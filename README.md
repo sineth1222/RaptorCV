@@ -19,10 +19,10 @@
 
 ## Features
 
- **⚡️ AI-Powered Auto Description Generation:**  Instead of manually writing out your roles, responsibilities, and achievements, RaptorCV's AI-driven system automatically generates engaging and results-oriented bullet points tailored to your experience.
- **📝 Resume Summary Generation:** Using AI technology, the platform creates an instantly engaging professional summary based on the content of your entire resume, ensuring a strong introduction.
- **🎨 Easy Customization (User-Friendly):** The ability to easily change the appearance, colors, and layout of your resume using various professional templates to suit your specific needs.
- **💾 Saving and Exporting (Download & Export):**  Allows you to easily download your finalized resume in PDF format.
+- **⚡️ AI-Powered Auto Description Generation:**  Instead of manually writing out your roles, responsibilities, and achievements, RaptorCV's AI-driven system automatically generates engaging and results-oriented bullet points tailored to your experience.
+- **📝 Resume Summary Generation:** Using AI technology, the platform creates an instantly engaging professional summary based on the content of your entire resume, ensuring a strong introduction.
+- **🎨 Easy Customization (User-Friendly):** The ability to easily change the appearance, colors, and layout of your resume using various professional templates to suit your specific needs.
+- **💾 Saving and Exporting (Download & Export):**  Allows you to easily download your finalized resume in PDF format.
 
 ## 🛠️ Tech Stack <a name="-tech-stack"></a>
 
