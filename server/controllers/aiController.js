@@ -30,6 +30,7 @@ export const enhanceProfessionalSummary = async (req, res) => {
         return res.status(200).json({enhancedContent})
 
     } catch (error) {
+        console.error("OpenAI API Error:", error);
         return res.status(400).json({message: error.message})
     }
 }
