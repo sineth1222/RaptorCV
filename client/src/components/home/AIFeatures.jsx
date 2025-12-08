@@ -28,7 +28,7 @@ const featuresData = [
         icon: ZapIcon,
         bgColor: "bg-purple-100",
         iconColor: "text-purple-600",
-        imageText: assets.ai1, // Placeholder text for image
+        imageText: assets.ai1v, // Placeholder text for image
     },
     {
         title: "Enhance Job Descriptions",
@@ -36,7 +36,7 @@ const featuresData = [
         icon: ZapIcon,
         bgColor: "bg-green-100",
         iconColor: "text-green-600",
-        imageText: assets.ai3 // Placeholder text for image
+        imageText: assets.ai3v // Placeholder text for image
     },
     {
         title: "Save Valuable Time",

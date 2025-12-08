@@ -1,8 +1,8 @@
 import dummy_profile from './dummy_profile.png';
 import resume from './resume.jpg';
 import ai1 from './ai1.png';
-import ai2 from './ai2.jpeg';
-import ai3 from './ai3.jpeg';
+import ai2 from './ai2v.png';
+import ai3v from './ai3.png';
 import calmsidebar from './calm-sidebar.jpeg';
 import calm from './calm.jpeg'
 import minimalimage from './minimal-image.jpeg'
@@ -13,10 +13,11 @@ import natural from './natural.jpeg'
 import proffetional from './proffetional.jpeg'
 import strong from './strong.jpeg'
 import contact from './contact.jpg'
+import ai1v from './ai1v.png';
 
 
 export const assets = {
-    resume, ai1, ai2, ai3, calmsidebar, calm, minimalimage, mordernimage, mordernsimple, mordern, natural, proffetional, strong, contact
+    resume, ai1, ai2, ai3v, calmsidebar, calm, minimalimage, mordernimage, mordernsimple, mordern, natural, proffetional, strong, contact, ai1v
 }
 
 export const dummyResumeData = [

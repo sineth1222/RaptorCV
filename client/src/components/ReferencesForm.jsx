@@ -27,12 +27,12 @@ const ReferencesForm = ({ data, onChange }) => {
 
   return (
     <div className='space-y-6'>
-            <div className='flex items-center justify-between'>
-                <div>
+            <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8 sm:gap-0'>
+                <div className='flex flex-col items-center justify-center sm:block'>
                     <h3 className='flex items-center gap-2 text-lg font-semibold text-gray-900'> References</h3>
                     <p className='text-sm text-gray-500'>Add your References details</p>
                 </div>
-                <button onClick={addReferences} className='flex items-center gap-2 px-3 py-1 text-sm bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors'>
+                <button onClick={addReferences} className='flex items-center w-fit ml-auto sm:ml-0 gap-2 px-3 py-2 text-sm bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors'>
                     <Plus className='size-4' />
                         Add References
                 </button>
