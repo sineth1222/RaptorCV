@@ -1,7 +1,9 @@
 import imagekit from "../configs/imageKit.js";
 import Resume from "../models/Resume.js";
 import fs from "fs"
-import puppeteer from 'puppeteer';
+//import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core'; // <-- puppeteer-core භාවිතා කරන්න
+import chromium from '@sparticuz/chromium';
 
 
 
@@ -177,7 +179,16 @@ export const downloadResume = async (req, res) => {
 
         // 3. Puppeteer භාවිතයෙන් PDF ජනනය කිරීම
         browser = await puppeteer.launch({ 
-            args: ['--no-sandbox', '--disable-setuid-sandbox'] 
+            // Vercel මත අවශ්‍ය වන නිවැරදි Arguments සැකසීම
+            args: [
+                ...chromium.args, // @sparticuz/chromium හි recommended args
+                '--single-process', // Memory භාවිතය අඩු කිරීමට
+                '--no-sandbox', // Cloud environments සඳහා අනිවාර්යය
+                '--disable-setuid-sandbox'
+            ],
+            // Chromium binary එකේ path එක ගතිකව (dynamically) ලබා ගනී
+            executablePath: await chromium.executablePath(),
+            headless: chromium.headless, // true ලෙස සැකසීම
         }); // Production servers සඳහා 'args' වැදගත් වේ
         const page = await browser.newPage();
         
