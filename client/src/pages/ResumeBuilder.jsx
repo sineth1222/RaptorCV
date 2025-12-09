@@ -142,9 +142,56 @@ const ResumeBuilder = () => {
     }
   }
 
-  const downloadResume = () => {
+  /*const downloadResume = () => {
     window.print();
+  }*/
+  
+  // ✅ නව downloadResume ශ්‍රිතය - Back-End API එකට call කිරීමට
+  async function downloadResume() {
+    // resumeId එක 'new' නම් හෝ නොතිබුණහොත්, බාගත කිරීමට උත්සාහ නොකරන්න
+    if (!resumeId || resumeId === 'new') {
+      toast.error("Please save the resume before attempting to download.")
+      return
+    }
+
+    try {
+      await saveResume()
+
+      toast.loading('Generating copyable PDF...', { id: 'downloadToast' })
+
+      // 2. Back-End API call එක සිදු කරන්න.
+      // responseType: 'blob' යනු binary file (PDF) එකක් අපේක්ෂා කරන බව Axios වෙත දැනුම් දීමයි.
+      const response = await api.get(`/api/resumes/download/${resumeId}`, {
+        headers: {
+          Authorization: token,
+        },
+        responseType: 'blob'
+      })
+
+      toast.dismiss('downloadToast')
+
+      // 3. ලැබුණු binary data (blob) එක downloadable link එකක් බවට පත් කර බාගත කිරීම ආරම්භ කරන්න.
+      const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
+      const link = document.createElement('a')
+      link.href = url
+      // බාගත කරන ගොනුවේ නම set කිරීම
+      link.setAttribute('download', `${resumeData.title || 'Resume'}.pdf`)
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.URL.revokeObjectURL(url) // Clean up the created URL
+
+      toast.success('PDF downloaded successfully!')
+
+    } catch (error) {
+      toast.dismiss('downloadToast')
+      const errorMessage = error?.response?.data?.message || 'Failed to download PDF.'
+      toast.error(errorMessage)
+      console.error("Error downloading resume: ", error)
+    }
   }
+
+// ... (existing code below downloadResume)
 
   const saveResume = async () => {
     try {
