@@ -422,35 +422,50 @@ const getClassicTemplateHtml = (data, accentColor) => {
                 ${personalInfo.profession || ""}
             </p>
 
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; font-size: 0.875rem; color: #525252;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; font-size: 0.875rem; color: #525252; margin-top: 12px;">
+                
                 ${personalInfo.email ? `
                     <div style="display: flex; align-items: center; gap: 4px;">
-                        <span style="font-size: 16px; margin-top: -2px;">&#9993;</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
+                            <rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7" />
+                        </svg>
                         <span>${personalInfo.email}</span>
                     </div>
                 ` : ''}
+                
                 ${personalInfo.phone ? `
                     <div style="display: flex; align-items: center; gap: 4px;">
-                        <span style="font-size: 16px; margin-top: -2px;">&#9742;</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
+                            <path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3" />
+                        </svg>
                         <span>${personalInfo.phone}</span>
                     </div>
                 ` : ''}
+                
                 ${personalInfo.location ? `
                     <div style="display: flex; align-items: center; gap: 4px;">
-                        <span style="font-size: 16px; margin-top: -2px;">&#x1F4CD;</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+                        </svg>
                         <span>${personalInfo.location}</span>
                     </div>
                 ` : ''}
+                
                 ${personalInfo.linkedin ? `
-                    <a target="_blank" href="${personalInfo.linkedin}" style="display: flex; align-items: center; gap: 4px; color: inherit; text-decoration: none;">
-                        <span style="font-size: 16px; margin-top: -2px;">&#x1F517;</span>
-                        <span>${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
+                    <a target="_blank" href="${personalInfo.linkedin}" style="display: flex; align-items: center; gap: 4px; color: inherit; text-decoration: none; word-break: break-all;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
+                            <path d="M16 4.98a4.99 4.99 0 0 0-8 0v1.7h-3v14h6v-6.5a2.5 2.5 0 0 1 5 0V20h3V6.68a5 5 0 0 0-3-1.7Z" /><circle cx="8" cy="2.5" r="2.5" />
+                        </svg>
+                        <span style="word-break: break-all;">${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
                     </a>
                 ` : ''}
+                
                 ${personalInfo.website ? `
-                    <a target="_blank" href="${personalInfo.website}" style="display: flex; align-items: center; gap: 4px; color: inherit; text-decoration: none;">
-                        <span style="font-size: 16px; margin-top: -2px;">&#x1F310;</span>
-                        <span>${personalInfo.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
+                    <a target="_blank" href="${personalInfo.website}" style="display: flex; align-items: center; gap: 4px; color: inherit; text-decoration: none; word-break: break-all;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
+                            <circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" />
+                        </svg>
+                        <span style="word-break: break-all;">${personalInfo.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
                     </a>
                 ` : ''}
             </div>
@@ -642,31 +657,31 @@ const getClassicTemplateHtml = (data, accentColor) => {
 const getCalmSidebarTemplateHtml = (data, accentColor) => {
 
     // Skill Pill/Tag HTML
-        const getSkillPillHtml = (skill, accentColor) => `
-            <div 
-                style="font-size: 0.75rem; font-weight: 600; padding: 1px 8px; border-radius: 2px; display: inline-block; margin-bottom: 4px; margin-right: 4px; background-color: transparent; color: #333; border: 1px solid ${accentColor};"
-            >
-                ${skill}
-            </div>
-        `;
+    const getSkillPillHtml = (skill, accentColor) => `
+        <div 
+            style="font-size: 0.75rem; font-weight: 600; padding: 1px 8px; border-radius: 2px; display: inline-block; margin-bottom: 4px; margin-right: 4px; background-color: transparent; color: #333; border: 1px solid ${accentColor};"
+        >
+            ${skill}
+        </div>
+    `;
 
-        // Sidebar Section Header HTML
-        const getSidebarHeaderHtml = (title, accentColor) => `
-            <h3 
-                style="text-transform: uppercase; font-size: 0.875rem; font-weight: 700; padding-top: 16px; padding-bottom: 4px; margin-bottom: 8px; letter-spacing: 0.05em; color: ${accentColor}; border-bottom: 2px solid ${accentColor};"
-            >
-                ${title}
-            </h3>
-        `;
+    // Sidebar Section Header HTML
+    const getSidebarHeaderHtml = (title, accentColor) => `
+        <h3 
+            style="text-transform: uppercase; font-size: 0.875rem; font-weight: 700; padding-top: 16px; padding-bottom: 4px; margin-bottom: 8px; letter-spacing: 0.05em; color: ${accentColor}; border-bottom: 2px solid ${accentColor};"
+        >
+            ${title}
+        </h3>
+    `;
 
-        // Main Content Section Header HTML
-        const getMainHeaderHtml = (title, accentColor) => `
-            <h3 
-                style="text-transform: uppercase; font-size: 1.125rem; font-weight: 700; padding-top: 16px; margin-bottom: 8px; letter-spacing: 0.1em; color: #1f2937; border-bottom: 2px solid ${accentColor}; padding-bottom: 4px;"
-            >
-                ${title}
-            </h3>
-        `;
+    // Main Content Section Header HTML
+    const getMainHeaderHtml = (title, accentColor) => `
+        <h3 
+            style="text-transform: uppercase; font-size: 1.125rem; font-weight: 700; padding-top: 16px; margin-bottom: 8px; letter-spacing: 0.1em; color: #1f2937; border-bottom: 2px solid ${accentColor}; padding-bottom: 4px;"
+        >
+            ${title}
+        </h3>
+    `;
 
     const personalInfo = data.personal_info || {};
     const summary = data.professional_summary;
