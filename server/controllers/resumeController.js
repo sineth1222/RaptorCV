@@ -724,10 +724,7 @@ const getCalmSidebarTemplateHtml = (data, accentColor) => {
                 ` : ''}
                 ${personalInfo.phone ? `
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
-                            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
-                            <path d="M12 18h.01"/>
-                        </svg>
+                        📞
                         <span>${personalInfo.phone}</span>
                     </div>
                 ` : ''}
