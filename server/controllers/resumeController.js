@@ -436,7 +436,7 @@ const getClassicTemplateHtml = (data, accentColor) => {
                 ${personalInfo.phone ? `
                     <div style="display: flex; align-items: center; gap: 4px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
-                            <path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16a2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3" />
+                            <path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16a2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/>
                         </svg>
                         <span>${personalInfo.phone}</span>
                     </div>
@@ -454,9 +454,10 @@ const getClassicTemplateHtml = (data, accentColor) => {
                 ${personalInfo.linkedin ? `
                     <a target="_blank" href="${personalInfo.linkedin}" style="display: flex; align-items: center; gap: 4px; color: inherit; text-decoration: none; word-break: break-all;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
-                            <path d="M16 8a6 6 0 0 0-6 6v7h-4v-7a6 6 0 0 1 6-6h0a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2Z" />
-                            <path d="M4 14h4v7h-4z" />
-                            <circle cx="6" cy="6" r="2" />
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" fill="#525252" stroke="none"/>
+                            <line x1="8.5" y1="11" x2="8.5" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="8.5" cy="7.5" r="1.5" fill="white" stroke="none"/>
+                            <path d="M12.5 18v-4a2.5 2.5 0 0 1 2.5-2.5h0a2.5 2.5 0 0 1 2.5 2.5V18" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
                         </svg>
                         <span style="word-break: break-all;">${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
                     </a>
@@ -723,8 +724,8 @@ const getCalmSidebarTemplateHtml = (data, accentColor) => {
                 ` : ''}
                 ${personalInfo.phone ? `
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
-                            <path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
+                            <path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16a2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/>
                         </svg>
                         <span>${personalInfo.phone}</span>
                     </div>
@@ -739,8 +740,11 @@ const getCalmSidebarTemplateHtml = (data, accentColor) => {
                 ` : ''}
                 ${personalInfo.linkedin ? `
                     <div style="display: flex; align-items: flex-start; gap: 8px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
-                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.54-7.54l-3 3a5 5 0 0 0-.54 7.54Z"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.54 7.54l3-3a5 5 0 0 0 .54-7.54Z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" fill="#525252" stroke="none"/>
+                            <line x1="8.5" y1="11" x2="8.5" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="8.5" cy="7.5" r="1.5" fill="white" stroke="none"/>
+                            <path d="M12.5 18v-4a2.5 2.5 0 0 1 2.5-2.5h0a2.5 2.5 0 0 1 2.5 2.5V18" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
                         </svg>
                         <a href="${personalInfo.linkedin}" target="_blank" style="color: #4b5563; text-decoration: none; word-break: break-all;">
                             ${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}
