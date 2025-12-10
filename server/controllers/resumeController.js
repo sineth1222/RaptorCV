@@ -364,22 +364,6 @@ const generateResumeHtml = (data) => {
 // 📢 Helper Functions (Assistants for generateResumeHtml)
 // =================================================================
 
-// 📅 Date Formatting Helper (JS Date objects වෙනුවට string manipulation)
-const formatDate = (dateStr) => {
-    if (!dateStr || dateStr.toLowerCase() === 'present') return 'Present';
-    
-    const [year, month] = dateStr.split("-");
-
-    if (year && month) {
-        // Month number to short name map
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const monthName = months[parseInt(month, 10) - 1];
-        return `${monthName} ${year}`;
-    }
-    if (year) return year;
-    return dateStr;
-};
 
 
 /**
@@ -659,6 +643,23 @@ const getClassicTemplateHtml = (data, accentColor) => {
  */
 const getCalmSidebarTemplateHtml = (data, accentColor) => {
 
+    // 📅 Date Formatting Helper (JS Date objects වෙනුවට string manipulation)
+    const formatDate = (dateStr) => {
+        if (!dateStr || dateStr.toLowerCase() === 'present') return 'Present';
+        
+        const [year, month] = dateStr.split("-");
+
+        if (year && month) {
+            // Month number to short name map
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const monthName = months[parseInt(month, 10) - 1];
+            return `${monthName} ${year}`;
+        }
+        if (year) return year;
+        return dateStr;
+    };
+
     // Skill Pill/Tag HTML
     const getSkillPillHtml = (skill, accentColor) => `
         <div 
@@ -927,3 +928,554 @@ const getCalmSidebarTemplateHtml = (data, accentColor) => {
         </div>
     `;
 };
+
+
+
+/**
+ * Modern Resume Template එක JSX වලින් සෘජු HTML String එකක් බවට පරිවර්තනය කරයි.
+ * මෙහිදී Tailwind Classes වෙනුවට Inline CSS styles භාවිතා කරන අතර, Icons සඳහා SVG කේත යොදනු ලැබේ.
+ * * @param {object} data - Resume දත්ත අඩංගු object එක.
+ * @param {string} accentColor - Resume එකේ ප්‍රධාන වර්ණය (e.g., '#0077b5').
+ * @returns {string} - සම්පූර්ණ HTML String එක.
+ */
+function getModernTemplateHtml(data, accentColor) {
+
+    // Helper function to format date (copied from JSX)
+    const formatDate = (dateStr) => {
+        if (!dateStr) return "";
+        const [year, month] = dateStr.split("-");
+        if (!year || !month) return dateStr;
+
+        try {
+            return new Date(year, month - 1).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short"
+            });
+        } catch (error) {
+            return dateStr; // Return original if parsing fails
+        }
+    };
+
+    // --- ICON SVGs ---
+    // Note: Lucide-react icons (Mail, Phone, MapPin, Linkedin, Globe) are replaced with reliable SVG paths.
+    
+    // Mail Icon
+    const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7" /></svg>`;
+    
+    // Phone Icon (Simple Handset - most reliable)
+    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16a2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3" /></svg>`;
+
+    // MapPin Icon (Location)
+    const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>`;
+
+    // Linkedin Icon (Classic 'in' Logo - simple path)
+    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M16 8a6 6 0 0 0-6 6v7h-4v-7a6 6 0 0 1 6-6h0a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2Z" /><path d="M4 14h4v7h-4z" /><circle cx="6" cy="6" r="2" /></svg>`;
+
+    // Globe Icon (Website)
+    const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>`;
+
+
+    // --- TEMPLATE GENERATION ---
+
+    const personalInfo = data.personal_info || {};
+    const experience = data.experience || [];
+    const project = data.project || [];
+    const education = data.education || [];
+    const skills = data.skills || [];
+    const languages = data.languages || [];
+    const references = data.references || [];
+
+    const htmlContent = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${personalInfo.full_name || "Resume"}</title>
+            <style>
+                /* Basic Reset and Font Setup for Print/PDF */
+                body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; margin: 0; padding: 0; color: #333; line-height: 1.5; }
+                .resume-container { max-width: 800px; margin: 0 auto; background-color: #ffffff; color: #1f2937; line-height: 1.6; }
+                a { color: inherit; text-decoration: none; word-break: break-all; }
+                .section-title { font-size: 1.5rem; font-weight: 300; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; }
+                .date-badge { background-color: #f3f4f6; color: #6b7280; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; white-space: nowrap; }
+                .skill-tag { color: #ffffff; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; display: inline-block; }
+                /* Print specific styles for layout consistency */
+                @media print {
+                    .resume-container { box-shadow: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="resume-container" style="max-width: 800px; margin: 0 auto; background-color: #ffffff; color: #1f2937; line-height: 1.6;">
+                
+                <header style="text-align: center; padding-bottom: 1.5rem; border-top: 4px solid; border-bottom: 2px solid; margin: 1rem; padding: 1rem; border-color: ${accentColor};">
+                    <h1 style="font-size: 2.25rem; font-weight: 700; margin-bottom: 0.25rem; color: ${accentColor};">
+                        ${personalInfo.full_name || "Your Name"}
+                    </h1>
+                    <p style="text-transform: uppercase; color: #525252; font-weight: 500; font-size: 1.125rem; letter-spacing: 0.1em; margin-bottom: 0.75rem;">
+                        ${personalInfo.profession || ""}
+                    </p>
+
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; font-size: 0.875rem; color: #525252;">
+                        
+                        ${personalInfo.email ? `
+                            <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                ${MailIcon}
+                                <span>${personalInfo.email}</span>
+                            </div>
+                        ` : ''}
+                        
+                        ${personalInfo.phone ? `
+                            <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                ${PhoneIcon}
+                                <span>${personalInfo.phone}</span>
+                            </div>
+                        ` : ''}
+                        
+                        ${personalInfo.location ? `
+                            <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                ${MapPinIcon}
+                                <span>${personalInfo.location}</span>
+                            </div>
+                        ` : ''}
+                        
+                        ${personalInfo.linkedin ? `
+                            <a target="_blank" href="${personalInfo.linkedin}" style="display: flex; align-items: center; gap: 0.25rem; color: inherit;">
+                                ${LinkedinIcon}
+                                <span style="word-break: break-all;">${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
+                            </a>
+                        ` : ''}
+                        
+                        ${personalInfo.website ? `
+                            <a target="_blank" href="${personalInfo.website}" style="display: flex; align-items: center; gap: 0.25rem; color: inherit;">
+                                ${GlobeIcon}
+                                <span style="word-break: break-all;">${personalInfo.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
+                            </a>
+                        ` : ''}
+                    </div>
+                </header>
+
+                <div style="padding: 1rem 2rem;"> 
+                    
+                    ${data.professional_summary ? `
+                        <section style="margin-bottom: 2rem;">
+                            <h2 class="section-title">Professional Summary</h2>
+                            <p style="color: #4b5563; font-size: 1rem;">${data.professional_summary}</p>
+                        </section>
+                    ` : ''}
+
+                    ${experience.length > 0 ? `
+                        <section style="margin-bottom: 2rem;">
+                            <h2 class="section-title">Experience</h2>
+
+                            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                ${experience.map((exp) => `
+                                    <div style="position: relative; padding-left: 1.5rem; border-left: 1px solid #e5e7eb;">
+
+                                        <div style="display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 0.5rem;">
+                                            <div style="flex-grow: 1;">
+                                                <h3 style="font-size: 1.25rem; font-weight: 500; color: #1f2937; margin: 0; padding: 0;">${exp.position}</h3>
+                                                <p style="font-weight: 500; color: ${accentColor}; margin: 0; padding: 0;">${exp.company}</p>
+                                            </div>
+                                            <div class="date-badge" style="margin-top: 0.25rem;">
+                                                ${formatDate(exp.start_date)} - ${exp.is_current ? "Present" : formatDate(exp.end_date)}
+                                            </div>
+                                        </div>
+
+                                        ${exp.description ? `
+                                            <div style="color: #4b5563; line-height: 1.6; margin-top: 0.75rem; white-space: pre-line;">
+                                                ${exp.description}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+                    ` : ''}
+
+                    ${project.length > 0 ? `
+                        <section style="margin-bottom: 2rem;">
+                            <h2 class="section-title">Projects</h2>
+
+                            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                ${project.map((p) => `
+                                    <div style="position: relative; padding-left: 1.5rem; border-left: 2px solid ${accentColor};">
+
+                                        <div style="display: flex; flex-direction: column; margin-bottom: 0.25rem;">
+                                            <div style="flex-grow: 1;">
+                                                <h3 style="font-size: 1.125rem; font-weight: 500; color: #1f2937; margin: 0; padding: 0;">${p.name}</h3>
+                                            </div>
+                                            <div class="date-badge" style="color: #4b5563; background-color: #f3f4f6; margin-top: 0.25rem;">
+                                                ${p.type}
+                                            </div>
+                                        </div>
+
+                                        ${p.description ? `
+                                            <div style="color: #4b5563; line-height: 1.6; font-size: 0.875rem; margin-top: 0.75rem;">
+                                                ${p.description}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+                    ` : ''}
+
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                        
+                        ${education.length > 0 ? `
+                            <section style="break-inside: avoid;">
+                                <h2 class="section-title">Education</h2>
+
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    ${education.map((edu) => `
+                                        <div>
+                                            <h3 style="font-weight: 600; color: #1f2937; margin: 0; padding: 0;">
+                                                ${edu.degree} ${edu.field ? `in ${edu.field}` : ''}
+                                            </h3>
+                                            <p style="color: ${accentColor}; margin: 0; padding: 0; font-size: 0.95rem;">${edu.institution}</p>
+                                            
+                                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem; color: #6b7280; flex-wrap: wrap; margin-top: 0.25rem;">
+                                                <span>${formatDate(edu.graduation_date)}</span>
+                                                ${edu.gpa ? `<span>GPA: ${edu.gpa}</span>` : ''}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </section>
+                        ` : ''}
+
+                        ${skills.length > 0 ? `
+                            <section style="break-inside: avoid;">
+                                <h2 class="section-title">Skills</h2>
+
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                    ${skills.map((skill) => `
+                                        <span class="skill-tag" style="background-color: ${accentColor};">
+                                            ${skill}
+                                        </span>
+                                    `).join('')}
+                                </div>
+                            </section>
+                        ` : ''}
+                    </div>
+
+
+                    ${languages.length > 0 ? `
+                        <section style="margin-top: 2rem; margin-bottom: 2rem;">
+                            <h2 class="section-title">Languages</h2> 
+
+                            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+                                ${languages.map((lang) => `
+                                    <p style="font-size: 0.875rem; color: #4b5563; min-width: 45%; margin: 0; padding: 0;">
+                                        • <span style="font-weight: 600;">${lang.language}</span> - ${lang.level}
+                                    </p>
+                                `).join('')}
+                            </div>
+                        </section>
+                    ` : ''}
+
+
+                    ${references.length > 0 ? `
+                        <section style="margin-bottom: 2rem;">
+                            <h2 class="section-title">References</h2>
+
+                            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; font-size: 0.875rem; color: #4b5563;">
+                                ${references.map((ref) => `
+                                    <div style="flex-basis: calc(50% - 1rem); min-width: 250px;">
+                                        <p style="font-weight: 700; margin: 0;">${ref.name}</p>
+                                        <p style="font-size: 0.875rem; margin: 0;">${ref.title}</p>
+                                        <p style="font-size: 0.875rem; margin: 0;">${ref.company}</p>
+                                        <p style="font-size: 0.875rem; margin: 0;">${ref.contact}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+                    ` : ''}
+                </div>
+            </div>
+        </body>
+        </html>
+    `;
+
+    return htmlContent;
+}
+
+
+
+/**
+ * Minimal Resume Template එක JSX වලින් සෘජු HTML String එකක් බවට පරිවර්තනය කරයි.
+ * මෙහිදී Tailwind Classes වෙනුවට Inline CSS styles භාවිතා කරන අතර, Icons සඳහා විශ්වාසදායක SVG කේත යොදනු ලැබේ.
+ * @param {object} data - Resume දත්ත අඩංගු object එක.
+ * @param {string} accentColor - Resume එකේ ප්‍රධාන වර්ණය (e.g., '#0077b5').
+ * @returns {string} - සම්පූර්ණ HTML String එක.
+ */
+function getMinimalTemplateHtml(data, accentColor) {
+
+    // Helper function to format date (copied from JSX)
+    const formatDate = (dateStr) => {
+        if (!dateStr) return "";
+        const [year, month] = dateStr.split("-");
+        if (!year || !month) return dateStr;
+
+        try {
+            return new Date(year, month - 1).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short"
+            });
+        } catch (error) {
+            return dateStr;
+        }
+    };
+
+    // --- ICON SVGs (Standardized at 16x16 pixels for clarity) ---
+    const IconStyle = `width: 16px; height: 16px; flex-shrink: 0; margin-top: -2px;`;
+    const IconStrokeColor = '#525252';
+
+    // Mail Icon
+    const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" ${IconStyle} viewBox="0 0 24 24" fill="none" stroke="${IconStrokeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7" /></svg>`;
+    
+    // Phone Icon (Simple Handset - most reliable)
+    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" ${IconStyle} viewBox="0 0 24 24" fill="none" stroke="${IconStrokeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16a2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3" /></svg>`;
+
+    // MapPin Icon (Location)
+    const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" ${IconStyle} viewBox="0 0 24 24" fill="none" stroke="${IconStrokeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>`;
+
+    // Linkedin Icon
+    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" ${IconStyle} viewBox="0 0 24 24" fill="none" stroke="${IconStrokeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 0-6 6v7h-4v-7a6 6 0 0 1 6-6h0a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2Z" /><path d="M4 14h4v7h-4z" /><circle cx="6" cy="6" r="2" /></svg>`;
+
+    // Globe Icon (Website)
+    const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" ${IconStyle} viewBox="0 0 24 24" fill="none" stroke="${IconStrokeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>`;
+
+    // --- TEMPLATE GENERATION ---
+
+    const personalInfo = data.personal_info || {};
+    const experience = data.experience || [];
+    const project = data.project || [];
+    const education = data.education || [];
+    const skills = data.skills || [];
+    const languages = data.languages || [];
+    const references = data.references || [];
+
+    const htmlContent = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${personalInfo.full_name || "Resume"}</title>
+            <style>
+                /* Basic Reset and Font Setup for Print/PDF */
+                body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; margin: 0; padding: 0; color: #1f2937; line-height: 1.5; font-weight: 300; }
+                .resume-container { max-width: 800px; margin: 0 auto; background-color: #ffffff; padding: 1rem; }
+                a { color: inherit; text-decoration: none; word-break: break-all; }
+                .section-title { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; font-weight: 500; border-bottom: 1px solid; padding-bottom: 0.25rem; }
+                
+                /* Responsive adjustments for print/desktop (sm:p-8) */
+                @media screen and (min-width: 640px) {
+                     .resume-container { padding: 2rem; }
+                }
+                @media print {
+                    .resume-container { padding: 2rem; box-shadow: none; }
+                    /* Force grid for print */
+                    .grid-2-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+                    .ref-item { width: 48%; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="resume-container" style="max-width: 800px; margin: 0 auto; background-color: #ffffff; color: #1f2937; font-weight: 300; line-height: 1.6;">
+                
+                <header style="margin-bottom: 2rem;">
+                    <h1 style="font-size: 2.25rem; font-weight: 200; margin-bottom: 0.5rem; letter-spacing: 0.05em; text-align: center;">
+                        ${personalInfo.full_name || "Your Name"}
+                    </h1>
+                    <p style="text-transform: uppercase; color: #525252; font-weight: 500; font-size: 0.875rem; letter-spacing: 0.2em; margin-bottom: 1rem; text-align: center;">
+                        ${personalInfo.profession || ""}
+                    </p>
+
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; column-gap: 1rem; row-gap: 0.5rem; font-size: 0.875rem; color: #6b7280;">
+                        
+                        ${personalInfo.email ? `
+                            <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                ${MailIcon}
+                                <span>${personalInfo.email}</span>
+                            </div>
+                        ` : ''}
+                        
+                        ${personalInfo.phone ? `
+                            <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                ${PhoneIcon}
+                                <span>${personalInfo.phone}</span>
+                            </div>
+                        ` : ''}
+                        
+                        ${personalInfo.location ? `
+                            <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                ${MapPinIcon}
+                                <span>${personalInfo.location}</span>
+                            </div>
+                        ` : ''}
+                        
+                        ${personalInfo.linkedin ? `
+                            <a target="_blank" href="${personalInfo.linkedin}" style="display: flex; align-items: center; gap: 0.25rem; color: inherit;">
+                                ${LinkedinIcon}
+                                <span style="word-break: break-all;">${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
+                            </a>
+                        ` : ''}
+                        
+                        ${personalInfo.website ? `
+                            <a target="_blank" href="${personalInfo.website}" style="display: flex; align-items: center; gap: 0.25rem; color: inherit;">
+                                ${GlobeIcon}
+                                <span style="word-break: break-all;">${personalInfo.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
+                            </a>
+                        ` : ''}
+                    </div>
+                </header>
+
+                
+                ${data.professional_summary ? `
+                    <section style="margin-bottom: 2rem;">
+                        <p style="color: #4b5563; font-size: 1rem; line-height: 1.6;">
+                            ${data.professional_summary}
+                        </p>
+                    </section>
+                ` : ''}
+
+                ${experience.length > 0 ? `
+                    <section style="margin-bottom: 2rem; break-inside: avoid;">
+                        <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                            Experience
+                        </h2>
+
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            ${experience.map((exp) => `
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem; flex-wrap: wrap;">
+                                        <h3 style="font-size: 1rem; font-weight: 500; margin: 0; flex-grow: 1;">${exp.position}</h3>
+                                        <span style="font-size: 0.75rem; color: #6b7280; flex-shrink: 0;">
+                                            ${formatDate(exp.start_date)} - ${exp.is_current ? "Present" : formatDate(exp.end_date)}
+                                        </span>
+                                    </div>
+                                    <p style="font-size: 0.875rem; color: #4b5563; margin: 0 0 0.25rem 0;">${exp.company}</p>
+                                    ${exp.description ? `
+                                        <div style="font-size: 0.875rem; color: #4b5563; line-height: 1.6; white-space: pre-line; margin-top: 0.25rem;">
+                                            ${exp.description}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </section>
+                ` : ''}
+
+                ${project.length > 0 ? `
+                    <section style="margin-bottom: 2rem; break-inside: avoid;">
+                        <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                            Projects
+                        </h2>
+
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            ${project.map((proj) => `
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; flex-wrap: wrap;">
+                                        <h3 style="font-size: 1rem; font-weight: 500; margin: 0; flex-grow: 1;">${proj.name}</h3>
+                                        <div style="font-size: 0.75rem; color: #4b5563; background-color: #f3f4f6; padding: 0 0.5rem; border-radius: 4px; flex-shrink: 0;">
+                                            ${proj.type}
+                                        </div>
+                                    </div>
+                                    <p style="font-size: 0.875rem; color: #4b5563; margin: 0.25rem 0 0 0;">${proj.description}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </section>
+                ` : ''}
+
+                <div class="grid-2-col" style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                    
+                    ${education.length > 0 ? `
+                        <section style="break-inside: avoid;">
+                            <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                Education
+                            </h2>
+
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                ${education.map((edu) => `
+                                    <div>
+                                        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+                                            <h3 style="font-weight: 500; font-size: 1rem; margin: 0;">
+                                                ${edu.degree} ${edu.field ? `in ${edu.field}` : ''}
+                                            </h3>
+                                            <span style="font-size: 0.75rem; color: #6b7280; flex-shrink: 0;">
+                                                ${formatDate(edu.graduation_date)}
+                                            </span>
+                                        </div>
+                                        <p style="font-size: 0.875rem; color: #4b5563; margin: 0;">${edu.institution}</p>
+                                        ${edu.gpa ? `<p style="font-size: 0.75rem; color: #6b7280; margin: 0;">GPA: ${edu.gpa}</p>` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+                    ` : ''}
+
+                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+
+                        ${skills.length > 0 ? `
+                            <section style="break-inside: avoid;">
+                                <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                    Skills
+                                </h2>
+                                <div style="font-size: 0.875rem; color: #4b5563; display: flex; flex-wrap: wrap; column-gap: 1rem; row-gap: 0.25rem;">
+                                    ${skills.map((skill, index) => `
+                                        <span style="white-space: nowrap;">
+                                            ${index > 0 ? '• ' : ''} ${skill}
+                                        </span>
+                                    `).join('')}
+                                </div>
+                            </section>
+                        ` : ''}
+
+                        ${languages.length > 0 ? `
+                            <section style="break-inside: avoid;">
+                                <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                    Languages
+                                </h2>
+                                <div style="display: flex; flex-direction: column; gap: 0.25rem; padding-top: 0.25rem;">
+                                    ${languages.map((lang) => `
+                                        <p style="font-size: 0.875rem; color: #4b5563; margin: 0;">
+                                            • <span style="font-weight: 600;">${lang.language}</span> - ${lang.level}
+                                        </p>
+                                    `).join('')}
+                                </div>
+                            </section>
+                        ` : ''}
+                    </div>
+                </div>
+
+                ${references.length > 0 ? `
+                    <section style="margin-top: 2rem; margin-bottom: 1.5rem; break-inside: avoid;">
+                        <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                            REFERENCES
+                        </h2>
+
+                        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: 0.875rem; color: #4b5563;">
+                            ${references.map((ref) => `
+                                <div class="ref-item" style="width: 100%; max-width: 48%;">
+                                    <p style="font-weight: 700; margin: 0;">${ref.name}</p>
+                                    <p style="font-size: 0.875rem; margin: 0;">${ref.title}</p>
+                                    <p style="font-size: 0.875rem; margin: 0;">${ref.company}</p>
+                                    <p style="font-size: 0.875rem; margin: 0;">${ref.contact}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </section>
+                ` : ''}
+
+            </div>
+        </body>
+        </html>
+    `;
+
+    return htmlContent;
+}
