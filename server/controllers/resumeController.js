@@ -366,17 +366,19 @@ const generateResumeHtml = (data) => {
 
 // 📅 Date Formatting Helper (JS Date objects වෙනුවට string manipulation)
 const formatDate = (dateStr) => {
-    if (!dateStr) return "";
-    // Date format එක YYYY-MM ලෙස අපේක්ෂා කෙරේ
+    if (!dateStr || dateStr.toLowerCase() === 'present') return 'Present';
+    
     const [year, month] = dateStr.split("-");
-    
-    // Month number to short name map
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    
-    const monthName = months[parseInt(month) - 1];
 
-    return `${monthName} ${year}`;
+    if (year && month) {
+        // Month number to short name map
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const monthName = months[parseInt(month, 10) - 1];
+        return `${monthName} ${year}`;
+    }
+    if (year) return year;
+    return dateStr;
 };
 
 
@@ -387,6 +389,15 @@ const formatDate = (dateStr) => {
  * @returns {string} - Styled HTML string
  */
 const getClassicTemplateHtml = (data, accentColor) => {
+
+    const formatDate = (dateStr) => {
+        if (!dateStr) return "";
+        const [year, month] = dateStr.split("-");
+        return new Date(year, month - 1).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short"
+        });
+    };
 
     const personalInfo = data.personal_info || {};
     const summary = data.professional_summary;
@@ -611,6 +622,278 @@ const getClassicTemplateHtml = (data, accentColor) => {
             ${educationHtml}
             ${skillsAndLanguagesHtml}
             ${referencesHtml}
+        </div>
+    `;
+};
+
+
+
+// =================================================================
+// 📢 Helper Functions (Assistants for generateResumeHtml)
+// =================================================================
+
+
+/**
+ * Calm Sidebar Template සඳහා HTML අන්තර්ගතය ජනනය කරයි.
+ * @param {object} data - සම්පූර්ණ Resume දත්ත වස්තුව
+ * @param {string} accentColor - තෝරාගත් වර්ණය (e.g., '#3b82f6')
+ * @returns {string} - Styled HTML string
+ */
+const getCalmSidebarTemplateHtml = (data, accentColor) => {
+
+    // Skill Pill/Tag HTML
+        const getSkillPillHtml = (skill, accentColor) => `
+            <div 
+                style="font-size: 0.75rem; font-weight: 600; padding: 1px 8px; border-radius: 2px; display: inline-block; margin-bottom: 4px; margin-right: 4px; background-color: transparent; color: #333; border: 1px solid ${accentColor};"
+            >
+                ${skill}
+            </div>
+        `;
+
+        // Sidebar Section Header HTML
+        const getSidebarHeaderHtml = (title, accentColor) => `
+            <h3 
+                style="text-transform: uppercase; font-size: 0.875rem; font-weight: 700; padding-top: 16px; padding-bottom: 4px; margin-bottom: 8px; letter-spacing: 0.05em; color: ${accentColor}; border-bottom: 2px solid ${accentColor};"
+            >
+                ${title}
+            </h3>
+        `;
+
+        // Main Content Section Header HTML
+        const getMainHeaderHtml = (title, accentColor) => `
+            <h3 
+                style="text-transform: uppercase; font-size: 1.125rem; font-weight: 700; padding-top: 16px; margin-bottom: 8px; letter-spacing: 0.1em; color: #1f2937; border-bottom: 2px solid ${accentColor}; padding-bottom: 4px;"
+            >
+                ${title}
+            </h3>
+        `;
+
+    const personalInfo = data.personal_info || {};
+    const summary = data.professional_summary;
+    const experience = data.experience || [];
+    const projects = data.project || [];
+    const education = data.education || [];
+    const skills = data.skills || [];
+    const languages = data.languages || [];
+    const references = data.references || [];
+    
+    // =================================================================
+    // 🛠️ Left Sidebar Content
+    // =================================================================
+
+    // Image
+    const imageHtml = personalInfo.image ? `
+        <div style="margin-bottom: 24px; display: flex; justify-content: center;">
+            <img 
+                src="${personalInfo.image}" 
+                alt="Profile" 
+                style="width: 128px; height: 128px; object-fit: cover; border-radius: 50%; border: 4px solid ${accentColor}; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);"
+            />
+        </div>
+    ` : '';
+    
+    // Contact
+    const contactHtml = `
+        <section style="margin-bottom: 24px;">
+            ${getSidebarHeaderHtml("Contact", accentColor)}
+            <div style="line-height: 1.5; font-size: 0.875rem; font-weight: 500; color: #4b5563; display: flex; flex-direction: column; gap: 8px;">
+                ${personalInfo.email ? `
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span style="font-size: 16px; color: #6b7280; flex-shrink: 0; margin-top: 2px;">&#9993;</span>
+                        <span style="word-break: break-all;">${personalInfo.email}</span>
+                    </div>
+                ` : ''}
+                ${personalInfo.phone ? `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 16px; color: #6b7280; flex-shrink: 0;">&#9742;</span>
+                        <span>${personalInfo.phone}</span>
+                    </div>
+                ` : ''}
+                ${personalInfo.location ? `
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span style="font-size: 16px; color: #6b7280; flex-shrink: 0; margin-top: 2px;">&#x1F4CD;</span>
+                        <span>${personalInfo.location}</span>
+                    </div>
+                ` : ''}
+                ${personalInfo.linkedin ? `
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span style="font-size: 16px; color: #6b7280; flex-shrink: 0; margin-top: 2px;">&#x1F517;</span>
+                        <a href="${personalInfo.linkedin}" target="_blank" style="color: #4b5563; text-decoration: none; word-break: break-all;">
+                            ${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}
+                        </a>
+                    </div>
+                ` : ''}
+                ${personalInfo.website ? `
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span style="font-size: 16px; color: #6b7280; flex-shrink: 0; margin-top: 2px;">&#x1F310;</span>
+                        <a href="${personalInfo.website}" target="_blank" style="color: #4b5563; text-decoration: none; word-break: break-all;">
+                            ${personalInfo.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}
+                        </a>
+                    </div>
+                ` : ''}
+            </div>
+        </section>
+    `;
+
+    // Skills
+    const skillsHtml = skills.length > 0 ? `
+        <section style="margin-bottom: 24px;">
+            ${getSidebarHeaderHtml("Skills", accentColor)}
+            <div style="display: flex; flex-wrap: wrap; margin-top: 8px;">
+                ${skills.map(skill => getSkillPillHtml(skill, accentColor)).join('')}
+            </div>
+        </section>
+    ` : '';
+    
+    // Languages
+    const languagesHtml = languages.length > 0 ? `
+        <section style="margin-bottom: 24px;">
+            ${getSidebarHeaderHtml("Languages", accentColor)}
+            <div style="line-height: 1.5; font-size: 0.875rem; color: #4b5563; display: flex; flex-direction: column; gap: 8px; padding-top: 4px;">
+                ${languages.map((lang, index) => `
+                    <p style="margin: 0; font-size: 0.875rem; color: #4b5563;">
+                        <span style="font-weight: 600;">${lang.language}</span> - ${lang.level}
+                    </p>
+                `).join('')}
+            </div>
+        </section>
+    ` : '';
+
+    // References
+    const referencesHtml = references.length > 0 ? `
+        <section style="margin-bottom: 24px;">
+            ${getSidebarHeaderHtml("References", accentColor)}
+            <div style="line-height: 1.4; font-size: 0.75rem; color: #4b5563; display: flex; flex-direction: column; gap: 12px; padding-top: 4px;">
+                ${references.map((ref, index) => `
+                    <div>
+                        <p style="font-weight: 700; margin: 0; color: ${accentColor}; font-size: 0.875rem;">${ref.name}</p>
+                        <p style="color: #4b5563; margin: 0; font-size: 0.8125rem;">${ref.title}</p>
+                        <p style="color: #4b5563; margin: 0; font-size: 0.8125rem;">${ref.company}</p>
+                        <p style="font-style: italic; margin-top: 4px; word-break: break-all; font-size: 0.75rem;">${ref.contact}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+    ` : '';
+
+
+    // =================================================================
+    // 🛠️ Right Main Content
+    // =================================================================
+
+    // Header Block (Name, Profession, Summary)
+    const mainHeaderBlock = `
+        <header style="margin-bottom: 24px;">
+            <h1 style="font-size: 2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; color: ${accentColor};">
+                ${personalInfo.full_name || ""}
+            </h1>
+            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 12px; color: #4b5563;">
+                ${personalInfo.profession || ""}
+            </h2>
+            ${summary ? `
+                <p style="font-size: 0.875rem; line-height: 1.6; color: #4b5563; margin-top: 12px;">
+                    ${summary}
+                </p>
+            ` : ''}
+        </header>
+    `;
+
+    // Education
+    const educationHtml = education.length > 0 ? `
+        <section style="margin-bottom: 24px;"> 
+            ${getMainHeaderHtml("Educational Background", accentColor)}
+            <div style="display: flex; flex-direction: column; gap: 16px; padding-top: 8px;">
+                ${education.map((edu, index) => `
+                    <div style="padding-bottom: 8px;"> 
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; font-size: 0.875rem; font-weight: 700; color: #1f2937; margin-bottom: 4px;">
+                            <h4 style="color: ${accentColor}; margin: 0; font-size: 0.9375rem;">${edu.degree} ${edu.field ? `in ${edu.field}` : ''}</h4>
+                            <span style="font-weight: 500; color: #4b5563; white-space: nowrap; font-size: 0.8125rem;">
+                                ${formatDate(edu.start_date)} - ${formatDate(edu.graduation_date)}
+                            </span>
+                        </div>
+                        <p style="font-size: 0.875rem; font-style: italic; color: #4b5563; margin: 0;">
+                            ${edu.institution}
+                        </p>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+    ` : '';
+    
+    // Work Experience
+    const experienceHtml = experience.length > 0 ? `
+        <section style="margin-bottom: 24px;">
+            ${getMainHeaderHtml("Work Experience", accentColor)}
+            <div style="display: flex; flex-direction: column; gap: 20px; padding-top: 8px;">
+                ${experience.map((exp, index) => `
+                    <div style="padding-bottom: 8px;"> 
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; font-size: 0.875rem; margin-bottom: 4px;">
+                            <h4 style="font-weight: 700; color: #1f2937; margin: 0; font-size: 0.9375rem;">${exp.position}</h4>
+                            <span style="font-weight: 500; color: #4b5563; white-space: nowrap; font-size: 0.8125rem;">
+                                ${formatDate(exp.start_date)} - ${exp.is_current ? "Present" : formatDate(exp.end_date)}
+                            </span>
+                        </div>
+                        <p style="font-size: 0.875rem; font-style: italic; color: #4b5563; margin: 0; margin-bottom: 8px;">${exp.company}</p>
+                        ${exp.description ? `
+                            <ul style="list-style-type: disc; padding-left: 20px; margin: 0; font-size: 0.875rem; color: #4b5563; line-height: 1.5;">
+                                ${exp.description.split("\n").map((line, i) => `
+                                    <li style="margin-bottom: 4px; word-break: break-word;">${line}</li>
+                                `).join('')}
+                            </ul>
+                        ` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+    ` : '';
+
+    // Projects
+    const projectsHtml = projects.length > 0 ? `
+        <section style="margin-bottom: 24px;">
+            ${getMainHeaderHtml("Projects Experience", accentColor)}
+            <div style="display: flex; flex-direction: column; gap: 20px; padding-top: 8px;">
+                ${projects.map((p, index) => `
+                    <div style="padding-bottom: 8px;"> 
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; font-size: 0.875rem; margin-bottom: 4px;">
+                            <h4 style="font-weight: 700; color: #1f2937; margin: 0; font-size: 0.9375rem;">${p.name} - (${p.type})</h4>
+                        </div>
+                        ${p.description ? `
+                            <ul style="list-style-type: disc; padding-left: 20px; margin: 0; font-size: 0.875rem; color: #4b5563; line-height: 1.5;">
+                                ${p.description.split("\n").map((line, i) => `
+                                    <li style="margin-bottom: 4px; word-break: break-word;">${line}</li>
+                                `).join('')}
+                            </ul>
+                        ` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+    ` : '';
+
+
+    // =================================================================
+    // 📦 Final Template Structure (Combines Sidebar and Main Content)
+    // =================================================================
+
+    return `
+        <div style="max-width: 8.5in; margin: 0 auto; background: white; color: #374151; font-family: Arial, sans-serif; display: flex; flex-direction: row; min-height: 11in; font-size: 10pt;">
+            
+            <aside 
+                style="width: 250px; min-width: 250px; padding: 24px 16px; background-color: #f3f2f7; color: #1f2937; flex-shrink: 0; flex-grow: 0;" 
+            >
+                ${imageHtml}
+                ${contactHtml}
+                ${skillsHtml}
+                ${languagesHtml}
+                ${referencesHtml}
+            </aside>
+
+            <main style="flex-grow: 1; width: auto; padding: 24px; color: #1f2937;">
+                ${mainHeaderBlock}
+                ${educationHtml}
+                ${experienceHtml}
+                ${projectsHtml}
+            </main>
         </div>
     `;
 };
