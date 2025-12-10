@@ -166,13 +166,7 @@ export const downloadResume = async (req, res) => {
             return res.status(404).json({ message: 'Resume not found' });
         }
         
-        // **සටහන:** මෙහිදී, `resume.toObject()` භාවිතා කළ හැක්කේ Mongoose Document එක JS Object එකක් බවට පත් කිරීමටයි.
         const resumeData = resume.toObject();
-
-        // 2. Resume Template HTML එක ජනනය කිරීම
-        // ***මෙය ඉතා වැදගත් කොටසයි***
-        // ***ඔබේ Resume Template එකේ සැබෑ HTML කේතය මෙහි ඇතුළත් කළ යුතුය.***
-        // ***දැනට, පහත දැක්වෙන්නේ සරල උදාහරණයක් පමණි.***
         
         const htmlContent = generateResumeHtml(resumeData);
         // 
@@ -202,10 +196,10 @@ export const downloadResume = async (req, res) => {
             format: 'A4',
             printBackground: true, // Background colors/images print කිරීමට
             margin: {
-                top: '20mm',
-                right: '20mm',
-                bottom: '20mm',
-                left: '20mm',
+                top: '0mm',
+                right: '0mm',
+                bottom: '0mm',
+                left: '0mm',
             }
         });
 
@@ -366,59 +360,257 @@ const generateResumeHtml = (data) => {
 
 // Back-End Controller File එකේදී:
 
-const getClassicTemplateHtml = (data, accentColor) => {
+// =================================================================
+// 📢 Helper Functions (Assistants for generateResumeHtml)
+// =================================================================
+
+// 📅 Date Formatting Helper (JS Date objects වෙනුවට string manipulation)
+const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    // Date format එක YYYY-MM ලෙස අපේක්ෂා කෙරේ
+    const [year, month] = dateStr.split("-");
     
-    // දත්ත වලට පහසුවෙන් ළඟා වීමට Destructure කරන්න
-    const personalInfo = data.personal_info || {};
-    const summary = data.professional_summary || '';
-    const experience = data.experience || [];
+    // Month number to short name map
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+    const monthName = months[parseInt(month) - 1];
 
-    // date formatting function එකද මෙහි නැවත නිර්මාණය කළ යුතුය.
-    const formatDate = (dateStr) => { /* ... formatting logic here ... */ }; 
-
-    // JSX/Tailwind වෙනුවට HTML String එක
-    return `
-        <div style="max-width: 850px; margin: 0 auto; padding: 32px; background: white; color: #333; line-height: 1.6;">
-            <header style="text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px solid ${accentColor};">
-                <h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 4px; color: ${accentColor};">
-                    ${personalInfo.full_name || "Your Name"}
-                </h1>
-                <p style="text-transform: uppercase; color: #525252; font-weight: 500; font-size: 1.125rem; letter-spacing: 0.1em; margin-bottom: 12px;">
-                    ${personalInfo.profession || ""}
-                </p>
-                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; font-size: 0.875rem; color: #525252;">
-                    ${personalInfo.email ? `<div><span style="margin-right: 4px;">&#9993;</span><span>${personalInfo.email}</span></div>` : ''}
-                    ${personalInfo.phone ? `<div><span style="margin-right: 4px;">&#9742;</span><span>${personalInfo.phone}</span></div>` : ''}
-                    </div>
-            </header>
-
-            ${summary ? `
-                <section style="margin-bottom: 24px;">
-                    <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; color: ${accentColor}; border-bottom: 1px solid #ccc; padding-bottom: 4px;">
-                        PROFESSIONAL SUMMARY
-                    </h2>
-                    <p style="font-size: 0.9375rem; color: #4b5563;">${summary}</p>
-                </section>
-            ` : ''}
-
-            ${experience.length > 0 ? `
-                <section style="margin-bottom: 24px;">
-                    <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; color: ${accentColor}; border-bottom: 1px solid #ccc; padding-bottom: 4px;">
-                        EXPERIENCE
-                    </h2>
-                    ${experience.map(exp => `
-                        <div style="margin-bottom: 16px; padding-bottom: 8px; border-left: 3px solid ${accentColor}; padding-left: 10px;">
-                            <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 0.9375rem; margin-bottom: 4px;">
-                                <h3 style="font-weight: bold; color: #1f2937; margin: 0;">${exp.job_title} at ${exp.company}</h3>
-                                <span style="color: #6b7280; font-size: 0.875rem;">${formatDate(exp.start_date)} - ${formatDate(exp.end_date)}</span>
-                            </div>
-                            </div>
-                    `).join('')}
-                </section>
-            ` : ''}
-
-            </div>
-    `;
+    return `${monthName} ${year}`;
 };
 
-// ... අනෙකුත් Templates සඳහා ද මෙවැනි ශ්‍රිත නිර්මාණය කළ යුතුය.
+
+/**
+ * Classic Template සඳහා HTML අන්තර්ගතය ජනනය කරයි.
+ * @param {object} data - සම්පූර්ණ Resume දත්ත වස්තුව
+ * @param {string} accentColor - තෝරාගත් වර්ණය (e.g., '#3b82f6')
+ * @returns {string} - Styled HTML string
+ */
+const getClassicTemplateHtml = (data, accentColor) => {
+
+    const personalInfo = data.personal_info || {};
+    const summary = data.professional_summary;
+    const experience = data.experience || [];
+    const projects = data.project || [];
+    const education = data.education || [];
+    const skills = data.skills || [];
+    const languages = data.languages || [];
+    const references = data.references || [];
+    
+    // =================================================================
+    // 🛠️ HTML Markup Generation Sections
+    // =================================================================
+
+    // 1. Header Section
+    const headerHtml = `
+        <header style="text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px solid; border-color: ${accentColor};">
+            <h1 style="font-size: 2.25rem; font-weight: 700; margin-bottom: 4px; color: ${accentColor};">
+                ${personalInfo.full_name || "Your Name"}
+            </h1>
+            <p style="text-transform: uppercase; color: #525252; font-weight: 500; font-size: 1.125rem; letter-spacing: 0.1em; margin-bottom: 12px;">
+                ${personalInfo.profession || ""}
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; font-size: 0.875rem; color: #525252;">
+                ${personalInfo.email ? `
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <span style="font-size: 16px; margin-top: -2px;">&#9993;</span>
+                        <span>${personalInfo.email}</span>
+                    </div>
+                ` : ''}
+                ${personalInfo.phone ? `
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <span style="font-size: 16px; margin-top: -2px;">&#9742;</span>
+                        <span>${personalInfo.phone}</span>
+                    </div>
+                ` : ''}
+                ${personalInfo.location ? `
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <span style="font-size: 16px; margin-top: -2px;">&#x1F4CD;</span>
+                        <span>${personalInfo.location}</span>
+                    </div>
+                ` : ''}
+                ${personalInfo.linkedin ? `
+                    <a target="_blank" href="${personalInfo.linkedin}" style="display: flex; align-items: center; gap: 4px; color: inherit; text-decoration: none;">
+                        <span style="font-size: 16px; margin-top: -2px;">&#x1F517;</span>
+                        <span>${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
+                    </a>
+                ` : ''}
+                ${personalInfo.website ? `
+                    <a target="_blank" href="${personalInfo.website}" style="display: flex; align-items: center; gap: 4px; color: inherit; text-decoration: none;">
+                        <span style="font-size: 16px; margin-top: -2px;">&#x1F310;</span>
+                        <span>${personalInfo.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
+                    </a>
+                ` : ''}
+            </div>
+        </header>
+    `;
+
+    // 2. Summary Section
+    const summaryHtml = summary ? `
+        <section style="margin-bottom: 24px;">
+            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 12px; color: ${accentColor}; border-bottom: 1px solid #ccc; padding-bottom: 4px;">
+                PROFESSIONAL SUMMARY
+            </h2>
+            <p style="color: #4b5563; line-height: 1.6;">${summary}</p>
+        </section>
+    ` : '';
+
+    // 3. Experience Section
+    const experienceHtml = experience.length > 0 ? `
+        <section style="margin-bottom: 24px;">
+            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; color: ${accentColor}; border-bottom: 1px solid #ccc; padding-bottom: 4px;">
+                PROFESSIONAL EXPERIENCE
+            </h2>
+
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                ${experience.map(exp => `
+                    <div style="border-left: 3px solid; padding-left: 16px; border-color: ${accentColor};">
+                        <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <div style="width: 100%;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <h3 style="font-weight: 600; color: #1f2937; margin: 0; font-size: 1rem;">${exp.position}</h3>
+                                    <div style="text-align: right; font-size: 0.875rem; color: #52525b;">
+                                        <p style="margin: 0;">${formatDate(exp.start_date)} - ${exp.is_current ? "Present" : formatDate(exp.end_date)}</p>
+                                    </div>
+                                </div>
+                                <p style="color: #4b5563; font-weight: 500; margin: 0; font-size: 0.9375rem;">${exp.company}</p>
+                            </div>
+                        </div>
+                        ${exp.description ? `
+                            <div style="color: #4b5563; line-height: 1.6; white-space: pre-line; margin-top: 4px; font-size: 0.9375rem;">
+                                ${exp.description}
+                            </div>
+                        ` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+    ` : '';
+
+    // 4. Projects Section
+    const projectsHtml = projects.length > 0 ? `
+        <section style="margin-bottom: 24px;">
+            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; color: ${accentColor}; border-bottom: 1px solid #ccc; padding-bottom: 4px;">
+                PROJECTS
+            </h2>
+
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                ${projects.map(proj => `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; border-left: 3px solid #d1d5db; padding-left: 16px;">
+                        <div>
+                            <div style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; gap: 8px;">
+                                <li style="font-weight: 600; color: #1f2937; margin: 0; font-size: 1rem;">${proj.name}</li>
+                                <div style="font-size: 0.8125rem; color: #52525b; background-color: #f3f4f6; padding: 2px 8px; border-radius: 4px;">
+                                    ${proj.type}
+                                </div>
+                            </div>
+                            <p style="color: #4b5563; margin-top: 4px; font-size: 0.9375rem;">${proj.description}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </ul>
+        </section>
+    ` : '';
+
+    // 5. Education Section
+    const educationHtml = education.length > 0 ? `
+        <section style="margin-bottom: 24px;">
+            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; color: ${accentColor}; border-bottom: 1px solid #ccc; padding-bottom: 4px;">
+                EDUCATION
+            </h2>
+
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                ${education.map(edu => `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h3 style="font-weight: 600; color: #1f2937; margin: 0; font-size: 1rem;">
+                                ${edu.degree} ${edu.field ? `in ${edu.field}` : ''}
+                            </h3>
+                            <p style="color: #4b5563; margin: 0; font-size: 0.9375rem;">${edu.institution}</p>
+                            ${edu.gpa ? `<p style="font-size: 0.875rem; color: #52525b; margin: 0;">GPA: ${edu.gpa}</p>` : ''}
+                        </div>
+                        <div style="text-align: right; font-size: 0.875rem; color: #52525b;">
+                            <p style="margin: 0;">${formatDate(edu.graduation_date)}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+    ` : '';
+
+    // 6 & 7. Skills and Languages Section (Side-by-side layout)
+    const skillsAndLanguagesHtml = (skills.length > 0 || languages.length > 0) ? `
+        <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 32px;">
+
+            ${skills.length > 0 ? `
+                <section style="margin-bottom: 24px; width: 50%;">
+                    <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; color: ${accentColor}; border-bottom: 1px solid #ccc; padding-bottom: 4px;">
+                        CORE SKILLS
+                    </h2>
+
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; font-size: 0.9375rem;">
+                        ${skills.map(skill => `
+                            <div style="color: #4b5563;">
+                                • ${skill}
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+            ` : ''}
+
+            ${languages.length > 0 ? `
+                <section style="margin-bottom: 24px; width: 50%;">
+                    <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; color: ${accentColor}; border-bottom: 1px solid #ccc; padding-bottom: 4px;">
+                        LANGUAGES
+                    </h2>
+
+                    <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 8px;">
+                        ${languages.map(lang => `
+                            <p style="font-size: 0.9375rem; color: #4b5563; margin: 0;">
+                                <span style="font-weight: 600;">${lang.language}</span> - ${lang.level}
+                            </p>
+                        `).join('')}
+                    </div>
+                </section>
+            ` : ''}
+        </div>
+    ` : '';
+
+
+    // 8. References Section
+    const referencesHtml = references.length > 0 ? `
+        <section style="margin-bottom: 24px;">
+            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; color: ${accentColor}; border-bottom: 1px solid #ccc; padding-bottom: 4px;">
+                REFERENCES
+            </h2>
+
+            <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; gap: 32px; font-size: 0.875rem; color: #4b5563;">
+                ${references.map(ref => `
+                    <div style="width: 45%;">
+                        <p style="font-weight: 700; margin: 0;">${ref.name}</p>
+                        <p style="font-size: 0.875rem; margin: 0;">${ref.title}</p>
+                        <p style="font-size: 0.875rem; margin: 0;">${ref.company}</p>
+                        <p style="font-size: 0.875rem; margin: 0;">${ref.contact}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+    ` : '';
+
+    // =================================================================
+    // 📦 Final Template Structure
+    // =================================================================
+
+    return `
+        <div style="max-width: 8.5in; margin: 0 auto; padding: 32px; background: white; color: #374151; line-height: 1.6; box-sizing: border-box;">
+            ${headerHtml}
+            ${summaryHtml}
+            ${experienceHtml}
+            ${projectsHtml}
+            ${educationHtml}
+            ${skillsAndLanguagesHtml}
+            ${referencesHtml}
+        </div>
+    `;
+};
