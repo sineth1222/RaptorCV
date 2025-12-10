@@ -1073,7 +1073,7 @@ function getModernTemplateHtml(data, accentColor) {
                                 ${experience.map((exp) => `
                                     <div style="position: relative; padding-left: 1.5rem; border-left: 1px solid #e5e7eb;">
 
-                                        <div style="display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 0.5rem;">
+                                        <div style="display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; margin-bottom: 0.5rem;">
                                             <div style="flex-grow: 1;">
                                                 <h3 style="font-size: 1.25rem; font-weight: 500; color: #1f2937; margin: 0; padding: 0;">${exp.position}</h3>
                                                 <p style="font-weight: 500; color: ${accentColor}; margin: 0; padding: 0;">${exp.company}</p>
@@ -1102,7 +1102,7 @@ function getModernTemplateHtml(data, accentColor) {
                                 ${project.map((p) => `
                                     <div style="position: relative; padding-left: 1.5rem; border-left: 2px solid ${accentColor};">
 
-                                        <div style="display: flex; flex-direction: column; margin-bottom: 0.25rem;">
+                                        <div style="display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 0.25rem;">
                                             <div style="flex-grow: 1;">
                                                 <h3 style="font-size: 1.125rem; font-weight: 500; color: #1f2937; margin: 0; padding: 0;">${p.name}</h3>
                                             </div>
@@ -1122,7 +1122,7 @@ function getModernTemplateHtml(data, accentColor) {
                         </section>
                     ` : ''}
 
-                    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                    <div style="display: grid; grid-template-columns: 2fr; gap: 2rem;">
                         
                         ${education.length > 0 ? `
                             <section style="break-inside: avoid;">
