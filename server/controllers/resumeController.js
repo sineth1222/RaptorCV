@@ -1506,7 +1506,6 @@ function getMinimalTemplateHtml(data, accentColor) {
 }
 
 
-
 /**
  * Minimal Image Template එක JSX වලින් සෘජු HTML String එකක් බවට පරිවර්තනය කරයි.
  * මෙහිදී Tailwind Classes වෙනුවට Inline CSS styles භාවිතා කරන අතර, Icons සඳහා විශ්වාසදායක SVG කේත යොදනු ලැබේ.
@@ -1542,6 +1541,10 @@ function getMinimalImageTemplateHtml(data, accentColor) {
     const MapPinIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>`;
     const LinkedinIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 0-6 6v7h-4v-7a6 6 0 0 1 6-6h0a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2Z" /><path d="M4 14h4v7h-4z" /><circle cx="6" cy="6" r="2" /></svg>`;
     const GlobeIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>`;
+    
+    // New style for contact bar item (moved to header)
+    const ContactBarItemStyle = `display: flex; align-items: center; gap: 0.25rem; margin-right: 1.5rem; font-size: 0.875rem; color: #525252;`;
+
 
     const PI = data.personal_info || {};
     const EXPERIENCE = data.experience || [];
@@ -1588,7 +1591,8 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                 .header-span {
                     order: -3; 
                     padding: 1.5rem 1.5rem 1rem 1.5rem; /* p-6 sm:p-10 */
-                    border-bottom: 1px solid #e4e4e7; /* border-zinc-200 */
+                    border-bottom: 1px solid ${accentColor}70; /* Use accent color for a professional separation */
+                    background-color: #f7f7f7; /* Light background for header */
                 }
                 
                 /* Left Sidebar (order-2 md:order-0) */
@@ -1607,7 +1611,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                 /* Desktop/Print styles (md:grid-cols-3 and print:grid-cols-3 with 1/3 and 2/3 split) */
                 @media screen and (min-width: 768px), print {
                     /* Desktop/Print padding */
-                    .header-span { padding: 2.5rem; }
+                    .header-span { padding: 2rem 2.5rem; }
                     .sidebar, .main-content { padding: 2rem; }
 
                     /* Grid Setup */
@@ -1624,7 +1628,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                     .sidebar {
                         grid-column: 1 / 2;
                         order: 0;
-                        border-right: 1px solid #a1a1aa; /* border-zinc-400 */
+                        border-right: 1px solid #e4e4e7; /* border-zinc-200 */
                         break-inside: avoid;
                     }
                     .main-content {
@@ -1641,70 +1645,65 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                 <div class="template-grid">
 
                     <div class="header-span">
-                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
+                            
+                            <div style="flex-grow: 1; padding-right: 1rem;">
+                                <h1 style="font-size: 2.5rem; font-weight: 800; color: ${accentColor}; letter-spacing: 0.025em; margin: 0 0 0.1rem 0;">
+                                    ${PI.full_name || "Your Name"}
+                                </h1>
+                                <p style="text-transform: uppercase; color: #525252; font-weight: 500; font-size: 1rem; letter-spacing: 0.1em; margin: 0 0 1rem 0;">
+                                    ${PI.profession || "Professional Title"}
+                                </p>
+
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 0.5rem; font-size: 0.875rem;">
+                                    ${PI.phone ? `
+                                        <div style="${ContactBarItemStyle}">
+                                            ${PhoneIcon(accentColor)}
+                                            <span style="color: #4b5563;">${PI.phone}</span>
+                                        </div>
+                                    ` : ''}
+                                    ${PI.email ? `
+                                        <div style="${ContactBarItemStyle}">
+                                            ${MailIcon(accentColor)}
+                                            <span style="color: #4b5563;">${PI.email}</span>
+                                        </div>
+                                    ` : ''}
+                                    ${PI.location ? `
+                                        <div style="${ContactBarItemStyle}">
+                                            ${MapPinIcon(accentColor)}
+                                            <span style="color: #4b5563;">${PI.location}</span>
+                                        </div>
+                                    ` : ''}
+                                    ${PI.linkedin ? `
+                                        <a target="_blank" href="${PI.linkedin}" style="${ContactBarItemStyle} color: inherit;">
+                                            ${LinkedinIcon(accentColor)}
+                                            <span style="word-break: break-all; color: #4b5563;">${PI.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
+                                        </a>
+                                    ` : ''}
+                                    ${PI.website ? `
+                                        <a target="_blank" href="${PI.website}" style="${ContactBarItemStyle} color: inherit;">
+                                            ${GlobeIcon(accentColor)}
+                                            <span style="word-break: break-all; color: #4b5563;">${PI.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
+                                        </a>
+                                    ` : ''}
+                                </div>
+                            </div>
                             
                             ${PI.image ? `
-                                <div style="flex-shrink: 0; margin: 0 auto;">
+                                <div style="flex-shrink: 0; margin-left: auto;">
                                     <img 
                                         src="${PI.image}" 
                                         alt="Profile" 
-                                        style="width: 112px; height: 112px; object-fit: cover; border-radius: 50%; border: 4px solid ${accentColor}70;" 
+                                        style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 3px solid ${accentColor};" 
                                     />
                                 </div>
                             ` : ''}
-
-                            <div style="text-align: center;">
-                                <h1 style="font-size: 2.25rem; font-weight: 800; color: #3f3f46; letter-spacing: 0.025em; margin: 0 0 0.25rem 0;">
-                                    ${PI.full_name || "Your Name"}
-                                </h1>
-                                <p style="text-transform: uppercase; color: #525252; font-weight: 500; font-size: 0.875rem; letter-spacing: 0.2em; margin: 0;">
-                                    ${PI.profession || ""}
-                                </p>
-                            </div>
                         </div>
                     </div>
 
                     <aside class="sidebar">
                         <div style="display: flex; flex-direction: column; gap: 2rem;">
                             
-                            <section>
-                                <h2 class="section-title" style="border-color: ${accentColor}; color: #525252;">
-                                    CONTACT
-                                </h2>
-                                <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem;">
-                                    ${PI.phone ? `
-                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                            ${PhoneIcon(accentColor)}
-                                            <span>${PI.phone}</span>
-                                        </div>
-                                    ` : ''}
-                                    ${PI.email ? `
-                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                            ${MailIcon(accentColor)}
-                                            <span>${PI.email}</span>
-                                        </div>
-                                    ` : ''}
-                                    ${PI.location ? `
-                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                            ${MapPinIcon(accentColor)}
-                                            <span>${PI.location}</span>
-                                        </div>
-                                    ` : ''}
-                                    ${PI.linkedin ? `
-                                        <a target="_blank" href="${PI.linkedin}" style="display: flex; align-items: center; gap: 0.5rem; color: inherit;">
-                                            ${LinkedinIcon(accentColor)}
-                                            <span style="word-break: break-all;">${PI.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
-                                        </a>
-                                    ` : ''}
-                                    ${PI.website ? `
-                                        <a target="_blank" href="${PI.website}" style="display: flex; align-items: center; gap: 0.5rem; color: inherit;">
-                                            ${GlobeIcon(accentColor)}
-                                            <span style="word-break: break-all;">${PI.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
-                                        </a>
-                                    ` : ''}
-                                </div>
-                            </section>
-
                             ${EDUCATION.length > 0 ? `
                                 <section>
                                     <h2 class="section-title" style="border-color: ${accentColor}; color: #525252;">
@@ -1742,7 +1741,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                             ${LANGUAGES.length > 0 ? `
                                 <section>
                                     <h2 class="section-title" style="border-color: ${accentColor}; color: #525252;">
-                                        LANGUAGES    
+                                        LANGUAGES     
                                     </h2>
                                     <div style="display: flex; flex-direction: column; gap: 0.25rem; padding-top: 0.25rem;">
                                         ${LANGUAGES.map((lang) => `
