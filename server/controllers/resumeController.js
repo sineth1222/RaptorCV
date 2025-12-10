@@ -1534,16 +1534,20 @@ function getMinimalImageTemplateHtml(data, accentColor) {
 
     // --- ICON SVGs (Styled with accentColor) ---
     // Icons in this template are colored with accentColor.
-    const IconStyle = (color) => `width: 16px; height: 16px; flex-shrink: 0; margin-top: -2px; stroke: ${color || '#525252'};`;
+    const IconStyle = (color) => `width: 14px; height: 14px; flex-shrink: 0; margin-top: 0px; stroke: ${color || '#525252'};`;
 
+    // Note: Icon sizes adjusted to 14px to match JSX `size={14}`
     const PhoneIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16a2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3" /></svg>`;
     const MailIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7" /></svg>`;
     const MapPinIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>`;
     const LinkedinIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 0-6 6v7h-4v-7a6 6 0 0 1 6-6h0a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2Z" /><path d="M4 14h4v7h-4z" /><circle cx="6" cy="6" r="2" /></svg>`;
     const GlobeIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>`;
     
-    // New style for contact bar item (moved to header)
-    const ContactBarItemStyle = `display: flex; align-items: center; gap: 0.25rem; margin-right: 1.5rem; font-size: 0.875rem; color: #525252;`;
+    // Inline style for sidebar contact item
+    const ContactItemStyle = `display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #3f3f46;`;
+
+    // Inline style for skills tag
+    const SkillTagStyle = `padding: 0.125rem 0.5rem; border: 1px solid #d4d4d8; border-radius: 6px; background-color: #ffffff;`;
 
 
     const PI = data.personal_info || {};
@@ -1554,6 +1558,9 @@ function getMinimalImageTemplateHtml(data, accentColor) {
     const LANGUAGES = data.languages || [];
     const REFERENCES = data.references || [];
 
+    // Image URL logic: check if it's a string (URL) or an object (File/Blob) which we cannot resolve in a static HTML string. Assuming it's a URL/DataURL for simplicity.
+    const profileImageSrc = PI.image && typeof PI.image === 'string' ? PI.image : null;
+
     const htmlContent = `
         <!DOCTYPE html>
         <html lang="en">
@@ -1562,80 +1569,108 @@ function getMinimalImageTemplateHtml(data, accentColor) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${PI.full_name || "Resume"}</title>
             <style>
-                /* Basic Reset and Font Setup for Print/PDF */
+                /* Global Styles (text-zinc-800, max-w-5xl, mx-auto, shadow-lg) */
                 body { 
-                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-                    margin: 0; padding: 0; 
-                    color: #3f3f46; /* text-zinc-800 */
-                    line-height: 1.5; 
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, sans-serif; 
+                    margin: 0; 
+                    padding: 0; 
+                    color: #27272a; /* text-zinc-800 */
+                    line-height: 1.4; 
                 }
                 a { color: inherit; text-decoration: none; word-break: break-all; }
-                .section-title { font-size: 0.875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; border-bottom: 1px solid; padding-bottom: 0.25rem; }
-                .list-disc-li { margin-left: 1rem; list-style-type: disc; }
-
-                /* Main Container (max-w-5xl mx-auto shadow-lg) */
+                
                 .resume-container { 
-                    max-width: 1024px; 
+                    max-width: 1024px; /* max-w-5xl (approx) */
                     margin: 0 auto; 
                     background-color: #ffffff; 
                     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); 
                 }
 
-                /* Grid Layout: Default (Mobile) is stacked (flex-direction: column) */
+                /* Section Title Style (text-sm font-semibold tracking-widest text-zinc-600 mb-3 border-b-2) */
+                .sidebar-section-title { 
+                    font-size: 0.875rem; 
+                    font-weight: 600; 
+                    letter-spacing: 0.1em; 
+                    text-transform: uppercase; 
+                    color: #525252; /* text-zinc-600 */
+                    margin: 0 0 0.75rem 0; 
+                    border-bottom: 2px solid; 
+                    padding-bottom: 0.25rem;
+                }
+
+                /* Main Content Section Title Style (text-sm font-semibold tracking-widest mb-3 border-b) */
+                .main-section-title { 
+                    font-size: 0.875rem; 
+                    font-weight: 600; 
+                    letter-spacing: 0.1em; 
+                    text-transform: uppercase; 
+                    margin: 0 0 1rem 0; /* mb-4 for experience/projects, mb-3 for summary */
+                    border-bottom: 1px solid; 
+                    padding-bottom: 0.25rem;
+                }
+
+                /* Grid Layout (Mobile First: stacked columns) */
                 .template-grid {
                     display: flex; 
                     flex-direction: column;
                 }
                 
-                /* Header spans all columns and must be first (order: -3) */
-                .header-span {
-                    order: -3; 
-                    padding: 1.5rem 1.5rem 1rem 1.5rem; /* p-6 sm:p-10 */
-                    border-bottom: 1px solid ${accentColor}70; /* Use accent color for a professional separation */
-                    background-color: #f7f7f7; /* Light background for header */
+                /* Header (md:col-span-3, p-6 sm:p-10) */
+                .header-area {
+                    padding: 1.5rem; /* p-6 */
+                    border-bottom: 1px solid #e4e4e7; /* border-zinc-200 */
+                    background-color: #ffffff;
                 }
                 
-                /* Left Sidebar (order-2 md:order-0) */
+                /* Left Sidebar (md:col-span-1, bg-zinc-50, p-6 sm:p-8, order-2 md:order-0) */
                 .sidebar {
-                    order: 2; /* Mobile: after main content */
+                    order: 2; 
                     background-color: #fafafa; /* bg-zinc-50 */
-                    padding: 1.5rem 1.5rem 1.5rem 1.5rem; /* p-6 sm:p-8 */
+                    padding: 1.5rem; /* p-6 */
                 }
 
-                /* Right Main Content (order-1 md:order-0) */
+                /* Right Main Content (md:col-span-2, p-6 sm:p-8, order-1 md:order-0) */
                 .main-content {
-                    order: 1; /* Mobile: right after header */
-                    padding: 1.5rem 1.5rem 1.5rem 1.5rem; /* p-6 sm:p-8 */
+                    order: 1; 
+                    padding: 1.5rem; /* p-6 */
                 }
 
-                /* Desktop/Print styles (md:grid-cols-3 and print:grid-cols-3 with 1/3 and 2/3 split) */
+                /* Desktop/Print styles (min-width: 768px, grid-cols-3 logic - 1/3 and 2/3 split) */
                 @media screen and (min-width: 768px), print {
-                    /* Desktop/Print padding */
-                    .header-span { padding: 2rem 2.5rem; }
-                    .sidebar, .main-content { padding: 2rem; }
+                    /* Header/Sidebar/Main Content padding for desktop/print (sm:p-8 / sm:p-10) */
+                    .header-area { padding: 2.5rem; } /* sm:p-10 */
+                    .sidebar, .main-content { padding: 2rem; } /* sm:p-8 */
 
-                    /* Grid Setup */
+                    /* Grid Setup (1/3 for sidebar, 2/3 for main) */
                     .template-grid {
                         display: grid;
-                        grid-template-columns: 1fr 2fr; /* 1/3 and 2/3 split */
+                        grid-template-columns: 1fr 2fr; /* Approx. 1/3 and 2/3 */
+                        width: 100%;
                     }
                     
-                    /* Desktop Grid Placement */
-                    .header-span {
+                    /* Grid Placement & Order */
+                    .header-area {
                         grid-column: 1 / -1; /* spans all columns */
-                        order: -1; /* Ensure it stays at the top */
+                        order: 0; 
                     }
                     .sidebar {
                         grid-column: 1 / 2;
                         order: 0;
-                        border-right: 1px solid #e4e4e7; /* border-zinc-200 */
-                        break-inside: avoid;
+                        border-right: 1px solid #a1a1aa; /* border-zinc-400 */
+                        break-inside: avoid; /* Print break hint */
                     }
                     .main-content {
                         grid-column: 2 / -1;
                         order: 0;
-                        break-inside: avoid-page; /* Help for print breaking */
+                        break-inside: avoid-page; /* Print break hint */
                     }
+                }
+
+                /* Print specific adjustments */
+                @media print {
+                    body { font-size: 10pt; line-height: 1.3; }
+                    .header-area { break-after: avoid; }
+                    h1 { font-size: 24pt !important; }
                 }
             </style>
         </head>
@@ -1644,72 +1679,81 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                 
                 <div class="template-grid">
 
-                    <div class="header-span">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
+                    <div class="header-area">
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; 
+                            /* sm:flex-row sm:items-center sm:text-left */
+                            @media screen and (min-width: 640px) { flex-direction: row; text-align: left; }">
                             
-                            <div style="flex-grow: 1; padding-right: 1rem;">
-                                <h1 style="font-size: 2.5rem; font-weight: 800; color: ${accentColor}; letter-spacing: 0.025em; margin: 0 0 0.1rem 0;">
-                                    ${PI.full_name || "Your Name"}
-                                </h1>
-                                <p style="text-transform: uppercase; color: #525252; font-weight: 500; font-size: 1rem; letter-spacing: 0.1em; margin: 0 0 1rem 0;">
-                                    ${PI.profession || "Professional Title"}
-                                </p>
-
-                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 0.5rem; font-size: 0.875rem;">
-                                    ${PI.phone ? `
-                                        <div style="${ContactBarItemStyle}">
-                                            ${PhoneIcon(accentColor)}
-                                            <span style="color: #4b5563;">${PI.phone}</span>
-                                        </div>
-                                    ` : ''}
-                                    ${PI.email ? `
-                                        <div style="${ContactBarItemStyle}">
-                                            ${MailIcon(accentColor)}
-                                            <span style="color: #4b5563;">${PI.email}</span>
-                                        </div>
-                                    ` : ''}
-                                    ${PI.location ? `
-                                        <div style="${ContactBarItemStyle}">
-                                            ${MapPinIcon(accentColor)}
-                                            <span style="color: #4b5563;">${PI.location}</span>
-                                        </div>
-                                    ` : ''}
-                                    ${PI.linkedin ? `
-                                        <a target="_blank" href="${PI.linkedin}" style="${ContactBarItemStyle} color: inherit;">
-                                            ${LinkedinIcon(accentColor)}
-                                            <span style="word-break: break-all; color: #4b5563;">${PI.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
-                                        </a>
-                                    ` : ''}
-                                    ${PI.website ? `
-                                        <a target="_blank" href="${PI.website}" style="${ContactBarItemStyle} color: inherit;">
-                                            ${GlobeIcon(accentColor)}
-                                            <span style="word-break: break-all; color: #4b5563;">${PI.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
-                                        </a>
-                                    ` : ''}
-                                </div>
-                            </div>
-                            
-                            ${PI.image ? `
-                                <div style="flex-shrink: 0; margin-left: auto;">
+                            ${profileImageSrc ? `
+                                <div style="flex-shrink: 0; margin: 0 auto; /* sm:mx-0 */">
                                     <img 
-                                        src="${PI.image}" 
+                                        src="${profileImageSrc}" 
                                         alt="Profile" 
-                                        style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 3px solid ${accentColor};" 
+                                        style="width: 112px; height: 112px; /* w-28 h-28 sm:w-32 sm:h-32 */ object-fit: cover; border-radius: 50%; 
+                                            border: 4px solid ${accentColor}70;" 
                                     />
                                 </div>
                             ` : ''}
+
+                            <div style="text-align: center; /* sm:text-left */
+                                @media screen and (min-width: 640px) { text-align: left; }">
+                                <h1 style="font-size: 2.25rem; /* text-3xl sm:text-4xl */ font-weight: 800; color: #3f3f46; /* text-zinc-700 */ letter-spacing: 0.05em; margin: 0 0 0.25rem 0;">
+                                    ${PI.full_name || "Your Name"}
+                                </h1>
+                                <p style="text-transform: uppercase; color: #525252; /* text-zinc-600 */ font-weight: 500; font-size: 0.875rem; /* text-sm sm:text-base */ letter-spacing: 0.15em; margin: 0;">
+                                    ${PI.profession || ""}
+                                </p>
+                            </div>
                         </div>
                     </div>
 
                     <aside class="sidebar">
-                        <div style="display: flex; flex-direction: column; gap: 2rem;">
+                        <div style="display: flex; flex-direction: column; gap: 2rem; /* space-y-8 */">
                             
+                            <section>
+                                <h2 class="sidebar-section-title" style="border-color: ${accentColor}; color: #525252;">
+                                    CONTACT
+                                </h2>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem;">
+                                    ${PI.phone ? `
+                                        <div style="${ContactItemStyle}">
+                                            ${PhoneIcon(accentColor)}
+                                            <span>${PI.phone}</span>
+                                        </div>
+                                    ` : ''}
+                                    ${PI.email ? `
+                                        <div style="${ContactItemStyle}">
+                                            ${MailIcon(accentColor)}
+                                            <span>${PI.email}</span>
+                                        </div>
+                                    ` : ''}
+                                    ${PI.location ? `
+                                        <div style="${ContactItemStyle}">
+                                            ${MapPinIcon(accentColor)}
+                                            <span>${PI.location}</span>
+                                        </div>
+                                    ` : ''}
+                                    ${PI.linkedin ? `
+                                        <a target="_blank" href="${PI.linkedin}" style="${ContactItemStyle} color: inherit;">
+                                            ${LinkedinIcon(accentColor)}
+                                            <span style="word-break: break-all;">${PI.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
+                                        </a>
+                                    ` : ''}
+                                    ${PI.website ? `
+                                        <a target="_blank" href="${PI.website}" style="${ContactItemStyle} color: inherit;">
+                                            ${GlobeIcon(accentColor)}
+                                            <span style="word-break: break-all;">${PI.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
+                                        </a>
+                                    ` : ''}
+                                </div>
+                            </section>
+
                             ${EDUCATION.length > 0 ? `
                                 <section>
-                                    <h2 class="section-title" style="border-color: ${accentColor}; color: #525252;">
+                                    <h2 class="sidebar-section-title" style="border-color: ${accentColor}; color: #525252;">
                                         EDUCATION
                                     </h2>
-                                    <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.875rem;">
+                                    <div style="display: flex; flex-direction: column; gap: 1rem; /* space-y-4 */ font-size: 0.875rem;">
                                         ${EDUCATION.map((edu) => `
                                             <div>
                                                 <p style="font-weight: 600; text-transform: uppercase; margin: 0;">${edu.degree}</p>
@@ -1725,12 +1769,12 @@ function getMinimalImageTemplateHtml(data, accentColor) {
 
                             ${SKILLS.length > 0 ? `
                                 <section>
-                                    <h2 class="section-title" style="border-color: ${accentColor}; color: #525252;">
+                                    <h2 class="sidebar-section-title" style="border-color: ${accentColor}; color: #525252;">
                                         SKILLS
                                     </h2>
                                     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.875rem;">
                                         ${SKILLS.map((skill) => `
-                                            <span style="padding: 0.125rem 0.5rem; border: 1px solid #d4d4d8; border-radius: 6px; background-color: #ffffff;">
+                                            <span style="${SkillTagStyle}">
                                                 ${skill}
                                             </span>
                                         `).join('')}
@@ -1740,8 +1784,8 @@ function getMinimalImageTemplateHtml(data, accentColor) {
 
                             ${LANGUAGES.length > 0 ? `
                                 <section>
-                                    <h2 class="section-title" style="border-color: ${accentColor}; color: #525252;">
-                                        LANGUAGES     
+                                    <h2 class="sidebar-section-title" style="border-color: ${accentColor}; color: #525252;">
+                                        LANGUAGES    
                                     </h2>
                                     <div style="display: flex; flex-direction: column; gap: 0.25rem; padding-top: 0.25rem;">
                                         ${LANGUAGES.map((lang) => `
@@ -1760,10 +1804,10 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                             
                             ${data.professional_summary ? `
                                 <section style="break-inside: avoid;">
-                                    <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                    <h2 class="main-section-title" style="color: ${accentColor}; border-color: ${accentColor}; margin-bottom: 0.75rem;"> /* mb-3 */
                                         SUMMARY
                                     </h2>
-                                    <p style="color: #4b5563; line-height: 1.6; font-size: 0.875rem; margin: 0;">
+                                    <p style="color: #3f3f46; /* text-zinc-700 */ line-height: 1.6; font-size: 0.875rem; margin: 0;">
                                         ${data.professional_summary}
                                     </p>
                                 </section>
@@ -1771,28 +1815,28 @@ function getMinimalImageTemplateHtml(data, accentColor) {
 
                             ${EXPERIENCE.length > 0 ? `
                                 <section style="break-inside: avoid;">
-                                    <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                    <h2 class="main-section-title" style="color: ${accentColor}; border-color: ${accentColor}; margin-bottom: 1rem;"> /* mb-4 */
                                         EXPERIENCE
                                     </h2>
-                                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                    <div style="display: flex; flex-direction: column; gap: 1.5rem; /* space-y-6 mb-8 */">
                                         ${EXPERIENCE.map((exp) => `
                                             <div style="break-inside: avoid;">
                                                 <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
-                                                    <h3 style="font-weight: 600; color: #18181b; line-height: 1.25; margin: 0;">
+                                                    <h3 style="font-weight: 600; color: #18181b; /* text-zinc-900 */ line-height: 1.25; margin: 0; font-size: 1rem;">
                                                         ${exp.position}
                                                     </h3>
-                                                    <span style="font-size: 0.75rem; color: #71717a; flex-shrink: 0; margin-top: 0.25rem;">
+                                                    <span style="font-size: 0.75rem; color: #71717a; /* text-zinc-500 */ flex-shrink: 0; margin-top: 0.25rem;">
                                                         ${formatDate(exp.start_date)} - ${exp.is_current ? "Present" : formatDate(exp.end_date)}
                                                     </span>
                                                 </div>
-                                                <p style="font-size: 0.875rem; color: ${accentColor}; margin: 0 0 0.5rem 0;">
+                                                <p style="font-size: 0.875rem; margin: 0.25rem 0 0.5rem 0; color: ${accentColor};" >
                                                     ${exp.company}
                                                 </p>
                                                 ${exp.description ? `
-                                                    <ul style="list-style: none; padding-left: 0; margin-top: 0; margin-bottom: 0;">
-                                                        ${exp.description.split("\n").map((line, i) => `
-                                                            <li class="list-disc-li" style="font-size: 0.875rem; color: #4b5563; line-height: 1.6; margin-bottom: 0.25rem;">${line}</li>
-                                                        `).join('')}
+                                                    <ul style="list-style-type: disc; margin: 0; padding-left: 1.5rem; font-size: 0.875rem; color: #3f3f46; /* text-zinc-700 */ line-height: 1.5; display: flex; flex-direction: column; gap: 0.25rem;">
+                                                        ${exp.description.split("\n").map((line) => line.trim() ? `
+                                                            <li style="margin-left: 0.5rem;">${line}</li>
+                                                        ` : '').join('')}
                                                     </ul>
                                                 ` : ''}
                                             </div>
@@ -1803,21 +1847,21 @@ function getMinimalImageTemplateHtml(data, accentColor) {
 
                             ${PROJECT.length > 0 ? `
                                 <section style="break-inside: avoid;">
-                                    <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                    <h2 class="main-section-title" style="color: ${accentColor}; border-color: ${accentColor}; margin-bottom: 1rem;"> /* mb-4 */
                                         PROJECTS
                                     </h2>
-                                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                    <div style="display: flex; flex-direction: column; gap: 1.5rem; /* space-y-6 */">
                                         ${PROJECT.map((project) => `
                                             <div style="break-inside: avoid;">
-                                                <h3 style="font-size: 1rem; font-weight: 600; color: #3f3f46; line-height: 1.25; margin: 0;">${project.name}</h3>
-                                                <p style="font-size: 0.875rem; color: ${accentColor}; margin: 0 0 0.25rem 0;">
+                                                <h3 style="font-size: 1rem; font-weight: 600; color: #27272a; /* text-zinc-800 */ line-height: 1.25; margin: 0;">${project.name}</h3>
+                                                <p style="font-size: 0.875rem; margin: 0.25rem 0 0.5rem 0; color: ${accentColor};" >
                                                     ${project.type}
                                                 </p>
                                                 ${project.description ? `
-                                                    <ul style="list-style: none; padding-left: 0; margin-top: 0; margin-bottom: 0;">
-                                                        ${project.description.split("\n").map((line, i) => `
-                                                            <li class="list-disc-li" style="font-size: 0.875rem; color: #4b5563; line-height: 1.6; margin-bottom: 0.25rem;">${line}</li>
-                                                        `).join('')}
+                                                    <ul style="list-style-type: disc; margin: 0; padding-left: 1.5rem; font-size: 0.875rem; color: #3f3f46; /* text-zinc-700 */ line-height: 1.5; display: flex; flex-direction: column; gap: 0.25rem;">
+                                                        ${project.description.split("\n").map((line) => line.trim() ? `
+                                                            <li style="margin-left: 0.5rem;">${line}</li>
+                                                        ` : '').join('')}
                                                     </ul>
                                                 ` : ''}
                                             </div>
@@ -1828,13 +1872,12 @@ function getMinimalImageTemplateHtml(data, accentColor) {
 
                             ${REFERENCES.length > 0 ? `
                                 <section style="break-inside: avoid;">
-                                    <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                    <h2 class="main-section-title" style="color: ${accentColor}; border-color: ${accentColor}; margin-bottom: 1rem;"> /* mb-4 */
                                         REFERENCES
                                     </h2>
-
-                                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; font-size: 0.875rem; color: #4b5563;">
+                                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem 0; font-size: 0.875rem; color: #4b5563; /* text-gray-700 */">
                                         ${REFERENCES.map((ref) => `
-                                            <div style="width: 100%; max-width: 48%; break-inside: avoid;">
+                                            <div style="width: 45%;"> /* Approx. w-full sm:w-1/2 md:w-5/12 */
                                                 <p style="font-weight: 700; margin: 0;">${ref.name}</p>
                                                 <p style="font-size: 0.875rem; margin: 0;">${ref.title}</p>
                                                 <p style="font-size: 0.875rem; margin: 0;">${ref.company}</p>
@@ -1852,5 +1895,5 @@ function getMinimalImageTemplateHtml(data, accentColor) {
         </html>
     `;
 
-    return htmlContent;
+    return htmlContent.trim();
 }
