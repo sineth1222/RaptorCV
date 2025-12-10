@@ -436,7 +436,7 @@ const getClassicTemplateHtml = (data, accentColor) => {
                 ${personalInfo.phone ? `
                     <div style="display: flex; align-items: center; gap: 4px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
-                            <path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3" />
+                            <path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16a2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3" />
                         </svg>
                         <span>${personalInfo.phone}</span>
                     </div>
@@ -454,7 +454,9 @@ const getClassicTemplateHtml = (data, accentColor) => {
                 ${personalInfo.linkedin ? `
                     <a target="_blank" href="${personalInfo.linkedin}" style="display: flex; align-items: center; gap: 4px; color: inherit; text-decoration: none; word-break: break-all;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
-                            <path d="M16 4.98a4.99 4.99 0 0 0-8 0v1.7h-3v14h6v-6.5a2.5 2.5 0 0 1 5 0V20h3V6.68a5 5 0 0 0-3-1.7Z" /><circle cx="8" cy="2.5" r="2.5" />
+                            <path d="M16 8a6 6 0 0 0-6 6v7h-4v-7a6 6 0 0 1 6-6h0a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2Z" />
+                            <path d="M4 14h4v7h-4z" />
+                            <circle cx="6" cy="6" r="2" />
                         </svg>
                         <span style="word-break: break-all;">${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
                     </a>
@@ -707,32 +709,39 @@ const getCalmSidebarTemplateHtml = (data, accentColor) => {
         </div>
     ` : '';
     
-    // Contact
     const contactHtml = `
         <section style="margin-bottom: 24px;">
             ${getSidebarHeaderHtml("Contact", accentColor)}
             <div style="line-height: 1.5; font-size: 0.875rem; font-weight: 500; color: #4b5563; display: flex; flex-direction: column; gap: 8px;">
                 ${personalInfo.email ? `
                     <div style="display: flex; align-items: flex-start; gap: 8px;">
-                        <span style="font-size: 16px; color: #6b7280; flex-shrink: 0; margin-top: 2px;">&#9993;</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+                            <rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7" />
+                        </svg>
                         <span style="word-break: break-all;">${personalInfo.email}</span>
                     </div>
                 ` : ''}
                 ${personalInfo.phone ? `
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 16px; color: #6b7280; flex-shrink: 0;">&#9742;</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+                            <path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3" />
+                        </svg>
                         <span>${personalInfo.phone}</span>
                     </div>
                 ` : ''}
                 ${personalInfo.location ? `
                     <div style="display: flex; align-items: flex-start; gap: 8px;">
-                        <span style="font-size: 16px; color: #6b7280; flex-shrink: 0; margin-top: 2px;">&#x1F4CD;</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+                        </svg>
                         <span>${personalInfo.location}</span>
                     </div>
                 ` : ''}
                 ${personalInfo.linkedin ? `
                     <div style="display: flex; align-items: flex-start; gap: 8px;">
-                        <span style="font-size: 16px; color: #6b7280; flex-shrink: 0; margin-top: 2px;">&#x1F517;</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.54-7.54l-3 3a5 5 0 0 0-.54 7.54Z"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.54 7.54l3-3a5 5 0 0 0 .54-7.54Z"/>
+                        </svg>
                         <a href="${personalInfo.linkedin}" target="_blank" style="color: #4b5563; text-decoration: none; word-break: break-all;">
                             ${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}
                         </a>
@@ -740,7 +749,9 @@ const getCalmSidebarTemplateHtml = (data, accentColor) => {
                 ` : ''}
                 ${personalInfo.website ? `
                     <div style="display: flex; align-items: flex-start; gap: 8px;">
-                        <span style="font-size: 16px; color: #6b7280; flex-shrink: 0; margin-top: 2px;">&#x1F310;</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+                            <circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" />
+                        </svg>
                         <a href="${personalInfo.website}" target="_blank" style="color: #4b5563; text-decoration: none; word-break: break-all;">
                             ${personalInfo.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}
                         </a>
