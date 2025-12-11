@@ -2667,28 +2667,28 @@ function getStrongTemplateHtml(data, accentColor) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${p.full_name || "Resume"} - Resume</title>
             <style>
-                body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: #f3f4f6; color: #1f2937; line-height: 1.6; }
+                body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: #f3f4f6; color: #1f2937; line-height: 1.2; }
                 .container { max-width: 1024px; margin: 1rem auto; background: white; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-top: 8px solid ${accentColor}; }
                 .inner { padding: 2rem; }
                 header { text-align: center; margin-bottom: 2rem; }
-                h1 { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 0.5rem; color: #111827; }
-                .profession { font-size: 1.25rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; margin: 0.75rem 0; color: ${accentColor}; }
-                .contact { font-size: 0.9375rem; color: #4b5563; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+                h1 { font-size: 1.875rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.025em; margin: 0 0 0.5rem; color: #111827; }
+                .profession { font-size: 1rem; font-weight: 700; text-transform: uppercase; margin: 0.75rem 0; color: ${accentColor}; }
+                .contact { font-size: 0.875rem; color: #4b5563; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
                 .summary-section { padding: 1.5rem 2rem; margin: 0 0 2rem; border-top: 2px solid ${accentColor}; border-bottom: 2px solid ${accentColor}; text-align: center; }
-                .summary-section p { font-size: 0.9375rem; color: #374151; margin: 0; }
+                .summary-section p { font-size: 0.875rem; color: #374151; margin: 0; }
                 .content-grid { display: grid; grid-template-columns: 1fr; gap: 1rem 2rem; margin-bottom: 2rem; }
-                .section-title { font-size: 1.25rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.25rem 0 0.25rem 1rem; border-left: 4px solid ${accentColor}; color: ${accentColor}; margin: 0 0 1rem; }
+                .section-title { font-size: 1.125rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.25rem 0 0.25rem 1rem; border-left: 4px solid ${accentColor}; color: ${accentColor}; margin: 0 0 1rem; }
                 .section-content { padding-top: 0.25rem; }
                 .entry { margin-bottom: 1.5rem; }
                 .entry-header { display: flex; flex-direction: column; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
-                .entry-title { font-weight: 700; font-size: 1.1rem; color: #111827; }
-                .entry-subtitle { font-style: italic; color: #525252; font-size: 0.9375rem; }
-                .entry-date { font-size: 0.9375rem; color: #6b7280; font-weight: 500; }
+                .entry-title { font-weight: 700; font-size: 1.125rem; color: #111827; }
+                .entry-subtitle { font-style: italic; color: #525252; font-size: 0.875rem; }
+                .entry-date { font-size: 0.875rem; color: #6b7280; font-weight: 500; }
                 ul { margin: 0.75rem 0; padding-left: 1.5rem; }
                 li { margin-bottom: 0.4rem; color: #374151; }
                 .skills-list { display: grid; grid-template-columns: 1fr; gap: 0.5rem; list-style: disc inside; }
                 .languages { display: flex; flex-wrap: wrap; gap: 1.5rem; }
-                .lang-item { font-size: 0.9375rem; min-width: 45%; }
+                .lang-item { font-size: 0.875rem; min-width: 45%; }
                 .references { display: flex; flex-direction: column; gap: 1.5rem; }
 
                 @media (min-width: 768px) {
@@ -2728,7 +2728,7 @@ function getStrongTemplateHtml(data, accentColor) {
                     ` : ''}
 
                     <!-- MAIN CONTENT -->
-                    <div style="margin-top:2rem;">
+                    <div style="margin-top:1.5rem;">
 
                         <!-- EDUCATION -->
                         ${education.length > 0 ? `
