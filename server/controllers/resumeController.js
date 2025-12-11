@@ -2783,7 +2783,7 @@ function getStrongTemplateHtml(data, accentColor) {
                                 <div class="section-content">
                                     ${project.map(p => `
                                         <div class="entry">
-                                            <div class="entry-title">${p.name} <span style="font-weight:500; color:#6b7280;">(${p.type})</span></div>
+                                            <div class="entry-title">${p.name} <span style="font-weight:500; color:#6b7280; font-size: 0.875rem">(${p.type})</span></div>
                                             ${p.description ? `
                                                 <ul>
                                                     ${p.description.split('\n').map(line => line.trim() ? `<li>${line}</li>` : '').join('')}
