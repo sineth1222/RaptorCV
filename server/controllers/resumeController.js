@@ -3921,21 +3921,21 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                     padding-bottom: 0.5rem;
                 }
                 .name {
-                    font-size: 2.6rem;
+                    font-size: 2.25rem;
                     font-weight: 900;
                     text-transform: uppercase;
                     letter-spacing: 0.12em;
                     color: ${accentColor};
-                    margin: 0 0 0.3rem;
+                    margin: 0 0 0.25rem;
                 }
                 .profession {
                     font-size: 1.25rem;
                     font-weight: 600;
                     color: #444;
-                    margin-bottom: 0.8rem;
+                    margin-bottom: 0.75rem;
                 }
                 .contact-bar {
-                    font-size: 0.92rem;
+                    font-size: 0.875rem;
                     color: #444;
                     display: flex;
                     flex-wrap: wrap;
@@ -3950,7 +3950,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                     margin: 1.2rem 0;
                 }
                 .section-header {
-                    font-size: 1.1rem;
+                    font-size: 1.125rem;
                     font-weight: 800;
                     text-transform: uppercase;
                     letter-spacing: 0.12em;
@@ -3960,7 +3960,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                     margin: 1rem 0 1rem;
                 }
                 .summary {
-                    font-size: 0.98rem;
+                    font-size: 0.875rem;
                     color: #444;
                     line-height: 1.6;
                     margin-bottom: 1.2rem;
@@ -3976,17 +3976,17 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                 }
                 .entry-title {
                     font-weight: 700;
-                    font-size: 1.02rem;
+                    font-size: 0.875rem;
                     color: #111;
                 }
                 .entry-meta {
-                    font-size: 0.9rem;
+                    font-size: 0.875rem;
                     color: #666;
                 }
                 .entry-subtitle {
                     font-style: italic;
                     color: #555;
-                    font-size: 0.95rem;
+                    font-size: 0.875rem;
                     margin-bottom: 0.5rem;
                 }
                 ul.bullets {
@@ -3995,7 +3995,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                 }
                 ul.bullets li {
                     margin-bottom: 0.35rem;
-                    font-size: 0.94rem;
+                    font-size: 0.875rem;
                     color: #333;
                 }
                 .skill-pill {
@@ -4004,7 +4004,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                     color: white;
                     padding: 0.4rem 0.75rem;
                     border-radius: 6px;
-                    font-size: 0.8rem;
+                    font-size: 0.75rem;
                     font-weight: 600;
                     margin: 0.25rem 0.5rem 0.25rem 0;
                 }
