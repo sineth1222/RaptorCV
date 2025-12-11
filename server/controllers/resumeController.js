@@ -1596,7 +1596,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                 }
                 
                 /* Grid and Responsive Adjustments */
-                .main-grid { display: grid; grid-template-columns: 1fr; }
+                .main-grid { display: grid; grid-template-columns: 3fr; }
                 .header-section { padding: 1.5rem 2.5rem; border-bottom: 1px solid #e4e4e7; }
                 .sidebar-section { padding: 1.5rem 2.5rem; background-color: #fafafa; order: 2; }
                 .content-section { padding: 1.5rem 2.5rem; order: 1; }
@@ -1611,7 +1611,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                 /* Print Specific Styles */
                 @media print {
                     .resume-container { box-shadow: none; max-width: 100%; }
-                    .main-grid { grid-template-columns: 1fr 2fr; } /* print:grid-cols-3 (1/3 and 2/3 columns) */
+                    .main-grid { grid-template-columns: 3fr; } /* print:grid-cols-3 (1/3 and 2/3 columns) */
                     .header-section { grid-column: span 3 / span 3; padding: 2rem; } /* print:col-span-3 */
                     .sidebar-section { order: 0; border-right: 1px solid #a1a1aa; grid-column: span 1 / span 1; padding: 2rem; } /* print:col-span-1, print:border-r */
                     .content-section { order: 0; grid-column: span 2 / span 2; padding: 2rem; } /* print:col-span-2 */
@@ -1624,7 +1624,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                 <div class="main-grid">
 
                     <div class="header-section" style="grid-column: 1 / -1; background-color: #ffffff; border-bottom: 1px solid #e4e4e7;">
-                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+                        <div style="display: flex; flex-direction: row; align-items: center; gap: 1.5rem;">
                             
                             ${imageUrl ? `
                                 <div style="flex-shrink: 0; margin: 0 auto;">
@@ -1636,7 +1636,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                                 </div>
                             ` : ''}
 
-                            <div style="text-align: center;">
+                            <div style="text-align: left;">
                                 <h1 style="font-size: 2.25rem; font-weight: 800; color: #3f3f46; letter-spacing: 0.05em; margin: 0 0 0.25rem 0;">
                                     ${personalInfo.full_name || "Your Name"}
                                 </h1>
@@ -1647,7 +1647,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                         </div>
                     </div>
 
-                    <aside class="sidebar-section" style="background-color: #fafafa; border-right: 1px solid #a1a1aa; order: 2;">
+                    <aside class="sidebar-section" style="background-color: #fafafa; border-right: 1px solid #a1a1aa; order: 0;">
                         <div style="display: flex; flex-direction: column; gap: 2rem;">
                             
                             <section>
@@ -1698,10 +1698,12 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                                     <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
                                         Skills
                                     </h2>
-                                    <div style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.875rem; color: #4b5563;">
-                                        ${skills.map((skill) => `
-                                            <p style="margin: 0;">• ${skill}</p>
-                                        `).join('')}
+                                    <div style="display: flex; flex-direction: column; flex-wrap: wrap; gap: 0.25rem; font-size: 0.875rem; color: #4b5563;">
+                                        ${skills.map((skill, index) => 
+                                            <span key={index} style="padding-inline: 0.5rem; padding-block: 0.125rem; border: 1px solid #d1d5db; border-radius: 0.375rem; background-color: #ffffff;">
+                                                {skill}
+                                            </span>
+                                        )}
                                     </div>
                                 </section>
                             ` : ''}
@@ -1747,7 +1749,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                         </div>
                     </aside>
 
-                    <main class="content-section" style="order: 1;">
+                    <main class="content-section" style="order: 0;">
                         <div style="display: flex; flex-direction: column; gap: 2.5rem;">
 
                             ${data.professional_summary ? `
