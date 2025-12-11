@@ -3573,28 +3573,34 @@ function getOfficialTemplateHtml(data, accentColor) {
 
 
 /**
- * Modern Image Resume Template → Pure HTML + Inline CSS
- * Clean sidebar with accent-colored photo border & headers
- * White skill pills with colored border, professional & ATS-friendly
- * @param {object} data - Your resume data object
- * @param {string} accentColor - Hex color (e.g. "#1e40af", "#dc2626")
- * @returns {string} Complete standalone HTML string
+ * Modern Image Resume Template – Optimized for Print & PDF (Perfect CV Font Sizes)
+ * @param {object} data - Your resume data
+ * @param {string} accentColor - e.g. "#1e40af", "#dc2626"
+ * @returns {string} Standalone HTML string
  */
-function getMordernImageTemplateHtml(data, accentColor) {
+function getMordernImageTemplateHtml(data, accentColor = "#1e40af") {
 
     const formatDate = (dateStr, justYear = false) => {
-        if (!dateStr || dateStr.toLowerCase() === 'present' || dateStr.toLowerCase() === 'current') return 'Present';
-
+        if (!dateStr || ['present', 'current'].includes(dateStr.toLowerCase())) return 'Present';
         const [year, month] = dateStr.split("-");
         if (justYear && year) return year;
-
         if (year && month) {
             const date = new Date(year, parseInt(month, 10) - 1);
-            const monthName = date.toLocaleString('en-us', { month: 'short' });
-            return `${monthName} ${year}`;
+            return date.toLocaleString('en-us', { month: 'short', year: 'numeric' });
         }
         return dateStr;
     };
+
+    // === ICON SVGs (colored with accentColor) ===
+    const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>`;
+
+    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
+
+    const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+
+    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="${accentColor}" stroke="white" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
+
+    const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
 
     const p = data.personal_info || {};
     const experience = data.experience || [];
@@ -3606,7 +3612,7 @@ function getMordernImageTemplateHtml(data, accentColor) {
     const references = data.references || [];
     const achievements = data.achievements || [];
 
-    const htmlContent = `
+    const htmlContent =  `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -3618,10 +3624,10 @@ function getMordernImageTemplateHtml(data, accentColor) {
                     margin: 0;
                     padding: 0;
                     font-family: 'Segoe UI', Calibri, Arial, sans-serif;
-                    background: #f8f8f8;
-                    color: #333;
-                    font-size: 10.5pt;
-                    line-height: 1.5;
+                    background: #fafafa;
+                    color: #222;
+                    font-size: 10pt;           /* Perfect base size for CVs */
+                    line-height: 1.48;
                 }
                 .container {
                     max-width: 1100px;
@@ -3629,158 +3635,156 @@ function getMordernImageTemplateHtml(data, accentColor) {
                     background: white;
                     display: flex;
                     flex-direction: column;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+                    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
                     overflow: hidden;
                 }
                 .sidebar {
-                    background: #f5f5f5;
-                    padding: 2rem;
-                    width: 100%;
+                    background: #f7f7f7;
+                    padding: 1.8rem 1.6rem;
                 }
                 .main {
+                    padding: 1.8rem 2.2rem;
                     flex: 1;
-                    padding: 2rem 2.5rem;
                 }
                 .profile-img {
-                    width: 128px;
-                    height: 128px;
+                    width: 112px;
+                    height: 112px;
                     border-radius: 50%;
                     object-fit: cover;
-                    border: 5px solid ${accentColor};
-                    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+                    border: 4.5px solid ${accentColor};
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.18);
                     display: block;
-                    margin: 0 auto 1.8rem;
+                    margin: 0 auto 1.4rem;
                 }
                 .sidebar-header {
-                    font-size: 0.8rem;
+                    font-size: 0.78rem;
                     font-weight: 800;
                     text-transform: uppercase;
-                    letter-spacing: 0.12em;
+                    letter-spacing: 0.11em;
                     color: ${accentColor};
-                    padding: 1rem 0 0.4rem;
-                    border-bottom: 1px solid ${accentColor};
-                    margin-bottom: 0.9rem;
+                    padding-bottom: 0.35rem;
+                    border-bottom: 1.5px solid ${accentColor};
+                    margin: 1.3rem 0 0.75rem;
                 }
                 .main-header {
-                    font-size: 1.15rem;
+                    font-size: 1.02rem;
                     font-weight: 800;
                     text-transform: uppercase;
-                    letter-spacing: 0.14em;
-                    color: #333;
-                    padding: 1.2rem 0 0.5rem;
-                    border-bottom: 1px solid #ccc;
-                    margin-bottom: 1rem;
+                    letter-spacing: 0.13em;
+                    color: #222;
+                    padding-bottom: 0.4rem;
+                    border-bottom: 1px solid #ddd;
+                    margin: 1.6rem 0 0.9rem;
                 }
                 .name {
-                    font-size: 2.3rem;
+                    font-size: 2.1rem;
                     font-weight: 900;
                     text-transform: uppercase;
-                    letter-spacing: 0.08em;
+                    letter-spacing: 0.06em;
                     color: ${accentColor};
-                    margin: 0 0 0.4rem;
+                    margin: 0 0 0.25rem;
+                    line-height: 1.1;
                 }
                 .profession {
-                    font-size: 1.3rem;
+                    font-size: 1.15rem;
                     font-weight: 600;
                     color: #444;
-                    margin-bottom: 1rem;
+                    margin-bottom: 0.9rem;
                 }
                 .summary {
-                    font-size: 0.95rem;
-                    color: #555;
-                    border-top: 1px solid #eee;
-                    padding-top: 1rem;
-                    margin-top: 1rem;
-                }
-                .contact-item {
-                    display: flex;
-                    align-items: flex-start;
-                    gap: 0.7rem;
-                    margin-bottom: 0.7rem;
                     font-size: 0.92rem;
                     color: #444;
+                    line-height: 1.55;
+                    border-top: 1px solid #eee;
+                    padding-top: 0.9rem;
+                    margin-top: 0.8rem;
+                }
+                .contact-item {
+                    font-size: 0.89rem;
+                    color: #333;
+                    margin-bottom: 0.55rem;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 0.6rem;
                 }
                 .contact-item a {
                     color: #333;
                     text-decoration: none;
                     font-weight: 600;
                 }
-                .contact-item a:hover { text-decoration: underline; }
                 .skill-pill {
                     display: inline-block;
                     background: white;
-                    color: #333;
-                    border: 1px solid ${accentColor};
-                    padding: 0.4rem 0.8rem;
-                    border-radius: 999px;
-                    font-size: 0.78rem;
+                    color: #222;
+                    border: 1.3px solid ${accentColor};
+                    padding: 0.32rem 0.68rem;
+                    border-radius: 50px;
+                    font-size: 0.73rem;
                     font-weight: 600;
-                    margin: 0.25rem 0.4rem 0.25rem 0;
+                    margin: 0.22rem 0.35rem 0.22rem 0;
                 }
                 .lang-bar {
-                    height: 6px;
-                    background: #ddd;
+                    height: 5px;
+                    background: #e0e0e0;
                     border-radius: 3px;
-                    margin-top: 0.4rem;
+                    margin-top: 0.35rem;
                     overflow: hidden;
                 }
                 .lang-fill {
                     height: 100%;
                     background: ${accentColor};
-                    border-radius: 3px;
                 }
                 .entry {
-                    margin-bottom: 1.4rem;
+                    margin-bottom: 1.1rem;
                 }
                 .entry-header {
                     display: flex;
                     flex-direction: column;
-                    gap: 0.2rem;
-                    margin-bottom: 0.3rem;
+                    gap: 0.15rem;
+                    margin-bottom: 0.25rem;
                 }
                 .entry-title {
                     font-weight: 700;
-                    font-size: 1.02rem;
-                    color: #222;
+                    font-size: 0.98rem;
+                    color: #111;
                 }
                 .entry-meta {
-                    font-size: 0.88rem;
+                    font-size: 0.84rem;
                     color: #666;
                 }
                 .entry-subtitle {
                     font-style: italic;
                     color: #555;
-                    font-size: 0.95rem;
-                    margin-bottom: 0.5rem;
+                    font-size: 0.90rem;
+                    margin-bottom: 0.4rem;
                 }
                 ul.bullets {
-                    margin: 0.6rem 0;
-                    padding-left: 1.3rem;
+                    margin: 0.45rem 0;
+                    padding-left: 1.25rem;
                 }
                 ul.bullets li {
-                    margin-bottom: 0.35rem;
-                    font-size: 0.93rem;
-                    color: #444;
+                    margin-bottom: 0.28rem;
+                    font-size: 0.89rem;
+                    color: #333;
                 }
                 .accent-text { color: ${accentColor}; font-weight: 600; }
 
+                /* Desktop layout */
                 @media (min-width: 768px) {
                     .container { flex-direction: row; }
-                    .sidebar { width: 35%; }
-                    .main { width: 65%; }
-                    .profile-img { margin: 0 auto 1.8rem; }
-                    .entry-header {
-                        flex-direction: row;
-                        justify-content: space-between;
-                        align-items: baseline;
-                    }
+                    .sidebar { width: 34%; padding: 2rem 1.8rem; }
+                    .main { width: 66%; }
+                    .entry-header { flex-direction: row; justify-content: space-between; align-items: baseline; }
                 }
+
+                /* Print perfection */
                 @media print {
-                    body { background: white; font-size: 10pt; }
+                    body { background: white; font-size: 9.5pt; }
                     .container { box-shadow: none; max-width: none; margin: 0; display: flex; flex-direction: row !important; }
-                    .profile-img { border-color: ${accentColor} !important; -webkit-print-color-adjust: exact; }
+                    .profile-img { border: 4.5px solid ${accentColor} !important; -webkit-print-color-adjust: exact; }
+                    .skill-pill { border: 1.3px solid ${accentColor} !important; background: white !important; }
                     a { color: inherit !important; text-decoration: none; }
-                    .skill-pill { border: 1px solid ${accentColor} !important; background: white !important; }
+                    .no-print { display: none; }
                 }
             </style>
         </head>
@@ -3789,73 +3793,33 @@ function getMordernImageTemplateHtml(data, accentColor) {
 
                 <!-- SIDEBAR -->
                 <aside class="sidebar">
-
                     ${p.image ? `<img src="${p.image}" alt="Profile" class="profile-img">` : ''}
 
                     <!-- Contact -->
                     ${(p.email || p.phone || p.location || p.linkedin || p.website) ? `
                     <div class="sidebar-header">Contact</div>
                     <div>
-                        ${p.email ? `<div class="contact-item">Email: ${p.email}</div>` : ''}
-                        ${p.phone ? `<div class="contact-item">Phone: ${p.phone}</div>` : ''}
-                        ${p.location ? `<div class="contact-item">Location: ${p.location}</div>` : ''}
-                        ${p.linkedin ? `<div class="contact-item">LinkedIn: <a href="${p.linkedin}" target="_blank">${p.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</a></div>` : ''}
-                        ${p.website ? `<div class="contact-item">Website: <a href="${p.website}" target="_blank">${p.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</a></div>` : ''}
-                    </div>
-                    ` : ''}
+                        ${p.email ? `<div class="contact-item">${MailIcon} ${p.email}</div>` : ''}
+                        ${p.phone ? `<div class="contact-item">${PhoneIcon} ${p.phone}</div>` : ''}
+                        ${p.location ? `<div class="contact-item">${MapPinIcon} ${p.location}</div>` : ''}
+                        ${p.linkedin ? `<div class="contact-item">${LinkedinIcon} <a href="${p.linkedin}">LinkedIn</a></div>` : ''}
+                        ${p.website ? `<div class="contact-item">${GlobeIcon} <a href="${p.website}">Portfolio</a></div>` : ''}
+                    </div>` : ''}
 
                     <!-- Skills -->
-                    ${skills.length > 0 ? `
-                    <div class="sidebar-header">Relevant Skills</div>
-                    <div>
-                        ${skills.map(s => `<span class="skill-pill">${s}</span>`).join('')}
-                    </div>
-                    ` : ''}
+                    ${skills.length > 0 ? `<div class="sidebar-header">Relevant Skills</div><div>${skills.map(s => `<span class="skill-pill">${s}</span>`).join('')}</div>` : ''}
 
                     <!-- Languages -->
-                    ${languages.length > 0 ? `
-                    <div class="sidebar-header">Languages</div>
-                    <div style="margin-top:0.5rem;">
-                        ${languages.map(l => {
-                            const levelNum = parseInt(l.level);
-                            const width = isNaN(levelNum) ? 0 : (levelNum / 5) * 100;
-                            return `
-                                <div style="margin-bottom:0.9rem;">
-                                    <div><strong>${l.language}</strong> - ${l.level}</div>
-                                    ${!isNaN(levelNum) ? `<div class="lang-bar"><div class="lang-fill" style="width:${width}%;"></div></div>` : ''}
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-                    ` : ''}
+                    ${languages.length > 0 ? `<div class="sidebar-header">Languages</div><div style="margin-top:0.4rem;">${languages.map(l => {
+                        const w = isNaN(parseInt(l.level)) ? 0 : (parseInt(l.level)/5)*100;
+                        return `<div style="margin-bottom:0.75rem;"><strong>${l.language}</strong> — ${l.level}${!isNaN(parseInt(l.level)) ? `<div class="lang-bar"><div class="lang-fill" style="width:${w}%"></div></div>` : ''}</div>`;
+                    }).join('')}</div>` : ''}
 
                     <!-- Certificates -->
-                    ${certificates.length > 0 ? `
-                    <div class="sidebar-header">Certificates</div>
-                    <div style="font-size:0.9rem;">
-                        ${certificates.map(c => `
-                            <div style="margin-bottom:0.8rem;">
-                                <div class="accent-text">${c.name}</div>
-                                <div style="font-size:0.85rem; color:#666;">${c.institution} - ${c.year}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    ` : ''}
+                    ${certificates.length > 0 ? `<div class="sidebar-header">Certificates</div><div style="font-size:0.88rem;">${certificates.map(c => `<div style="margin-bottom:0.7rem;"><div class="accent-text">${c.name}</div><div style="color:#666;font-size:0.82rem;">${c.institution} — ${c.year}</div></div>`).join('')}</div>` : ''}
 
                     <!-- References -->
-                    ${references.length > 0 ? `
-                    <div class="sidebar-header">References</div>
-                    <div style="font-size:0.88rem;">
-                        ${references.map(r => `
-                            <div style="margin-bottom:1rem;">
-                                <div class="accent-text">${r.name}</div>
-                                <div>${r.title}</div>
-                                <div>${r.company}</div>
-                                <div style="font-style:italic; font-size:0.9rem;">${r.contact}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    ` : ''}
+                    ${references.length > 0 ? `<div class="sidebar-header">References</div><div style="font-size:0.86rem;">${references.map(r => `<div style="margin-bottom:0.9rem;"><div class="accent-text">${r.name}</div><div>${r.title}</div><div>${r.company}</div><div style="font-style:italic;color:#555;">${r.contact}</div></div>`).join('')}</div>` : ''}
                 </aside>
 
                 <!-- MAIN CONTENT -->
@@ -3867,75 +3831,16 @@ function getMordernImageTemplateHtml(data, accentColor) {
                     </header>
 
                     <!-- Education -->
-                    ${education.length > 0 ? `
-                    <section style="margin-top:2rem;">
-                        <div class="main-header">Educational Background</div>
-                        ${education.map(edu => `
-                            <div class="entry">
-                                <div class="entry-header">
-                                    <div class="entry-title" style="color:${accentColor};">${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</div>
-                                    <div class="entry-meta">${edu.start_date ? formatDate(edu.start_date, true) : ''} - ${formatDate(edu.graduation_date, true)}</div>
-                                </div>
-                                <div class="entry-subtitle">${edu.institution}</div>
-                                ${edu.gpa ? `<div style="color:#666; font-size:0.9rem;">Grade: ${edu.gpa}</div>` : ''}
-                            </div>
-                        `).join('')}
-                    </section>
-                    ` : ''}
+                    ${education.length > 0 ? `<section><div class="main-header">Educational Background</div>${education.map(edu => `<div class="entry"><div class="entry-header"><div class="entry-title" style="color:${accentColor};">${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</div><div class="entry-meta">${edu.start_date ? formatDate(edu.start_date, true) + ' – ' : ''}${formatDate(edu.graduation_date, true)}</div></div><div class="entry-subtitle">${edu.institution}</div>${edu.gpa ? `<div style="color:#666;font-size:0.88rem;">Grade: ${edu.gpa}</div>` : ''}</div>`).join('')}</section>` : ''}
 
                     <!-- Work Experience -->
-                    ${experience.length > 0 ? `
-                    <section style="margin-top:2rem;">
-                        <div class="main-header">Work Experience</div>
-                        ${experience.map(exp => `
-                            <div class="entry">
-                                <div class="entry-header">
-                                    <div class="entry-title">${exp.position}</div>
-                                    <div class="entry-meta">${formatDate(exp.start_date)} – ${exp.is_current ? 'Present' : formatDate(exp.end_date)}</div>
-                                </div>
-                                <div class="entry-subtitle">${exp.company}</div>
-                                ${exp.description ? `
-                                <ul class="bullets">
-                                    ${exp.description.split('\n').filter(l => l.trim()).map(l => `<li>${l.trim()}</li>`).join('')}
-                                </ul>
-                                ` : ''}
-                            </div>
-                        `).join('')}
-                    </section>
-                    ` : ''}
+                    ${experience.length > 0 ? `<section><div class="main-header">Work Experience</div>${experience.map(exp => `<div class="entry"><div class="entry-header"><div class="entry-title">${exp.position}</div><div class="entry-meta">${formatDate(exp.start_date)} – ${exp.is_current ? 'Present' : formatDate(exp.end_date)}</div></div><div class="entry-subtitle">${exp.company}</div>${exp.description ? `<ul class="bullets">${exp.description.split('\n').filter(l=>l.trim()).map(l=>`<li>${l.trim()}</li>`).join('')}</ul>` : ''}</div>`).join('')}</section>` : ''}
 
                     <!-- Projects -->
-                    ${projects.length > 0 ? `
-                    <section style="margin-top:2rem;">
-                        <div class="main-header">Projects Experience</div>
-                        ${projects.map(p => `
-                            <div class="entry">
-                                <div class="entry-header">
-                                    <div class="entry-title">${p.name}</div>
-                                    <div class="entry-meta">(${p.type})</div>
-                                </div>
-                                ${p.description ? `
-                                <ul class="bullets">
-                                    ${p.description.split('\n').filter(l => l.trim()).map(l => `<li>${l.trim()}</li>`).join('')}
-                                </ul>
-                                ` : ''}
-                            </div>
-                        `).join('')}
-                    </section>
-                    ` : ''}
+                    ${projects.length > 0 ? `<section><div class="main-header">Projects Experience</div>${projects.map(p => `<div class="entry"><div class="entry-header"><div class="entry-title">${p.name}</div><div class="entry-meta">(${p.type})</div></div>${p.description ? `<ul class="bullets">${p.description.split('\n').filter(l=>l.trim()).map(l=>`<li>${l.trim()}</li>`).join('')}</ul>` : ''}</div>`).join('')}</section>` : ''}
 
                     <!-- Achievements -->
-                    ${achievements.length > 0 ? `
-                    <section style="margin-top:2rem;">
-                        <div class="main-header">Achievements</div>
-                        ${achievements.map(a => `
-                            <div class="entry-header" style="margin-bottom:0.6rem;">
-                                <div style="font-weight:600;">${a.title} - ${a.company || ''}</div>
-                                <div class="entry-meta">${a.year}</div>
-                            </div>
-                        `).join('')}
-                    </section>
-                    ` : ''}
+                    ${achievements.length > 0 ? `<section><div class="main-header">Achievements</div>${achievements.map(a => `<div class="entry-header" style="margin-bottom:0.5rem;"><div style="font-weight:600;">${a.title} ${a.company ? '– ' + a.company : ''}</div><div class="entry-meta">${a.year}</div></div>`).join('')}</section>` : ''}
                 </main>
             </div>
         </body>
