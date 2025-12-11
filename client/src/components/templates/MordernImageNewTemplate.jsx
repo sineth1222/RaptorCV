@@ -54,10 +54,10 @@ const ImageAccurateTemplate = ({ data, accentColor }) => {
             {/* Header Block: Name and Profession */}
             <header className="mb-4 pb-2 text-center">
                 <h1 className="text-4xl font-extrabold uppercase tracking-widest mb-1" style={{ color: accentColor }}>
-                    {data.personal_info?.full_name || "SINETH MASHENKA"}
+                    {data.personal_info?.full_name || ""}
                 </h1>
                 <h2 className="text-xl font-semibold mb-3 text-gray-700">
-                    {data.personal_info?.profession || "UNDERGRADUATE"}
+                    {data.personal_info?.profession || ""}
                 </h2>
                 
                 {/* Contact Info (Inline/Top Bar Style as seen in the image) */}

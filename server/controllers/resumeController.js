@@ -3889,22 +3889,32 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
     const languages = data.languages || [];
     const references = data.references || [];
 
-    // Build contact line with pipes
+    const contactIconItem = (iconSvg, text, href = null) => {
+    const content = href 
+        ? `<a href="${href}" target="_blank" style="color:#333; text-decoration:none; display:flex; align-items:center; gap:6px;">${iconSvg}<span>${text}</span></a>`
+        : `<div style="display:flex; align-items:center; gap:6px;">${iconSvg}<span>${text}</span></div>`;
+    return `<span style="white-space:nowrap;">${content}</span>`;
+};
+
+    // Then build contact line like this:
     const contactParts = [];
-    if (p.email) contactParts.push(`${MailIcon} ${p.email}`);
-    if (p.phone) contactParts.push(`${PhoneIcon} ${p.phone}`);
-    if (p.location) contactParts.push(`${MapPinIcon} ${p.location}`);
+    if (p.email) contactParts.push(contactIconItem(MailIcon, p.email));
+    if (p.phone) contactParts.push(contactIconItem(PhoneIcon, p.phone));
+    if (p.location) contactParts.push(contactIconItem(MapPinIcon, p.location));
     if (p.linkedin) {
-        const clean = p.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '');
-        contactParts.push(`${LinkedinIcon} <a href="${p.linkedin}" target="_blank" style="color:#333;text-decoration:none;">LinkedIn</a>`);
+        const clean = p.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn';
+        contactParts.push(contactIconItem(LinkedinIcon, clean, p.linkedin));
     }
     if (p.website) {
-        const clean = p.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '');
-        contactParts.push(`${GlobeIcon} <a href="${p.website}" target="_blank" style="color:#333;text-decoration:none;">Portfolio</a>`);
+        const clean = p.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio';
+        contactParts.push(contactIconItem(GlobeIcon, clean, p.website));
     }
-    const contactLine = contactParts.map((item, i) => 
-        `<span style="white-space:nowrap;">${item}${i < contactParts.length - 1 ? ' <span style="color:#999;font-weight:bold;">|</span> ' : ''}</span>`
-    ).join('');
+
+    const contactLine = contactParts.length > 0
+        ? contactParts.map((item, i) => 
+            `${item}${i < contactParts.length - 1 ? ' <span style="color:#999;font-weight:bold;margin:0 0.6rem;">|</span> ' : ''}`
+        ).join('')
+        : '';
 
     const htmlContent =  `
         <!DOCTYPE html>
@@ -3957,7 +3967,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                     justify-content: center;
                     align-items: center;
                     gap: 0.8rem 1.2rem;
-                    margin-top: 1rem;
+                    margin-top: 0.2rem;
                 }
                 hr {
                     border: none;
