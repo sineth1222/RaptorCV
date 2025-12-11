@@ -2034,3 +2034,357 @@ function getSimpleModernTemplateHtml(data, accentColor) {
 
     return htmlContent;
 }
+
+
+
+
+/**
+ * Traditional Resume Template → Pure HTML + Inline CSS
+ * Classic two-column serif design with elegant borders
+ * @param {object} data - Resume data
+ * @param {string} accentColor - e.g., "#1f2937", "#8b5cf6", etc. (default dark gray)
+ * @returns {string} Full standalone HTML string
+ */
+function getTraditionalTemplateHtml(data, accentColor = "#1f2937") {
+
+    const formatDate = (dateStr) => {
+        if (!dateStr || dateStr.toLowerCase() === 'current') return 'Present';
+        const [year, month] = dateStr.split("-");
+        if (year && month) {
+            const date = new Date(year, month - 1);
+            if (!isNaN(date)) {
+                return date.toLocaleDateString("en-US", { year: "numeric", month: "short" });
+            }
+        }
+        return dateStr;
+    };
+
+    const p = data.personal_info || {};
+    const experience = data.experience || [];
+    const project = data.project || [];
+    const education = data.education || [];
+    const skills = data.skills || [];
+    const languages = data.languages || [];
+    const references = data.references || [];
+
+    // Build contact items (with pipe separators on md+ and print)
+    const contactItems = [];
+    if (p.phone) contactItems.push(`<span style="white-space:nowrap;">${p.phone}</span>`);
+    if (p.email) contactItems.push(`<span style="white-space:nowrap;">${p.email}</span>`);
+    if (p.location) contactItems.push(`<span style="white-space:nowrap;">${p.location}</span>`);
+    if (p.linkedin) {
+        const clean = p.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn';
+        contactItems.push(`<a href="${p.linkedin}" target="_blank" style="color:inherit; text-decoration:none; white-space:nowrap;">LinkedIn</a>`);
+    }
+    if (p.website) {
+        const clean = p.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio';
+        contactItems.push(`<a href="${p.website}" target="_blank" style="color:inherit; text-decoration:none; white-space:nowrap;">Portfolio</a>`);
+    }
+
+    const contactHtml = contactItems.length > 0
+        ? `<div style="font-size:0.875rem; color:#525252; display:flex; flex-wrap:wrap; justify-content:center; gap:0.75rem;">
+             ${contactItems.map((item, i) => 
+                 `<span>${item}${i < contactItems.length - 1 ? '<span style="margin:0 0.5rem; color:#9ca3af;">|</span>' : ''}</span>`
+             ).join('')}
+           </div>`
+        : '';
+
+    const htmlContent = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${p.full_name || "Resume"} - Resume</title>
+        <style>
+            body {
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                margin: 0;
+                padding: 0;
+                background: #f9fafb;
+                color: #1f2937;
+                line-height: 1.6;
+            }
+            .container {
+                max-width: 1000px;
+                margin: 2rem auto;
+                background: white;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            .header-border {
+                border-top: 2px solid ${accentColor};
+                border-bottom: 2px solid ${accentColor};
+                padding: 1.5rem 0;
+                margin: 0 2rem 2rem;
+            }
+            h1 {
+                font-size: 2.5rem;
+                font-weight: normal;
+                text-transform: uppercase;
+                letter-spacing: 0.15em;
+                text-align: center;
+                margin: 0 0 0.5rem;
+                color: #111827;
+            }
+            .profession {
+                font-size: 1.25rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                text-align: center;
+                margin: 0.75rem 0 1rem;
+                color: ${accentColor};
+            }
+            .section-title {
+                font-size: 1.35rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin: 0 0 1rem;
+                color: ${accentColor};
+            }
+            .left-col .section-title,
+            .right-col .section-title {
+                padding-top: 0;
+            }
+            .grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .left-col {
+                order: 2;
+            }
+            .right-col {
+                order: 1;
+            }
+            .entry {
+                margin-bottom: 1.5rem;
+            }
+            .entry-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin-bottom: 0.25rem;
+            }
+            .entry-title {
+                font-weight: 600;
+                font-size: 1rem;
+                color: #111827;
+            }
+            .entry-date {
+                font-size: 0.875rem;
+                color: #6b7280;
+                font-weight: 500;
+            }
+            .entry-subtitle {
+                font-style: italic;
+                color: #525252;
+                margin-bottom: 0.5rem;
+            }
+            ul {
+                margin: 0.5rem 0;
+                padding-left: 1.5rem;
+            }
+            li {
+                margin-bottom: 0.35rem;
+                color: #374151;
+            }
+            .skills-list {
+                list-style: none;
+                padding-left: 0;
+            }
+            .skills-list li {
+                position: relative;
+                padding-left: 1rem;
+            }
+            .skills-list li:before {
+                content: "•";
+                font-weight: bold;
+                color: #111827;
+                position: absolute;
+                left: 0;
+            }
+            .references {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            @media (min-width: 768px) {
+                .container { padding: 3rem 2rem; }
+                .header-border { margin: 0 2rem 2.5rem; }
+                .grid {
+                    grid-template-columns: 4fr 8fr;
+                    gap: 2.5rem;
+                }
+                .left-col {
+                    order: 0;
+                    padding-right: 1.5rem;
+                }
+                .right-col {
+                    order: 0;
+                    border-left: 1px solid #d1d5db;
+                    padding-left: 2rem;
+                }
+            }
+
+            @media print {
+                body { background: white; }
+                .container {
+                    box-shadow: none;
+                    margin: 0;
+                    padding: 2rem;
+                    max-width: none;
+                }
+                .header-border { margin: 0 2rem 2rem; }
+                .grid {
+                    grid-template-columns: 4fr 8fr;
+                }
+                .right-col {
+                    border-left: 1px solid #d1d5db;
+                    padding-left: 2rem;
+                }
+                a { color: inherit; text-decoration: none; }
+                .contact-line span:not(:last-child):after {
+                    content: " | ";
+                    margin: 0 0.5rem;
+                    color: #9ca3af;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+
+            <!-- Header with bordered section -->
+            <div class="header-border">
+                <header style="text-align:center;">
+                    <h1>${p.full_name || "SINETH MASHENKA"}</h1>
+                    <div class="profession">${p.profession || "UNDERGRADUATE"}</div>
+                    ${contactHtml}
+                </header>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="grid">
+
+                <!-- LEFT COLUMN: Skills, Languages, References -->
+                <aside class="left-col">
+
+                    <!-- Skills -->
+                    ${skills.length > 0 ? `
+                        <section style="margin-bottom:2rem;">
+                            <h2 class="section-title">Core Skills</h2>
+                            <ul class="skills-list" style="font-size:0.9375rem;">
+                                ${skills.map(skill => `<li>${skill}</li>`).join('')}
+                            </ul>
+                        </section>
+                    ` : ''}
+
+                    <!-- Languages -->
+                    ${languages.length > 0 ? `
+                        <section style="margin-bottom:2rem;">
+                            <h2 class="section-title">Languages</h2>
+                            <div style="font-size:0.9375rem;">
+                                ${languages.map(lang => `
+                                    <p style="margin:0.35rem 0;"><strong>${lang.language}</strong> - ${lang.level}</p>
+                                `).join('')}
+                            </div>
+                        </section>
+                    ` : ''}
+
+                    <!-- References -->
+                    ${references.length > 0 ? `
+                        <section style="margin-bottom:2rem;">
+                            <h2 class="section-title">References</h2>
+                            <div class="references" style="font-size:0.9375rem;">
+                                ${references.map(ref => `
+                                    <div>
+                                        <div style="font-weight:bold;">${ref.name}</div>
+                                        <div>${ref.title}</div>
+                                        <div>${ref.company}</div>
+                                        <div>${ref.contact}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+                    ` : ''}
+
+                </aside>
+
+                <!-- RIGHT COLUMN: Main content -->
+                <main class="right-col">
+
+                    <!-- Professional Summary -->
+                    ${data.professional_summary ? `
+                        <section style="margin-bottom:2rem;">
+                            <h2 class="section-title">Professional Summary</h2>
+                            <p style="font-size:0.9375rem; color:#374151;">${data.professional_summary.replace(/\n/g, '<br>')}</p>
+                        </section>
+                    ` : ''}
+
+                    <!-- Experience -->
+                    ${experience.length > 0 ? `
+                        <section style="margin-bottom:2rem;">
+                            <h2 class="section-title">Experience</h2>
+                            ${experience.map(exp => `
+                                <div class="entry">
+                                    <div class="entry-header">
+                                        <div class="entry-title">${exp.position}</div>
+                                        <div class="entry-date">${formatDate(exp.start_date)} – ${exp.is_current ? 'Present' : formatDate(exp.end_date)}</div>
+                                    </div>
+                                    <div class="entry-subtitle">${exp.company}${exp.location ? `, ${exp.location}` : ''}</div>
+                                    ${exp.description ? `
+                                        <ul>
+                                            ${exp.description.split('\n').map(line => line.trim() ? `<li>${line}</li>` : '').join('')}
+                                        </ul>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </section>
+                    ` : ''}
+
+                    <!-- Education -->
+                    ${education.length > 0 ? `
+                        <section style="margin-bottom:2rem;">
+                            <h2 class="section-title">Education</h2>
+                            ${education.map(edu => `
+                                <div class="entry">
+                                    <div class="entry-header">
+                                        <div class="entry-title">${edu.degree}${edu.field ? `: ${edu.field}` : ''}</div>
+                                        <div class="entry-date">${formatDate(edu.graduation_date)}</div>
+                                    </div>
+                                    <div class="entry-subtitle">${edu.institution}${edu.location ? `, ${edu.location}` : ''}</div>
+                                </div>
+                            `).join('')}
+                        </section>
+                    ` : ''}
+
+                    <!-- Projects -->
+                    ${project.length > 0 ? `
+                        <section style="margin-bottom:2rem;">
+                            <h2 class="section-title">Projects Experience</h2>
+                            ${project.map(p => `
+                                <div class="entry">
+                                    <div class="entry-title">${p.name} <span style="font-weight:500; color:#6b7280;">(${p.type})</span></div>
+                                    ${p.description ? `
+                                        <ul>
+                                            ${p.description.split('\n').map(line => line.trim() ? `<li>${line}</li>` : '').join('')}
+                                        </ul>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </section>
+                    ` : ''}
+
+                </main>
+            </div>
+        </div>
+    </body>
+    </html>
+        `;
+
+    return htmlContent;
+}
