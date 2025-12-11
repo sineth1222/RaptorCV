@@ -3966,7 +3966,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                     flex-wrap: wrap;
                     justify-content: center;
                     align-items: center;
-                    gap: 0.8rem 1.2rem;
+                    gap: 0.25rem 1.2rem;
                     margin-top: 0.2rem;
                 }
                 hr {
