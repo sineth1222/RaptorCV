@@ -1597,7 +1597,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
 
                     <!-- HEADER WITH IMAGE -->
                     <div class="header">
-                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center;">
+                        <div style="display: flex; flex-direction: row; align-items: center; gap: 1.5rem; text-align: center;">
                             ${imgSrc ? `
                                 <img src="${imgSrc}" alt="Profile" style="width: 128px; height: 128px; object-fit: cover; border-radius: 50%; border: 4px solid ${accentColor}70;" />
                             ` : ''}
@@ -1623,8 +1623,8 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                                     ${p.phone ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">${PhoneIcon}<span>${p.phone}</span></div>` : ''}
                                     ${p.email ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">${MailIcon}<span>${p.email}</span></div>` : ''}
                                     ${p.location ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">${MapPinIcon}<span>${p.location}</span></div>` : ''}
-                                    ${p.linkedin ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><a href="${p.linkedin}" target="_blank" style="color:inherit;">${LinkedinIcon}<span>${p.linkedin.replace(/^(https?:\/\/)?(www\.)?/, '').replace(/\/$/, '')}</span></a></div>` : ''}
-                                    ${p.website ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><a href="${p.website}" target="_blank" style="color:inherit;">${GlobeIcon}<span>${p.website.replace(/^(https?:\/\/)?(www\.)?/, '').replace(/\/$/, '')}</span></a></div>` : ''}
+                                    ${p.linkedin ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><a href="${p.linkedin}" target="_blank" style="color:inherit;">Linkedin</span></a></div>` : ''}
+                                    ${p.website ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><a href="${p.website}" target="_blank" style="color:inherit;">${GlobeIcon}<span>Protfolio</span></a></div>` : ''}
                                 </div>
                             </section>
 
