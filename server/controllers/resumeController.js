@@ -1763,11 +1763,11 @@ function getSimpleModernTemplateHtml(data, accentColor) {
     if (p.email) contactItems.push(`<span>${p.email}</span>`);
     if (p.linkedin) {
         const cleanLink = p.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '');
-        contactItems.push(`<a href="${p.linkedin}" target="_blank" style="color:#374151; text-decoration:none; font-weight:500;">${cleanLink}</a>`);
+        contactItems.push(`<a href="${p.linkedin}" target="_blank" style="color:#374151; text-decoration:none; font-weight:500;">LinkedIn</a>`);
     }
     if (p.website) {
         const cleanSite = p.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '');
-        contactItems.push(`<a href="${p.website}" target="_blank" style="color:#374151; text-decoration:none; font-weight:500;">${cleanSite}</a>`);
+        contactItems.push(`<a href="${p.website}" target="_blank" style="color:#374151; text-decoration:none; font-weight:500;">Portfolio</a>`);
     }
     const contactLine = contactItems.join('<span style="margin:0 0.5rem; color:#9ca3af;">|</span>');
 
@@ -1796,9 +1796,9 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                 }
                 .container {
                     max-width: 900px;
-                    margin: 2rem auto;
+                    margin: 1rem auto;
                     background: white;
-                    padding: 3rem;
+                    padding: 2rem;
                     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
                     border-radius: 8px;
                 }
@@ -1816,12 +1816,12 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                     text-transform: uppercase;
                     letter-spacing: 0.15em;
                     color: ${accentColor};
-                    margin: 0.5rem 0 0.75rem 0;
+                    margin: 0.25rem 0 0.5rem 0;
                 }
                 .contact-line {
                     font-size: 0.95rem;
                     color: #4b5563;
-                    margin-bottom: 2rem;
+                    margin-bottom: 1rem;
                 }
                 .section-header {
                     font-size: 1.25rem;
