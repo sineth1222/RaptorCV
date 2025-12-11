@@ -2045,7 +2045,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
  * @param {string} accentColor - e.g., "#1f2937", "#8b5cf6", etc. (default dark gray)
  * @returns {string} Full standalone HTML string
  */
-function getTraditionalTemplateHtml(data, accentColor = "#1f2937") {
+function getTraditionalTemplateHtml(data, accentColor) {
 
     const formatDate = (dateStr) => {
         if (!dateStr || dateStr.toLowerCase() === 'current') return 'Present';
@@ -2385,6 +2385,227 @@ function getTraditionalTemplateHtml(data, accentColor = "#1f2937") {
     </body>
     </html>
         `;
+
+    return htmlContent;
+}
+
+
+
+/**
+ * Natural Resume Template → Pure HTML + Inline CSS
+ * Modern, clean design with photo, accent header, sidebar skills/education
+ * @param {object} data - Resume data
+ * @param {string} accentColor - Hex color, e.g., "#10b981" (emerald), "#6366f1" (indigo)
+ * @returns {string} Full standalone HTML string
+ */
+function getNaturalTemplateHtml(data, accentColor) {
+
+    const formatDate = (dateStr) => {
+        if (!dateStr || dateStr.toLowerCase() === 'current') return 'Present';
+        const [year, month] = dateStr.split("-");
+        if (year && month) {
+            const date = new Date(year, month - 1);
+            if (!isNaN(date)) {
+                return date.toLocaleDateString("en-US", { year: "numeric", month: "short" });
+            }
+        }
+        return dateStr;
+    };
+
+    const p = data.personal_info || {};
+    const imgSrc = p.image ? (typeof p.image === "string" ? p.image : URL.createObjectURL(p.image)) : "";
+
+    // === ICON SVGs (colored with accentColor) ===
+    const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>`;
+
+    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
+
+    const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+
+    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="${accentColor}" stroke="white" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
+
+    const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
+
+    const experience = data.experience || [];
+    const project = data.project || [];
+    const education = data.education || [];
+    const skills = data.skills || [];
+    const languages = data.languages || [];
+    const references = data.references || [];
+
+    const headerBg = accentColor + "30";
+
+    const htmlContent = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${p.full_name || "Resume"} - Resume</title>
+            <style>
+                body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: #f3f4f6; color: #1f2937; line-height: 1.6; }
+                .container { max-width: 900px; margin: 2rem auto; background: white; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; }
+                header { padding: 2rem 2rem 1rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; background-color: ${headerBg}; -webkit-print-color-adjust: exact; color-adjust: exact; }
+                h1 { font-size: 2.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin: 0; color: #111827; }
+                .profession { font-size: 1.25rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: ${accentColor}; margin: 0.5rem 0; }
+                .summary { font-size: 0.9375rem; color: #4b5563; max-width: 800px; }
+                .grid { display: grid; grid-template-columns: 1fr; }
+                aside { padding: 2rem; background: #f8f8f8; -webkit-print-color-adjust: exact; color-adjust: exact; }
+                main { padding: 1rem 2rem 2rem; }
+                .section-title-main { font-size: 1.25rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; padding: 1rem 0 0.5rem; margin: 1.5rem 0 1rem; border-bottom: 1px solid #d1d5db; color: #111827; }
+                .section-title-side { font-size: 1.125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 1.5rem 0 1rem; color: #1f2937; }
+                .tag { display: inline-block; padding: 0.375rem 0.75rem; font-size: 0.75rem; font-weight: 600; border: 1px solid ${accentColor}; color: ${accentColor}; background: white; border-radius: 9999px; margin-right: 0.5rem; margin-bottom: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+                .entry { margin-bottom: 1.5rem; }
+                .entry-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.25rem; }
+                .entry-title { font-weight: 700; font-size: 1.1rem; color: #111827; }
+                .entry-date { font-size: 0.875rem; color: #6b7280; font-weight: 500; }
+                .entry-subtitle { font-style: italic; color: #525252; margin-bottom: 0.5rem; }
+                ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+                li { margin-bottom: 0.35rem; color: #374151; }
+                .contact-item { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.75rem; font-size: 0.875rem; font-weight: 500; }
+                .languages { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 0.5rem; }
+                .lang-item { font-size: 0.875rem; min-width: 45%; }
+
+                @media (min-width: 768px) {
+                    header { flex-direction: row; text-align: left; padding: 3rem; gap: 2rem; }
+                    .grid { grid-template-columns: 1fr 2fr; }
+                    aside { padding: 3rem; }
+                    main { padding: 2rem 3rem 3rem; }
+                }
+                @media print {
+                    body { background: white; }
+                    .container { box-shadow: none; margin: 0; max-width: none; }
+                    header, aside { -webkit-print-color-adjust: exact; color-adjust: exact; }
+                    .grid { grid-template-columns: 1fr 2fr; }
+                    a { color: inherit; text-decoration: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+
+                <!-- HEADER WITH PHOTO & SUMMARY -->
+                <header style="background-color:${headerBg};">
+                    ${imgSrc ? `<img src="${imgSrc}" alt="Profile" style="width:112px; height:112px; object-fit:cover; border-radius:50%; border:4px solid white; box-shadow:0 4px 12px rgba(0,0,0,0.2);" />` : ''}
+                    <div>
+                        <h1>${p.full_name || ""}</h1>
+                        <div class="profession" style="color:${accentColor};">${p.profession || ""}</div>
+                        ${data.professional_summary ? `<p class="summary">${data.professional_summary.replace(/\n/g, '<br>')}</p>` : ''}
+                    </div>
+                </header>
+
+                <!-- TWO-COLUMN LAYOUT -->
+                <div class="grid">
+
+                    <!-- LEFT SIDEBAR -->
+                    <aside style="background:#f8f8f8;">
+
+                        <!-- Contact -->
+                        <section>
+                            <h3 class="section-title-side">Contact</h3>
+                            <div style="font-size:0.875rem;">
+                                ${p.email ? `<div class="contact-item">${MailIcon}<span style="word-break:break-all;">${p.email}</span></div>` : ''}
+                                ${p.phone ? `<div class="contact-item">${PhoneIcon}<span>${p.phone}</span></div>` : ''}
+                                ${p.location ? `<div class="contact-item">${MapPinIcon}<span>${p.location}</span></div>` : ''}
+                                ${p.linkedin ? `<div class="contact-item">${LinkedinIcon}<a href="${p.linkedin}" target="_blank" style="color:inherit;">LinkedIn</a></div>` : ''}
+                                ${p.website ? `<div class="contact-item">${GlobeIcon}<a href="${p.website}" target="_blank" style="color:inherit;">Portfolio</a></div>` : ''}
+                            </div>
+                        </section>
+
+                        <!-- Education -->
+                        ${education.length > 0 ? `
+                            <section style="margin-top:2rem;">
+                                <h3 class="section-title-side">Education</h3>
+                                ${education.map(edu => `
+                                    <div style="margin-bottom:1rem;">
+                                        <div style="font-weight:700; font-size:0.9375rem;">${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</div>
+                                        <div style="font-style:italic; color:#525252; font-size:0.875rem;">${edu.institution}</div>
+                                        <div style="font-size:0.8125rem; color:#6b7280;">
+                                            ${edu.start_date ? formatDate(edu.start_date) + ' – ' : ''}${formatDate(edu.graduation_date)}
+                                        </div>
+                                        ${edu.gpa ? `<div style="font-size:0.8125rem; color:#6b7280;">Grade: ${edu.gpa}</div>` : ''}
+                                    </div>
+                                `).join('')}
+                            </section>
+                        ` : ''}
+
+                        <!-- Skills -->
+                        ${skills.length > 0 ? `
+                            <section style="margin-top:2rem;">
+                                <h3 class="section-title-side">Skills</h3>
+                                <div style="margin-top:0.75rem;">
+                                    ${skills.map(skill => `<span class="tag" style="border-color:${accentColor}; color:${accentColor};">${skill}</span>`).join('')}
+                                </div>
+                            </section>
+                        ` : ''}
+
+                        <!-- Languages -->
+                        ${languages.length > 0 ? `
+                            <section style="margin-top:2rem;">
+                                <h3 class="section-title-side">Languages</h3>
+                                <div class="languages">
+                                    ${languages.map(lang => `<div class="lang-item">• <strong>${lang.language}</strong> – ${lang.level}</div>`).join('')}
+                                </div>
+                            </section>
+                        ` : ''}
+
+                        <!-- References -->
+                        ${references.length > 0 ? `
+                            <section style="margin-top:2rem;">
+                                <h3 class="section-title-side">References</h3>
+                                <div style="font-size:0.875rem;">
+                                    ${references.map(ref => `
+                                        <div style="margin-bottom:1rem;">
+                                            <div style="font-weight:700;">${ref.name}</div>
+                                            <div style="font-size:0.8125rem;">${ref.title} – ${ref.company}</div>
+                                            <div style="font-size:0.8125rem;">${ref.contact}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </section>
+                        ` : ''}
+
+                    </aside>
+
+                    <!-- MAIN CONTENT -->
+                    <main>
+
+                        <!-- Work Experience -->
+                        ${experience.length > 0 ? `
+                            <section>
+                                <h2 class="section-title-main">Work Experience</h2>
+                                ${experience.map(exp => `
+                                    <div class="entry">
+                                        <div class="entry-header">
+                                            <div class="entry-title">${exp.position}</div>
+                                            <div class="entry-date">${formatDate(exp.start_date)} – ${exp.is_current ? 'Present' : formatDate(exp.end_date)}</div>
+                                        </div>
+                                        <div class="entry-subtitle">${exp.company}</div>
+                                        ${exp.description ? `<ul>${exp.description.split('\n').map(line => line.trim() ? `<li>${line}</li>` : '').join('')}</ul>` : ''}
+                                    </div>
+                                `).join('')}
+                            </section>
+                        ` : ''}
+
+                        <!-- Projects -->
+                        ${project.length > 0 ? `
+                            <section>
+                                <h2 class="section-title-main">Projects</h2>
+                                ${project.map(p => `
+                                    <div class="entry">
+                                        <div class="entry-title">${p.name} <span style="font-weight:500; color:#6b7280;">(${p.type})</span></div>
+                                        ${p.description ? `<ul>${p.description.split('\n').map(line => line.trim() ? `<li>${line}</li>` : '').join('')}</ul>` : ''}
+                                    </div>
+                                `).join('')}
+                            </section>
+                        ` : ''}
+
+                    </main>
+                </div>
+            </div>
+        </body>
+        </html>
+            `;
 
     return htmlContent;
 }
