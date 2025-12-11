@@ -2687,7 +2687,7 @@ function getStrongTemplateHtml(data, accentColor) {
                 ul { margin: 0.75rem 0; padding-left: 1.5rem; }
                 li { margin-bottom: 0.4rem; color: #374151; }
                 .skills-list { display: grid; grid-template-columns: 1fr; gap: 0.5rem; list-style: disc inside; }
-                .languages { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+                .languages { display: flex; flex-wrap: wrap; gap: 1rem; }
                 .lang-item { font-size: 0.875rem; min-width: 45%; }
                 .references { display: flex; flex-direction: column; gap: 1.5rem; }
 
@@ -2696,7 +2696,7 @@ function getStrongTemplateHtml(data, accentColor) {
                     .summary-section { margin: 0 0 0; }
                     .content-grid { grid-template-columns: 3fr 9fr; }
                     .entry-header { flex-direction: row; align-items: flex-start; }
-                    .skills-list { grid-template-columns: 1fr 1fr; gap: 1rem 2rem; }
+                    .skills-list { grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem; }
                     .references { flex-direction: row; gap: 2rem; }
                 }
                 @media print {
@@ -2830,9 +2830,9 @@ function getStrongTemplateHtml(data, accentColor) {
                                         ${references.map(ref => `
                                             <div>
                                                 <div style="font-weight:700;">${ref.name}</div>
-                                                <div style="font-size:0.9375rem;">${ref.title}</div>
-                                                <div style="font-size:0.9375rem;">${ref.company}</div>
-                                                <div style="font-size:0.9375rem;">${ref.contact}</div>
+                                                <div style="font-size:0.875rem;">${ref.title}</div>
+                                                <div style="font-size:0.875rem;">${ref.company}</div>
+                                                <div style="font-size:0.875rem;">${ref.contact}</div>
                                             </div>
                                         `).join('')}
                                     </div>
