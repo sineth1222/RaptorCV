@@ -2656,10 +2656,10 @@ function getStrongTemplateHtml(data, accentColor) {
                 .section-content { padding-top: 0.25rem; }
                 .entry { margin-bottom: 1.5rem; }
                 .entry-header { display: flex; flex-direction: column; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
-                .entry-title { font-weight: 700; font-size: 1.125rem; color: #111827; }
+                .entry-title { font-weight: 700; font-size: 0.875rem; color: #111827; }
                 .entry-subtitle { font-style: italic; color: #525252; font-size: 0.875rem; }
                 .entry-date { font-size: 0.875rem; color: #6b7280; font-weight: 500; }
-                ul { margin: 0.75rem 0; padding-left: 1.5rem; }
+                ul { margin: 0.25rem 0; padding-left: 1.5rem; }
                 li { margin-bottom: 0.4rem; color: #374151; }
                 .skills-list { display: grid; grid-template-columns: 1fr; gap: 0.5rem; list-style: disc inside; }
                 .languages { display: flex; flex-wrap: wrap; gap: 1rem; }
