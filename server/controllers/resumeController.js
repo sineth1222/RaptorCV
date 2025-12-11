@@ -1507,9 +1507,8 @@ function getMinimalTemplateHtml(data, accentColor) {
 
 
 /**
- * Minimal Image Template එක JSX වලින් සෘජු HTML String එකක් බවට පරිවර්තනය කරයි.
+ * Minimal Resume Template (Image variant) එක JSX වලින් සෘජු HTML String එකක් බවට පරිවර්තනය කරයි.
  * මෙහිදී Tailwind Classes වෙනුවට Inline CSS styles භාවිතා කරන අතර, Icons සඳහා විශ්වාසදායක SVG කේත යොදනු ලැබේ.
- * Layout: 1/3 (Sidebar) - 2/3 (Main Content) split.
  * @param {object} data - Resume දත්ත අඩංගු object එක.
  * @param {string} accentColor - Resume එකේ ප්‍රධාන වර්ණය (e.g., '#0077b5').
  * @returns {string} - සම්පූර්ණ HTML String එක.
@@ -1532,34 +1531,42 @@ function getMinimalImageTemplateHtml(data, accentColor) {
         }
     };
 
-    // --- ICON SVGs (Styled with accentColor) ---
-    // Icons in this template are colored with accentColor.
-    const IconStyle = (color) => `width: 14px; height: 14px; flex-shrink: 0; margin-top: 0px; stroke: ${color || '#525252'};`;
+    // --- ICON SVGs (Tailwind/Lucide equivalents) ---
+    const BaseIconStyle = 'flex-shrink: 0; margin-top: 2px;';
 
-    // Note: Icon sizes adjusted to 14px to match JSX `size={14}`
-    const PhoneIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16a2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3" /></svg>`;
-    const MailIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7" /></svg>`;
-    const MapPinIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>`;
-    const LinkedinIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 0-6 6v7h-4v-7a6 6 0 0 1 6-6h0a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2Z" /><path d="M4 14h4v7h-4z" /><circle cx="6" cy="6" r="2" /></svg>`;
-    const GlobeIcon = (color) => `<svg xmlns="http://www.w3.org/2000/svg" style="${IconStyle(color)}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>`;
-    
-    // Inline style for sidebar contact item
-    const ContactItemStyle = `display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #3f3f46;`;
+    // Mail Icon
+    const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="${BaseIconStyle}"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7" /></svg>`;
 
-    // Inline style for skills tag
-    const SkillTagStyle = `padding: 0.125rem 0.5rem; border: 1px solid #d4d4d8; border-radius: 6px; background-color: #ffffff;`;
+    // Phone Icon
+    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="${BaseIconStyle}"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16a2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
+
+    // MapPin Icon (Location)
+    const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="${BaseIconStyle}"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>`;
+
+    // Linkedin Icon
+    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="${BaseIconStyle}"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2a2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>`;
+
+    // Globe Icon (Website)
+    const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="${BaseIconStyle}"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>`;
 
 
-    const PI = data.personal_info || {};
-    const EXPERIENCE = data.experience || [];
-    const PROJECT = data.project || [];
-    const EDUCATION = data.education || [];
-    const SKILLS = data.skills || [];
-    const LANGUAGES = data.languages || [];
-    const REFERENCES = data.references || [];
+    // --- Data Mapping ---
 
-    // Image URL logic: check if it's a string (URL) or an object (File/Blob) which we cannot resolve in a static HTML string. Assuming it's a URL/DataURL for simplicity.
-    const profileImageSrc = PI.image && typeof PI.image === 'string' ? PI.image : null;
+    const personalInfo = data.personal_info || {};
+    const experience = data.experience || [];
+    const project = data.project || [];
+    const education = data.education || [];
+    const skills = data.skills || [];
+    const languages = data.languages || [];
+    const references = data.references || [];
+
+    // Image URL handling (assuming data.personal_info.image is already a URL string or handled outside)
+    const imageUrl = typeof personalInfo.image === 'string'
+        ? personalInfo.image
+        : (personalInfo.image ? 'data:image/jpeg;base64,...' : ''); // Placeholder for non-string image data
+
+
+    // --- HTML Structure Generation ---
 
     const htmlContent = `
         <!DOCTYPE html>
@@ -1567,277 +1574,210 @@ function getMinimalImageTemplateHtml(data, accentColor) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${PI.full_name || "Resume"}</title>
+            <title>${personalInfo.full_name || "Resume"}</title>
             <style>
-                /* Global Styles (text-zinc-800, max-w-5xl, mx-auto, shadow-lg) */
+                /* Basic Reset and Font Setup for Print/PDF */
                 body { 
-                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, sans-serif; 
-                    margin: 0; 
-                    padding: 0; 
-                    color: #27272a; /* text-zinc-800 */
-                    line-height: 1.4; 
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; 
+                    margin: 0; padding: 0; color: #3f3f46; line-height: 1.5; font-weight: 300; 
+                }
+                .resume-container { 
+                    max-width: 1024px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); 
                 }
                 a { color: inherit; text-decoration: none; word-break: break-all; }
-                
-                .resume-container { 
-                    max-width: 1024px; /* max-w-5xl (approx) */
-                    margin: 0 auto; 
-                    background-color: #ffffff; 
-                    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); 
-                }
-
-                /* Section Title Style (text-sm font-semibold tracking-widest text-zinc-600 mb-3 border-b-2) */
-                .sidebar-section-title { 
+                .section-title { 
                     font-size: 0.875rem; 
-                    font-weight: 600; 
-                    letter-spacing: 0.1em; 
                     text-transform: uppercase; 
-                    color: #525252; /* text-zinc-600 */
-                    margin: 0 0 0.75rem 0; 
-                    border-bottom: 2px solid; 
-                    padding-bottom: 0.25rem;
-                }
-
-                /* Main Content Section Title Style (text-sm font-semibold tracking-widest mb-3 border-b) */
-                .main-section-title { 
-                    font-size: 0.875rem; 
-                    font-weight: 600; 
                     letter-spacing: 0.1em; 
-                    text-transform: uppercase; 
-                    margin: 0 0 1rem 0; /* mb-4 for experience/projects, mb-3 for summary */
-                    border-bottom: 1px solid; 
+                    margin-bottom: 1rem; 
+                    font-weight: 600; 
                     padding-bottom: 0.25rem;
-                }
-
-                /* Grid Layout (Mobile First: stacked columns) */
-                .template-grid {
-                    display: flex; 
-                    flex-direction: column;
+                    border-bottom: 1px solid;
                 }
                 
-                /* Header (md:col-span-3, p-6 sm:p-10) */
-                .header-area {
-                    padding: 1.5rem; /* p-6 */
-                    border-bottom: 1px solid #e4e4e7; /* border-zinc-200 */
-                    background-color: #ffffff;
+                /* Grid and Responsive Adjustments */
+                .main-grid { display: grid; grid-template-columns: 1fr; }
+                .header-section { padding: 1.5rem 2.5rem; border-bottom: 1px solid #e4e4e7; }
+                .sidebar-section { padding: 1.5rem 2.5rem; background-color: #fafafa; order: 2; }
+                .content-section { padding: 1.5rem 2.5rem; order: 1; }
+
+                @media screen and (min-width: 768px) {
+                    .main-grid { grid-template-columns: 1fr 2fr; } /* md:grid-cols-3 is 1/3 and 2/3 */
+                    .header-section { grid-column: span 3 / span 3; } /* md:col-span-3 */
+                    .sidebar-section { order: 0; border-right: 1px solid #a1a1aa; grid-column: span 1 / span 1; } /* md:col-span-1, md:border-r */
+                    .content-section { order: 0; grid-column: span 2 / span 2; } /* md:col-span-2 */
                 }
                 
-                /* Left Sidebar (md:col-span-1, bg-zinc-50, p-6 sm:p-8, order-2 md:order-0) */
-                .sidebar {
-                    order: 2; 
-                    background-color: #fafafa; /* bg-zinc-50 */
-                    padding: 1.5rem; /* p-6 */
-                }
-
-                /* Right Main Content (md:col-span-2, p-6 sm:p-8, order-1 md:order-0) */
-                .main-content {
-                    order: 1; 
-                    padding: 1.5rem; /* p-6 */
-                }
-
-                /* Desktop/Print styles (min-width: 768px, grid-cols-3 logic - 1/3 and 2/3 split) */
-                @media screen and (min-width: 768px), print {
-                    /* Header/Sidebar/Main Content padding for desktop/print (sm:p-8 / sm:p-10) */
-                    .header-area { padding: 2.5rem; } /* sm:p-10 */
-                    .sidebar, .main-content { padding: 2rem; } /* sm:p-8 */
-
-                    /* Grid Setup (1/3 for sidebar, 2/3 for main) */
-                    .template-grid {
-                        display: grid;
-                        grid-template-columns: 1fr 2fr; /* Approx. 1/3 and 2/3 */
-                        width: 100%;
-                    }
-                    
-                    /* Grid Placement & Order */
-                    .header-area {
-                        grid-column: 1 / -1; /* spans all columns */
-                        order: 0; 
-                    }
-                    .sidebar {
-                        grid-column: 1 / 2;
-                        order: 0;
-                        border-right: 1px solid #a1a1aa; /* border-zinc-400 */
-                        break-inside: avoid; /* Print break hint */
-                    }
-                    .main-content {
-                        grid-column: 2 / -1;
-                        order: 0;
-                        break-inside: avoid-page; /* Print break hint */
-                    }
-                }
-
-                /* Print specific adjustments */
+                /* Print Specific Styles */
                 @media print {
-                    body { font-size: 10pt; line-height: 1.3; }
-                    .header-area { break-after: avoid; }
-                    h1 { font-size: 24pt !important; }
+                    .resume-container { box-shadow: none; max-width: 100%; }
+                    .main-grid { grid-template-columns: 1fr 2fr; } /* print:grid-cols-3 (1/3 and 2/3 columns) */
+                    .header-section { grid-column: span 3 / span 3; padding: 2rem; } /* print:col-span-3 */
+                    .sidebar-section { order: 0; border-right: 1px solid #a1a1aa; grid-column: span 1 / span 1; padding: 2rem; } /* print:col-span-1, print:border-r */
+                    .content-section { order: 0; grid-column: span 2 / span 2; padding: 2rem; } /* print:col-span-2 */
                 }
             </style>
         </head>
         <body>
             <div class="resume-container">
                 
-                <div class="template-grid">
+                <div class="main-grid">
 
-                    <div class="header-area">
-                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; 
-                            /* sm:flex-row sm:items-center sm:text-left */
-                            @media screen and (min-width: 640px) { flex-direction: row; text-align: left; }">
+                    <div class="header-section" style="grid-column: 1 / -1; background-color: #ffffff; border-bottom: 1px solid #e4e4e7;">
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
                             
-                            ${profileImageSrc ? `
-                                <div style="flex-shrink: 0; margin: 0 auto; /* sm:mx-0 */">
+                            ${imageUrl ? `
+                                <div style="flex-shrink: 0; margin: 0 auto;">
                                     <img 
-                                        src="${profileImageSrc}" 
+                                        src="${imageUrl}" 
                                         alt="Profile" 
-                                        style="width: 112px; height: 112px; /* w-28 h-28 sm:w-32 sm:h-32 */ object-fit: cover; border-radius: 50%; 
-                                            border: 4px solid ${accentColor}70;" 
+                                        style="width: 7rem; height: 7rem; object-fit: cover; border-radius: 9999px; border: 4px solid ${accentColor}70;" 
                                     />
                                 </div>
                             ` : ''}
 
-                            <div style="text-align: center; /* sm:text-left */
-                                @media screen and (min-width: 640px) { text-align: left; }">
-                                <h1 style="font-size: 2.25rem; /* text-3xl sm:text-4xl */ font-weight: 800; color: #3f3f46; /* text-zinc-700 */ letter-spacing: 0.05em; margin: 0 0 0.25rem 0;">
-                                    ${PI.full_name || "Your Name"}
+                            <div style="text-align: center;">
+                                <h1 style="font-size: 2.25rem; font-weight: 800; color: #3f3f46; letter-spacing: 0.05em; margin: 0 0 0.25rem 0;">
+                                    ${personalInfo.full_name || "Your Name"}
                                 </h1>
-                                <p style="text-transform: uppercase; color: #525252; /* text-zinc-600 */ font-weight: 500; font-size: 0.875rem; /* text-sm sm:text-base */ letter-spacing: 0.15em; margin: 0;">
-                                    ${PI.profession || ""}
+                                <p style="text-transform: uppercase; color: #525252; font-weight: 500; font-size: 0.875rem; letter-spacing: 0.2em; margin: 0;">
+                                    ${personalInfo.profession || ""}
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <aside class="sidebar">
-                        <div style="display: flex; flex-direction: column; gap: 2rem; /* space-y-8 */">
+                    <aside class="sidebar-section" style="background-color: #fafafa; border-right: 1px solid #a1a1aa; order: 2;">
+                        <div style="display: flex; flex-direction: column; gap: 2rem;">
                             
                             <section>
-                                <h2 class="sidebar-section-title" style="border-color: ${accentColor}; color: #525252;">
-                                    CONTACT
+                                <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                    Contact
                                 </h2>
-                                <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem;">
-                                    ${PI.phone ? `
-                                        <div style="${ContactItemStyle}">
-                                            ${PhoneIcon(accentColor)}
-                                            <span>${PI.phone}</span>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem; color: #6b7280;">
+                                    
+                                    ${personalInfo.email ? `
+                                        <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                                            ${MailIcon}
+                                            <a href="mailto:${personalInfo.email}" style="word-break: break-all;">${personalInfo.email}</a>
                                         </div>
                                     ` : ''}
-                                    ${PI.email ? `
-                                        <div style="${ContactItemStyle}">
-                                            ${MailIcon(accentColor)}
-                                            <span>${PI.email}</span>
+                                    
+                                    ${personalInfo.phone ? `
+                                        <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                                            ${PhoneIcon}
+                                            <a href="tel:${personalInfo.phone}" style="word-break: break-all;">${personalInfo.phone}</a>
                                         </div>
                                     ` : ''}
-                                    ${PI.location ? `
-                                        <div style="${ContactItemStyle}">
-                                            ${MapPinIcon(accentColor)}
-                                            <span>${PI.location}</span>
+                                    
+                                    ${personalInfo.location ? `
+                                        <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                                            ${MapPinIcon}
+                                            <span>${personalInfo.location}</span>
                                         </div>
                                     ` : ''}
-                                    ${PI.linkedin ? `
-                                        <a target="_blank" href="${PI.linkedin}" style="${ContactItemStyle} color: inherit;">
-                                            ${LinkedinIcon(accentColor)}
-                                            <span style="word-break: break-all;">${PI.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
-                                        </a>
+
+                                    ${personalInfo.linkedin ? `
+                                        <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                                            ${LinkedinIcon}
+                                            <a target="_blank" href="${personalInfo.linkedin}" style="word-break: break-all;">${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</a>
+                                        </div>
                                     ` : ''}
-                                    ${PI.website ? `
-                                        <a target="_blank" href="${PI.website}" style="${ContactItemStyle} color: inherit;">
-                                            ${GlobeIcon(accentColor)}
-                                            <span style="word-break: break-all;">${PI.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
-                                        </a>
+                                    
+                                    ${personalInfo.website ? `
+                                        <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                                            ${GlobeIcon}
+                                            <a target="_blank" href="${personalInfo.website}" style="word-break: break-all;">${personalInfo.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</a>
+                                        </div>
                                     ` : ''}
                                 </div>
                             </section>
-
-                            ${EDUCATION.length > 0 ? `
+                            
+                            ${skills.length > 0 ? `
                                 <section>
-                                    <h2 class="sidebar-section-title" style="border-color: ${accentColor}; color: #525252;">
-                                        EDUCATION
+                                    <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                        Skills
                                     </h2>
-                                    <div style="display: flex; flex-direction: column; gap: 1rem; /* space-y-4 */ font-size: 0.875rem;">
-                                        ${EDUCATION.map((edu) => `
+                                    <div style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.875rem; color: #4b5563;">
+                                        ${skills.map((skill) => `
+                                            <p style="margin: 0;">• ${skill}</p>
+                                        `).join('')}
+                                    </div>
+                                </section>
+                            ` : ''}
+                            
+                            ${languages.length > 0 ? `
+                                <section>
+                                    <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                        Languages
+                                    </h2>
+                                    <div style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.875rem; color: #4b5563;">
+                                        ${languages.map((lang) => `
+                                            <p style="margin: 0;">• <span style="font-weight: 600;">${lang.language}</span> - ${lang.level}</p>
+                                        `).join('')}
+                                    </div>
+                                </section>
+                            ` : ''}
+
+                            ${education.length > 0 ? `
+                                <section>
+                                    <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                        Education
+                                    </h2>
+
+                                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                        ${education.map((edu) => `
                                             <div>
-                                                <p style="font-weight: 600; text-transform: uppercase; margin: 0;">${edu.degree}</p>
-                                                <p style="color: #525252; margin: 0;">${edu.institution}</p>
-                                                <p style="font-size: 0.75rem; color: #71717a; margin: 0;">
-                                                    ${formatDate(edu.graduation_date)}
-                                                </p>
+                                                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+                                                    <h3 style="font-weight: 600; font-size: 0.875rem; margin: 0; color: #3f3f46;">
+                                                        ${edu.degree} ${edu.field ? `in ${edu.field}` : ''}
+                                                    </h3>
+                                                    <span style="font-size: 0.75rem; color: #6b7280; flex-shrink: 0;">
+                                                        ${formatDate(edu.graduation_date)}
+                                                    </span>
+                                                </div>
+                                                <p style="font-size: 0.875rem; color: #525252; margin: 0;">${edu.institution}</p>
+                                                ${edu.gpa ? `<p style="font-size: 0.75rem; color: #6b7280; margin: 0;">GPA: ${edu.gpa}</p>` : ''}
                                             </div>
                                         `).join('')}
                                     </div>
                                 </section>
                             ` : ''}
 
-                            ${SKILLS.length > 0 ? `
-                                <section>
-                                    <h2 class="sidebar-section-title" style="border-color: ${accentColor}; color: #525252;">
-                                        SKILLS
-                                    </h2>
-                                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.875rem;">
-                                        ${SKILLS.map((skill) => `
-                                            <span style="${SkillTagStyle}">
-                                                ${skill}
-                                            </span>
-                                        `).join('')}
-                                    </div>
-                                </section>
-                            ` : ''}
-
-                            ${LANGUAGES.length > 0 ? `
-                                <section>
-                                    <h2 class="sidebar-section-title" style="border-color: ${accentColor}; color: #525252;">
-                                        LANGUAGES    
-                                    </h2>
-                                    <div style="display: flex; flex-direction: column; gap: 0.25rem; padding-top: 0.25rem;">
-                                        ${LANGUAGES.map((lang) => `
-                                            <p style="font-size: 0.875rem; color: #4b5563; margin: 0;">
-                                                • <span style="font-weight: 600;">${lang.language}</span> - ${lang.level}
-                                            </p>
-                                        `).join('')}
-                                    </div>
-                                </section>
-                            ` : ''}
                         </div>
                     </aside>
 
-                    <main class="main-content">
-                        <div style="display: flex; flex-direction: column; gap: 2rem;">
-                            
+                    <main class="content-section" style="order: 1;">
+                        <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+
                             ${data.professional_summary ? `
-                                <section style="break-inside: avoid;">
-                                    <h2 class="main-section-title" style="color: ${accentColor}; border-color: ${accentColor}; margin-bottom: 0.75rem;"> /* mb-3 */
-                                        SUMMARY
-                                    </h2>
-                                    <p style="color: #3f3f46; /* text-zinc-700 */ line-height: 1.6; font-size: 0.875rem; margin: 0;">
+                                <section>
+                                    <p style="color: #4b5563; font-size: 0.95rem; line-height: 1.6;">
                                         ${data.professional_summary}
                                     </p>
                                 </section>
                             ` : ''}
 
-                            ${EXPERIENCE.length > 0 ? `
+                            ${experience.length > 0 ? `
                                 <section style="break-inside: avoid;">
-                                    <h2 class="main-section-title" style="color: ${accentColor}; border-color: ${accentColor}; margin-bottom: 1rem;"> /* mb-4 */
-                                        EXPERIENCE
+                                    <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                        Experience
                                     </h2>
-                                    <div style="display: flex; flex-direction: column; gap: 1.5rem; /* space-y-6 mb-8 */">
-                                        ${EXPERIENCE.map((exp) => `
-                                            <div style="break-inside: avoid;">
-                                                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
-                                                    <h3 style="font-weight: 600; color: #18181b; /* text-zinc-900 */ line-height: 1.25; margin: 0; font-size: 1rem;">
-                                                        ${exp.position}
-                                                    </h3>
-                                                    <span style="font-size: 0.75rem; color: #71717a; /* text-zinc-500 */ flex-shrink: 0; margin-top: 0.25rem;">
+
+                                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                        ${experience.map((exp) => `
+                                            <div>
+                                                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem; flex-wrap: wrap;">
+                                                    <h3 style="font-size: 1rem; font-weight: 600; margin: 0; flex-grow: 1; color: #3f3f46;">${exp.position}</h3>
+                                                    <span style="font-size: 0.75rem; color: #6b7280; flex-shrink: 0;">
                                                         ${formatDate(exp.start_date)} - ${exp.is_current ? "Present" : formatDate(exp.end_date)}
                                                     </span>
                                                 </div>
-                                                <p style="font-size: 0.875rem; margin: 0.25rem 0 0.5rem 0; color: ${accentColor};" >
-                                                    ${exp.company}
-                                                </p>
+                                                <p style="font-size: 0.875rem; color: #525252; margin: 0 0 0.5rem 0;">${exp.company}</p>
                                                 ${exp.description ? `
-                                                    <ul style="list-style-type: disc; margin: 0; padding-left: 1.5rem; font-size: 0.875rem; color: #3f3f46; /* text-zinc-700 */ line-height: 1.5; display: flex; flex-direction: column; gap: 0.25rem;">
-                                                        ${exp.description.split("\n").map((line) => line.trim() ? `
-                                                            <li style="margin-left: 0.5rem;">${line}</li>
-                                                        ` : '').join('')}
-                                                    </ul>
+                                                    <div style="font-size: 0.875rem; color: #4b5563; line-height: 1.6; white-space: pre-line;">
+                                                        ${exp.description}
+                                                    </div>
                                                 ` : ''}
                                             </div>
                                         `).join('')}
@@ -1845,40 +1785,38 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                                 </section>
                             ` : ''}
 
-                            ${PROJECT.length > 0 ? `
+                            ${project.length > 0 ? `
                                 <section style="break-inside: avoid;">
-                                    <h2 class="main-section-title" style="color: ${accentColor}; border-color: ${accentColor}; margin-bottom: 1rem;"> /* mb-4 */
-                                        PROJECTS
+                                    <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                        Projects
                                     </h2>
-                                    <div style="display: flex; flex-direction: column; gap: 1.5rem; /* space-y-6 */">
-                                        ${PROJECT.map((project) => `
-                                            <div style="break-inside: avoid;">
-                                                <h3 style="font-size: 1rem; font-weight: 600; color: #27272a; /* text-zinc-800 */ line-height: 1.25; margin: 0;">${project.name}</h3>
-                                                <p style="font-size: 0.875rem; margin: 0.25rem 0 0.5rem 0; color: ${accentColor};" >
-                                                    ${project.type}
-                                                </p>
-                                                ${project.description ? `
-                                                    <ul style="list-style-type: disc; margin: 0; padding-left: 1.5rem; font-size: 0.875rem; color: #3f3f46; /* text-zinc-700 */ line-height: 1.5; display: flex; flex-direction: column; gap: 0.25rem;">
-                                                        ${project.description.split("\n").map((line) => line.trim() ? `
-                                                            <li style="margin-left: 0.5rem;">${line}</li>
-                                                        ` : '').join('')}
-                                                    </ul>
-                                                ` : ''}
+
+                                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                        ${project.map((proj) => `
+                                            <div>
+                                                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; flex-wrap: wrap;">
+                                                    <h3 style="font-size: 1rem; font-weight: 600; margin: 0; flex-grow: 1; color: #3f3f46;">${proj.name}</h3>
+                                                    <div style="font-size: 0.75rem; color: #4b5563; background-color: #f4f4f5; padding: 0 0.5rem; border-radius: 4px; flex-shrink: 0;">
+                                                        ${proj.type}
+                                                    </div>
+                                                </div>
+                                                <p style="font-size: 0.875rem; color: #4b5563; margin: 0.25rem 0 0 0;">${proj.description}</p>
                                             </div>
                                         `).join('')}
                                     </div>
                                 </section>
                             ` : ''}
 
-                            ${REFERENCES.length > 0 ? `
+                            ${references.length > 0 ? `
                                 <section style="break-inside: avoid;">
-                                    <h2 class="main-section-title" style="color: ${accentColor}; border-color: ${accentColor}; margin-bottom: 1rem;"> /* mb-4 */
-                                        REFERENCES
+                                    <h2 class="section-title" style="color: ${accentColor}; border-color: ${accentColor};">
+                                        References
                                     </h2>
-                                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem 0; font-size: 0.875rem; color: #4b5563; /* text-gray-700 */">
-                                        ${REFERENCES.map((ref) => `
-                                            <div style="width: 45%;"> /* Approx. w-full sm:w-1/2 md:w-5/12 */
-                                                <p style="font-weight: 700; margin: 0;">${ref.name}</p>
+
+                                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; font-size: 0.875rem; color: #4b5563;">
+                                        ${references.map((ref) => `
+                                            <div style="width: 100%; max-width: 48%;">
+                                                <p style="font-weight: 700; margin: 0; color: #3f3f46;">${ref.name}</p>
                                                 <p style="font-size: 0.875rem; margin: 0;">${ref.title}</p>
                                                 <p style="font-size: 0.875rem; margin: 0;">${ref.company}</p>
                                                 <p style="font-size: 0.875rem; margin: 0;">${ref.contact}</p>
@@ -1887,13 +1825,16 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                                     </div>
                                 </section>
                             ` : ''}
+
                         </div>
                     </main>
+
                 </div>
+
             </div>
         </body>
         </html>
     `;
 
-    return htmlContent.trim();
+    return htmlContent;
 }
