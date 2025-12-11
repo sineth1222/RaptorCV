@@ -1026,14 +1026,14 @@ function getModernTemplateHtml(data, accentColor) {
                         ${personalInfo.linkedin ? `
                             <a target="_blank" href="${personalInfo.linkedin}" style="display: flex; align-items: center; gap: 0.25rem; color: inherit;">
                                 ${LinkedinIcon}
-                                <span style="word-break: break-all;">${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
+                                <span style="word-break: break-all;">LinkedIn</span>
                             </a>
                         ` : ''}
                         
                         ${personalInfo.website ? `
                             <a target="_blank" href="${personalInfo.website}" style="display: flex; align-items: center; gap: 0.25rem; color: inherit;">
                                 ${GlobeIcon}
-                                <span style="word-break: break-all;">${personalInfo.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
+                                <span style="word-break: break-all;">Portfolio</span>
                             </a>
                         ` : ''}
                     </div>
