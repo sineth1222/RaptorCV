@@ -3704,7 +3704,7 @@ function getMordernImageTemplateHtml(data, accentColor = "#1e40af") {
                     color: #333;
                     margin-bottom: 0.55rem;
                     display: flex;
-                    align-items: flex-start;
+                    align-items: center;
                     gap: 0.6rem;
                 }
                 /*.contact-item a {
