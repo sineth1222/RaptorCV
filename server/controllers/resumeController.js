@@ -3176,3 +3176,386 @@ function getProfessionalTemplateHtml(data, accentColor) {
 
     return htmlContent;
 }
+
+
+/**
+ * Modern Sidebar Resume Template → Pure HTML + Inline CSS
+ * Clean, professional sidebar layout with accent-colored header and sidebar elements
+ * @param {object} data - Resume data (same structure as your React component)
+ * @param {string} accentColor - Hex color, e.g., "#1e40af", "#dc2626", "#16a34a"
+ * @returns {string} Complete standalone HTML string ready for PDF generation or email
+ */
+function getOfficialTemplateHtml(data, accentColor) {
+
+    const formatDate = (dateStr) => {
+        if (!dateStr || dateStr.toLowerCase() === 'current') return 'Present';
+        const [year, month] = dateStr.split("-");
+        if (year && month) {
+            const date = new Date(year, month - 1);
+            if (!isNaN(date.getTime())) {
+                return date.toLocaleDateString("en-US", { year: "numeric", month: "short" });
+            }
+        }
+        return dateStr;
+    };
+
+    const p = data.personal_info || {};
+    const experience = data.experience || [];
+    const education = data.education || [];
+    const projects = data.project || [];
+    const skills = data.skills || [];
+    const certificates = data.certificates || [];
+    const languages = data.languages || [];
+    const references = data.references || [];
+    const achievements = data.achievements || [];
+
+    const htmlContent =  `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${p.full_name || "Resume"} - Resume</title>
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: 'Calibri', 'Arial', sans-serif;
+                    background: #f5f5f5;
+                    color: #333;
+                    font-size: 10.5pt;
+                    line-height: 1.5;
+                }
+                .container {
+                    max-width: 1000px;
+                    margin: 0 auto;
+                    background: white;
+                    display: flex;
+                    flex-direction: column;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+                    overflow: hidden;
+                }
+                .sidebar {
+                    background: #f9f9f9;
+                    padding: 2rem;
+                    width: 100%;
+                }
+                .main {
+                    flex: 1;
+                }
+                header {
+                    background: ${accentColor};
+                    color: white;
+                    padding: 2.5rem 2rem;
+                    text-align: left;
+                }
+                header h1 {
+                    font-size: 2.4rem;
+                    font-weight: 900;
+                    margin: 0 0 0.4rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                }
+                header h2 {
+                    font-size: 1.35rem;
+                    font-weight: 600;
+                    margin: 0 0 1rem;
+                }
+                header p {
+                    font-size: 0.95rem;
+                    opacity: 0.95;
+                    max-width: 700px;
+                }
+                .profile-img {
+                    width: 128px;
+                    height: 128px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    border: 5px solid white;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                    margin-bottom: 1.5rem;
+                }
+                .section-title-sidebar {
+                    font-size: 0.8rem;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    letter-spacing: 0.12em;
+                    color: #333;
+                    padding: 1rem 0 0.5rem;
+                    border-bottom: 2px solid #ccc;
+                    margin-bottom: 0.8rem;
+                }
+                .section-title-main {
+                    font-size: 1.2rem;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    letter-spacing: 0.15em;
+                    color: ${accentColor};
+                    padding: 1.2rem 0 0.5rem;
+                    border-bottom: 2px solid #ddd;
+                    margin-bottom: 1rem;
+                }
+                .contact-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.6rem;
+                    margin-bottom: 0.7rem;
+                    font-size: 0.9rem;
+                }
+                .contact-item a {
+                    color: #333;
+                    text-decoration: none;
+                }
+                .contact-item a:hover {
+                    text-decoration: underline;
+                }
+                .skill-pill {
+                    display: inline-block;
+                    background: ${accentColor};
+                    color: white;
+                    padding: 0.35rem 0.75rem;
+                    border-radius: 999px;
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    margin: 0.25rem 0.4rem 0.25rem 0;
+                }
+                .lang-bar {
+                    height: 6px;
+                    background: #ddd;
+                    border-radius: 3px;
+                    margin-top: 0.4rem;
+                    overflow: hidden;
+                }
+                .lang-fill {
+                    height: 100%;
+                    background: ${accentColor};
+                    border-radius: 3px;
+                }
+                .entry {
+                    margin-bottom: 1.4rem;
+                }
+                .entry-header {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.2rem;
+                    margin-bottom: 0.3rem;
+                }
+                .entry-title {
+                    font-weight: 700;
+                    font-size: 1rem;
+                    color: #222;
+                }
+                .entry-meta {
+                    font-size: 0.88rem;
+                    color: #666;
+                }
+                .entry-subtitle {
+                    font-style: italic;
+                    color: #555;
+                    font-size: 0.95rem;
+                    margin-bottom: 0.4rem;
+                }
+                ul.bullets {
+                    margin: 0.5rem 0;
+                    padding-left: 1.3rem;
+                }
+                ul.bullets li {
+                    margin-bottom: 0.3rem;
+                    font-size: 0.92rem;
+                    color: #444;
+                }
+
+                /* Responsive & Print */
+                @media (min-width: 768px) {
+                    .container {
+                        flex-direction: row;
+                    }
+                    .sidebar {
+                        width: 32%;
+                        min-width: 280px;
+                    }
+                    .main {
+                        width: 68%;
+                    }
+                    .entry-header {
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: baseline;
+                    }
+                }
+                @media print {
+                    body { background: white; font-size: 10pt; }
+                    .container { box-shadow: none; max-width: none; margin: 0; display: flex; flex-direction: row !important; }
+                    header, .skill-pill { 
+                        background: ${accentColor} !important; 
+                        -webkit-print-color-adjust: exact; 
+                        color-adjust: exact; 
+                    }
+                    header { color: white !important; }
+                    a { color: inherit !important; text-decoration: none; }
+                    .no-print { display: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+
+                <!-- SIDEBAR (Left on desktop, bottom on mobile) -->
+                <aside class="sidebar">
+
+                    ${p.image ? `<img src="${p.image}" alt="Profile" class="profile-img">` : ''}
+
+                    <!-- Contact -->
+                    ${p.email || p.phone || p.location || p.linkedin || p.website ? `
+                    <div class="section-title-sidebar">Contact</div>
+                    <div style="font-size:0.92rem;">
+                        ${p.email ? `<div class="contact-item">✉ ${p.email}</div>` : ''}
+                        ${p.phone ? `<div class="contact-item">☎ ${p.phone}</div>` : ''}
+                        ${p.location ? `<div class="contact-item">📍 ${p.location}</div>` : ''}
+                        ${p.linkedin ? `<div class="contact-item">🔗 <a href="${p.linkedin}" target="_blank">${p.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</a></div>` : ''}
+                        ${p.website ? `<div class="contact-item">🌐 <a href="${p.website}" target="_blank">${p.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</a></div>` : ''}
+                    </div>
+                    ` : ''}
+
+                    <!-- Skills -->
+                    ${skills.length > 0 ? `
+                    <div class="section-title-sidebar">Skills</div>
+                    <div>
+                        ${skills.map(s => `<span class="skill-pill">${s}</span>`).join('')}
+                    </div>
+                    ` : ''}
+
+                    <!-- Certificates -->
+                    ${certificates.length > 0 ? `
+                    <div class="section-title-sidebar">Certificates</div>
+                    <div style="font-size:0.9rem;">
+                        ${certificates.map(c => `
+                            <div style="margin-bottom:0.8rem;">
+                                <div style="font-weight:600;">${c.name}</div>
+                                <div style="font-size:0.85rem; color:#666;">${c.institution} - ${c.year}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ` : ''}
+
+                    <!-- Languages -->
+                    ${languages.length > 0 ? `
+                    <div class="section-title-sidebar">Languages</div>
+                    <div style="font-size:0.9rem;">
+                        ${languages.map(l => {
+                            const levelNum = parseInt(l.level);
+                            const width = isNaN(levelNum) ? 0 : (levelNum / 5) * 100;
+                            return `
+                                <div style="margin-bottom:0.9rem;">
+                                    <div><strong>${l.language}</strong> - ${l.level}</div>
+                                    ${!isNaN(levelNum) ? `<div class="lang-bar"><div class="lang-fill" style="width:${width}%;"></div></div>` : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    ` : ''}
+
+                    <!-- References -->
+                    ${references.length > 0 ? `
+                    <div class="section-title-sidebar">References</div>
+                    <div style="font-size:0.88rem;">
+                        ${references.map(r => `
+                            <div style="margin-bottom:0.9rem;">
+                                <div style="font-weight:700;">${r.name}</div>
+                                <div>${r.title} at ${r.company}</div>
+                                <div>Contact: ${r.contact}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ` : ''}
+                </aside>
+
+                <!-- MAIN CONTENT (Right side) -->
+                <main class="main">
+                    <header style="background:${accentColor};">
+                        <h1>${p.full_name || "Your Name"}</h1>
+                        <h2>${p.profession || ""}</h2>
+                        ${data.professional_summary ? `<p>${data.professional_summary.replace(/\n/g, '<br>')}</p>` : ''}
+                    </header>
+
+                    <div style="padding:2rem;">
+
+                        <!-- Work Experience -->
+                        ${experience.length > 0 ? `
+                        <div>
+                            <div class="section-title-main">Work Experience</div>
+                            ${experience.map(exp => `
+                                <div class="entry">
+                                    <div class="entry-header">
+                                        <div class="entry-title">${exp.position}</div>
+                                        <div class="entry-meta">${formatDate(exp.start_date)} – ${exp.is_current ? 'Present' : formatDate(exp.end_date)}</div>
+                                    </div>
+                                    <div class="entry-subtitle">${exp.company}</div>
+                                    ${exp.description ? `
+                                    <ul class="bullets">
+                                        ${exp.description.split('\n').filter(line => line.trim()).map(line => `<li>${line.trim()}</li>`).join('')}
+                                    </ul>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+
+                        <!-- Achievements -->
+                        ${achievements.length > 0 ? `
+                        <div style="margin-top:2rem;">
+                            <div class="section-title-main">Achievements</div>
+                            ${achievements.map(a => `
+                                <div class="entry-header" style="margin-bottom:0.5rem;">
+                                    <div style="font-weight:600;">${a.title} - ${a.company || ''}</div>
+                                    <div class="entry-meta">${a.year}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+
+                        <!-- Education -->
+                        ${education.length > 0 ? `
+                        <div style="margin-top:2rem;">
+                            <div class="section-title-main">Education</div>
+                            ${education.map(edu => `
+                                <div class="entry">
+                                    <div class="entry-header">
+                                        <div class="entry-title">${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</div>
+                                        <div class="entry-meta">${formatDate(edu.graduation_date)}</div>
+                                    </div>
+                                    <div class="entry-subtitle">${edu.institution}</div>
+                                    ${edu.gpa ? `<div style="color:#666; font-size:0.9rem;">GPA: ${edu.gpa}</div>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+
+                        <!-- Projects -->
+                        ${projects.length > 0 ? `
+                        <div style="margin-top:2rem;">
+                            <div class="section-title-main">Project Experience</div>
+                            ${projects.map(p => `
+                                <div class="entry">
+                                    <div class="entry-header">
+                                        <div class="entry-title">${p.name}</div>
+                                        <div class="entry-meta">(${p.type})</div>
+                                    </div>
+                                    ${p.description ? `
+                                    <ul class="bullets">
+                                        ${p.description.split('\n').filter(l => l.trim()).map(l => `<li>${l.trim()}</li>`).join('')}
+                                    </ul>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+
+                    </div>
+                </main>
+            </div>
+        </body>
+        </html>
+            `;
+    return htmlContent;
+}
