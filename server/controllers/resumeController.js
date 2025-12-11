@@ -1699,10 +1699,10 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                                         Skills
                                     </h2>
                                     <div style="display: flex; flex-direction: column; flex-wrap: wrap; gap: 0.25rem; font-size: 0.875rem; color: #4b5563;">
-                                        ${skills.map((skill, index) => 
-                                            <span key={index} style="padding-inline: 0.5rem; padding-block: 0.125rem; border: 1px solid #d1d5db; border-radius: 0.375rem; background-color: #ffffff;">
-                                                {skill}
-                                            </span>
+                                        ${skills.map((skill) =>` 
+                                            <span style="padding-inline: 0.5rem; padding-block: 0.125rem; border: 1px solid #d1d5db; border-radius: 0.375rem; background-color: #ffffff;">
+                                                ${skill}
+                                            </span>`
                                         )}
                                     </div>
                                 </section>
