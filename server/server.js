@@ -14,9 +14,15 @@ const PORT = process.env.PORT || 3000;
 // Databse connection
 await ConnectDB()
 
+const allowedOrigins = [
+    'http://localhost:5173', 
+    'https://raptorcv.vercel.app', 
+    process.env.FRONT_END_URL 
+];
+
 app.use(express.json())
 app.use(cors({
-    origin: ['http://localhost:5173', process.env.FRONT_END_URL || 'https://resume-builder-one-puce.vercel.app'], 
+    origin: allowedOrigins, 
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
 }))
