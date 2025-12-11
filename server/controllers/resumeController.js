@@ -1598,8 +1598,8 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                 /* Grid and Responsive Adjustments */
                 .main-grid { display: grid; grid-template-columns: 3fr; }
                 .header-section { padding: 1.5rem 2.5rem; border-bottom: 1px solid #e4e4e7; }
-                .sidebar-section { padding: 1.5rem 2.5rem; background-color: #fafafa; order: 2; }
-                .content-section { padding: 1.5rem 2.5rem; order: 1; }
+                .sidebar-section { padding: 1.5rem 2.5rem; background-color: #fafafa; order: 0; }
+                .content-section { padding: 1.5rem 2.5rem; order: 0; }
 
                 @media screen and (min-width: 768px) {
                     .main-grid { grid-template-columns: 1fr 2fr; } /* md:grid-cols-3 is 1/3 and 2/3 */
