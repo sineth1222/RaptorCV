@@ -3934,7 +3934,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                     line-height: 1.5;
                 }
                 .container {
-                    max-width: 1100px;
+                    max-width: 1024px;
                     margin: 2rem auto;
                     background: white;
                     padding: 2.8rem 3rem;
