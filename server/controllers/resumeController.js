@@ -1513,7 +1513,6 @@ function getMinimalTemplateHtml(data, accentColor) {
  * @returns {string} Full standalone HTML string (perfect for PDF generation)
  */
 function getMinimalImageTemplateHtml(data, accentColor) {
-    const accentColor = accentColor || "#3b82f6";
 
     // Helper: Format YYYY-MM → "Jan 2024"
     const formatDate = (dateStr) => {
