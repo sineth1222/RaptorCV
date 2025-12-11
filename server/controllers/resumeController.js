@@ -3877,7 +3877,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
 
     const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
 
-    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white" stroke="#444" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
+    const LinkedinIcon = `<img width="16" height="16" src="https://img.icons8.com/ios/50/linkedin.png" alt="linkedin"/>`;
 
     const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
 
