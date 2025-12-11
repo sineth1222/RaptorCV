@@ -3870,6 +3870,17 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
         return year || dateStr;
     };
 
+     // === ICON SVGs (colored with accentColor) ===
+    const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f9f9f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>`;
+
+    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f9f9f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
+
+    const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f9f9f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+
+    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="" stroke="#f7f7f7" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
+
+    const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f9f9f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
+
     const p = data.personal_info || {};
     const experience = data.experience || [];
     const projects = data.project || [];
@@ -3880,16 +3891,16 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
 
     // Build contact line with pipes
     const contactParts = [];
-    if (p.email) contactParts.push(`Email: ${p.email}`);
-    if (p.phone) contactParts.push(`Phone: ${p.phone}`);
-    if (p.location) contactParts.push(`Location: ${p.location}`);
+    if (p.email) contactParts.push(`${MailIcon} ${p.email}`);
+    if (p.phone) contactParts.push(`${PhoneIcon} ${p.phone}`);
+    if (p.location) contactParts.push(`${MapPinIcon} ${p.location}`);
     if (p.linkedin) {
         const clean = p.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '');
-        contactParts.push(`LinkedIn: <a href="${p.linkedin}" target="_blank" style="color:#333;text-decoration:none;">LinkedIn</a>`);
+        contactParts.push(`${LinkedinIcon} <a href="${p.linkedin}" target="_blank" style="color:#333;text-decoration:none;">LinkedIn</a>`);
     }
     if (p.website) {
         const clean = p.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '');
-        contactParts.push(`Website: <a href="${p.website}" target="_blank" style="color:#333;text-decoration:none;">Portfolio</a>`);
+        contactParts.push(`${GlobeIcon} <a href="${p.website}" target="_blank" style="color:#333;text-decoration:none;">Portfolio</a>`);
     }
     const contactLine = contactParts.map((item, i) => 
         `<span style="white-space:nowrap;">${item}${i < contactParts.length - 1 ? ' <span style="color:#999;font-weight:bold;">|</span> ' : ''}</span>`
@@ -3913,7 +3924,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                     line-height: 1.5;
                 }
                 .container {
-                    max-width: 900px;
+                    max-width: 1024px;
                     margin: 2rem auto;
                     background: white;
                     padding: 2.8rem 3rem;
@@ -3921,8 +3932,8 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                 }
                 header {
                     text-align: center;
-                    margin-bottom: 1.2rem;
-                    padding-bottom: 0.8rem;
+                    margin-bottom: 1rem;
+                    padding-bottom: 0.5rem;
                 }
                 .name {
                     font-size: 2.6rem;
@@ -3960,7 +3971,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                     color: #222;
                     padding: 1.4rem 0 0.6rem;
                     border-bottom: 2.5px solid ${accentColor};
-                    margin: 1.8rem 0 1rem;
+                    margin: 1rem 0 1rem;
                 }
                 .summary {
                     font-size: 0.98rem;
@@ -4046,8 +4057,8 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
 
                 <!-- HEADER -->
                 <header>
-                    <h1 class="name">${p.full_name || "SINETH MASHENKA"}</h1>
-                    <h2 class="profession">${p.profession || "UNDERGRADUATE"}</h2>
+                    <h1 class="name">${p.full_name || ""}</h1>
+                    <h2 class="profession">${p.profession || ""}</h2>
                     ${contactLine ? `<div class="contact-bar">${contactLine}</div>` : ''}
                 </header>
                 <hr>
