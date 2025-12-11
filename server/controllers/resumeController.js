@@ -1587,7 +1587,8 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                     .header { grid-column: 1 / 4; padding: 3rem; }
                     .sidebar { grid-column: 1 / 2; padding: 3rem; border-right: 1px solid #e4e4e7; }
                     .main { grid-column: 2 / 4; padding: 3rem; }
-                    .no-print-break { break-inside: avoid; }
+                    /*.no-print-break { break-inside: avoid; }*/
+                    
                 }
             </style>
         </head>
