@@ -3867,13 +3867,13 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
             const date = new Date(year, parseInt(month, 10) - 1);
             return date.toLocaleString('en-us', { month: 'short', year: 'numeric' });
         }
-        return year || dateStr;
+        return year || dateStr; 
     };
 
      // === ICON SVGs (colored with accentColor) ===
     const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>`;
 
-    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
+    const PhoneIcon = `<img width="16" height="16" src="https://img.icons8.com/ios/50/phone--v1.png" alt="phone--v1"/>`;
 
     const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
 
