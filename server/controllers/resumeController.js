@@ -383,6 +383,7 @@ const getClassicTemplateHtml = (data, accentColor) => {
         });
     };
 
+
     const personalInfo = data.personal_info || {};
     const summary = data.professional_summary;
     const experience = data.experience || [];
@@ -419,9 +420,7 @@ const getClassicTemplateHtml = (data, accentColor) => {
                 
                 ${personalInfo.phone ? `
                     <div style="display: flex; align-items: center; gap: 4px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
-                            <path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16a2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/>
-                        </svg>
+                        <img width="16" height="16" src="https://img.icons8.com/ios/50/phone--v1.png" alt="phone--v1"/>
                         <span>${personalInfo.phone}</span>
                     </div>
                 ` : ''}
@@ -437,13 +436,8 @@ const getClassicTemplateHtml = (data, accentColor) => {
                 
                 ${personalInfo.linkedin ? `
                     <a target="_blank" href="${personalInfo.linkedin}" style="display: flex; align-items: center; gap: 4px; color: inherit; text-decoration: none; word-break: break-all;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
-                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" fill="#525252" stroke="none"/>
-                            <line x1="8.5" y1="11" x2="8.5" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                            <circle cx="8.5" cy="7.5" r="1.5" fill="white" stroke="none"/>
-                            <path d="M12.5 18v-4a2.5 2.5 0 0 1 2.5-2.5h0a2.5 2.5 0 0 1 2.5 2.5V18" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                        </svg>
-                        <span style="word-break: break-all;">${personalInfo.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
+                        <img width="16" height="16" src="https://img.icons8.com/ios/50/linkedin.png" alt="linkedin"/>
+                        <span style="word-break: break-all;">LinkedIn</span>
                     </a>
                 ` : ''}
                 
@@ -452,7 +446,7 @@ const getClassicTemplateHtml = (data, accentColor) => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: -2px;">
                             <circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" />
                         </svg>
-                        <span style="word-break: break-all;">${personalInfo.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}</span>
+                        <span style="word-break: break-all;">Portfolio</span>
                     </a>
                 ` : ''}
             </div>
