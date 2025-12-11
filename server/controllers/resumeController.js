@@ -1778,7 +1778,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                     border-radius: 8px;
                 }
                 h1 {
-                    font-size: 2.5rem;
+                    font-size: 1.875rem;
                     font-weight: 900;
                     text-transform: uppercase;
                     letter-spacing: 0.1em;
@@ -1786,7 +1786,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                     color: #111827;
                 }
                 .profession {
-                    font-size: 1.1rem;
+                    font-size: 1rem;
                     font-weight: 700;
                     text-transform: uppercase;
                     letter-spacing: 0.15em;
@@ -1794,12 +1794,12 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                     margin: 0.25rem 0 0.5rem 0;
                 }
                 .contact-line {
-                    font-size: 0.95rem;
+                    font-size: 0.875rem;
                     color: #4b5563;
                     margin-bottom: 1rem;
                 }
                 .section-header {
-                    font-size: 1.25rem;
+                    font-size: 1.125rem;
                     font-weight: 800;
                     text-transform: uppercase;
                     letter-spacing: 0.15em;
@@ -1821,13 +1821,13 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                 }
                 .entry-title {
                     font-weight: 700;
-                    font-size: 1.05rem;
+                    font-size: 0.875rem;
                     color: #111827;
                 }
                 .entry-date {
                     font-weight: 500;
                     color: #6b7280;
-                    font-size: 0.95rem;
+                    font-size: 0.875rem;
                 }
                 .entry-subtitle {
                     font-style: italic;
@@ -1882,7 +1882,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
 
                 @media print {
                     body { background: white; }
-                    .container { box-shadow: none; margin: 0; max-width: none; padding: 2.5rem; }
+                    .container { box-shadow: none; margin: 0; max-width: none; padding: 1.5rem; }
                     a { color: inherit !important; text-decoration: none !important; }
                 }
             </style>
