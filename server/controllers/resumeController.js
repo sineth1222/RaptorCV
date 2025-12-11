@@ -2674,7 +2674,7 @@ function getStrongTemplateHtml(data, accentColor) {
                 h1 { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 0.5rem; color: #111827; }
                 .profession { font-size: 1.25rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; margin: 0.75rem 0; color: ${accentColor}; }
                 .contact { font-size: 0.9375rem; color: #4b5563; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
-                .summary-section { padding: 1.5rem 2rem; border-top: 2px solid ${accentColor}; border-bottom: 2px solid ${accentColor}; text-align: center; }
+                .summary-section { padding: 1.5rem 2rem; margin: 0 0 2rem; border-top: 2px solid ${accentColor}; border-bottom: 2px solid ${accentColor}; text-align: center; }
                 .summary-section p { font-size: 0.9375rem; color: #374151; margin: 0; }
                 .content-grid { display: grid; grid-template-columns: 1fr; gap: 1rem 2rem; margin-bottom: 2rem; }
                 .section-title { font-size: 1.25rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.25rem 0 0.25rem 1rem; border-left: 4px solid ${accentColor}; color: ${accentColor}; margin: 0 0 1rem; }
@@ -2693,7 +2693,7 @@ function getStrongTemplateHtml(data, accentColor) {
 
                 @media (min-width: 768px) {
                     .inner { padding: 3rem; }
-                    .summary-section { margin: 0 3rem 2.5rem; }
+                    .summary-section { margin: 0 0 0; }
                     .content-grid { grid-template-columns: 3fr 9fr; }
                     .entry-header { flex-direction: row; align-items: flex-start; }
                     .skills-list { grid-template-columns: 1fr 1fr; gap: 1rem 2rem; }
