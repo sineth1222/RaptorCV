@@ -1795,7 +1795,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                     line-height: 1.6;
                 }
                 .container {
-                    max-width: 900px;
+                    max-width: 1000px;
                     margin: 1rem auto;
                     background: white;
                     padding: 2rem;
