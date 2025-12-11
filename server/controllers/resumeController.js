@@ -4052,7 +4052,7 @@ function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
                 }
                 @media print {
                     body { background: white; font-size: 10pt; }
-                    .container { box-shadow: none; max-width: 1100px; margin: 0; padding: 2.5rem 2.8rem; }
+                    .container { box-shadow: none; max-width: 1100px; margin: 0; padding: 1.5rem 1.8rem; }
                     .skill-pill { 
                         background: ${accentColor} !important; 
                         color: white !important;
