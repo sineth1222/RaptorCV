@@ -3550,7 +3550,7 @@ function getOfficialTemplateHtml(data, accentColor) {
  * @param {string} accentColor - e.g. "#1e40af", "#dc2626"
  * @returns {string} Standalone HTML string
  */
-function getMordernImageTemplateHtml(data, accentColor = "#1e40af") {
+function getMordernImageTemplateHtml(data, accentColor) {
 
     const formatDate = (dateStr, justYear = false) => {
         if (!dateStr || ['present', 'current'].includes(dateStr.toLowerCase())) return 'Present';
@@ -3830,7 +3830,7 @@ function getMordernImageTemplateHtml(data, accentColor = "#1e40af") {
  * @param {string} accentColor - Hex color (e.g. "#6d28d9" for purple, "#1e40af" for blue)
  * @returns {string} Standalone HTML string
  */
-function getImageAccurateTemplateHtml(data, accentColor = "#6d28d9") {
+function getImageAccurateTemplateHtml(data, accentColor) {
 
     const formatDate = (dateStr) => {
         if (!dateStr || dateStr.toLowerCase() === 'present' || dateStr.toLowerCase() === 'current') return 'Present';
