@@ -1470,52 +1470,36 @@ function getMinimalTemplateHtml(data, accentColor) {
 
 
 /**
- * Minimal Image Resume Template (with photo) → Pure HTML + Inline CSS
+ * Minimal Image Resume Template → Pure HTML + Inline CSS (Pixel-Perfect Tailwind Match)
+ * Exact conversion of your MinimalImageTemplate.jsx
  * @param {object} data - Resume data
- * @param {string} accentColor - e.g., "#e63946" or "#1d4ed8"
- * @returns {string} Full standalone HTML string (perfect for PDF generation)
+ * @param {string} accentColor - e.g. "#dc2626", "#1e40af"
+ * @returns {string} Standalone HTML string
  */
 function getMinimalImageTemplateHtml(data, accentColor) {
 
-    // Helper: Format YYYY-MM → "Jan 2024"
     const formatDate = (dateStr) => {
         if (!dateStr) return "";
         const [year, month] = dateStr.split("-");
         if (!year || !month) return dateStr;
-        try {
-            return new Date(year, month - 1).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "short",
-            });
-        } catch {
-            return dateStr;
-        }
+        return new Date(year, month - 1).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+        });
     };
 
     const p = data.personal_info || {};
-    const imgSrc = p.image
-        ? typeof p.image === "string"
-            ? p.image
-            : URL.createObjectURL(p.image) // works in browser only; for server use base64
-        : "";
-
-    // === ICON SVGs (same reliable ones as before, adjusted size/color) ===
-    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
-
-    const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>`;
-
-    const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
-
-    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="${accentColor}" stroke="white" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
-
-    const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
-
     const experience = data.experience || [];
-    const project = data.project || [];
     const education = data.education || [];
+    const projects = data.project || [];
     const skills = data.skills || [];
     const languages = data.languages || [];
     const references = data.references || [];
+
+    // Image handling (fallback if blob)
+    const imageUrl = p.image 
+        ? (typeof p.image === 'string' ? p.image : "https://via.placeholder.com/128?text=Photo")
+        : null;
 
     const htmlContent = `
         <!DOCTYPE html>
@@ -1525,33 +1509,165 @@ function getMinimalImageTemplateHtml(data, accentColor) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${p.full_name || "Resume"} - Resume</title>
             <style>
-                body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: #f9fafb; color: #27272a; line-height: 1.5; }
-                .container { max-width: 1000px; margin: 0 auto; background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-                .grid { display: grid; grid-cols-1; }
-                .header { grid-column: 1 / -1; padding: 2.5rem 1.5rem; border-bottom: 1px solid #e4e4e7; background: white; }
-                .sidebar { padding: 2rem 1.5rem; background: #f4f4f5; }
-                .main { padding: 2rem 1.5rem; }
-                .section-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 2px solid ${accentColor}; padding-bottom: 0.4rem; margin-bottom: 1rem; color: #525252; }
-                .accent { color: ${accentColor}; }
-                .tag { display: inline-block; padding: 0.25rem 0.5rem; border: 1px solid #d4d4d8; border-radius: 0.375rem; background: white; font-size: 0.875rem; margin-right: 0.5rem; margin-bottom: 0.5rem; }
-                ul { padding-left: 1.25rem; }
-                li { margin-bottom: 0.35rem; }
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    background: #f9fafb;
+                    color: #1f2937;
+                    font-size: 14px;
+                    line-height: 1.5;
+                }
+                .container {
+                    max-width: 1100px;
+                    margin: 2rem auto;
+                    background: white;
+                    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+                    overflow: hidden;
+                }
+                .grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                }
+                .header {
+                    grid-column: 1 / -1;
+                    padding: 2.5rem 2.5rem 2rem;
+                    border-bottom: 1px solid #e4e4e7;
+                    background: white;
+                }
+                .header-content {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 1.5rem;
+                }
+                .profile-img {
+                    width: 128px;
+                    height: 128px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    border: 4px solid ${accentColor}70;
+                }
+                .name-title {
+                    text-align: center;
+                }
+                .name {
+                    font-size: 2.25rem; /* text-3xl → 36px */
+                    font-weight: 800;
+                    color: #3f3f46;
+                    letter-spacing: 0.05em;
+                    margin: 0 0 0.25rem;
+                }
+                .profession {
+                    font-size: 0.875rem; /* text-sm */
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    letter-spacing: 0.15em;
+                    color: #52525b;
+                }
+                .sidebar {
+                    padding: 2rem 1.5rem;
+                    background: #f4f4f5;
+                    border-right: 1px solid #d4d4d8;
+                }
+                .main-content {
+                    padding: 2rem 2rem;
+                }
+                .section-title {
+                    font-size: 0.75rem; /* text-xs */
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.15em;
+                    color: #52525b;
+                    margin-bottom: 0.75rem;
+                    padding-bottom: 0.5rem;
+                    border-bottom: 2px solid ${accentColor};
+                }
+                .contact-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    font-size: 0.875rem;
+                    margin-bottom: 0.5rem;
+                }
+                .contact-item a {
+                    color: #1f2937;
+                    text-decoration: none;
+                }
+                .contact-item a:hover {
+                    text-decoration: underline;
+                    color: #2563eb;
+                }
+                .skill-tag {
+                    display: inline-block;
+                    padding: 0.25rem 0.5rem;
+                    font-size: 0.875rem;
+                    border: 1px solid #d4d4d8;
+                    border-radius: 0.375rem;
+                    background: white;
+                    margin: 0.25rem 0.5rem 0.25rem 0;
+                }
+                .entry {
+                    margin-bottom: 1.5rem;
+                }
+                .entry-header {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.25rem;
+                    margin-bottom: 0.25rem;
+                }
+                .entry-title {
+                    font-weight: 600;
+                    font-size: 1rem;
+                    color: #111;
+                }
+                .entry-meta {
+                    font-size: 0.75rem;
+                    color: #71717a;
+                }
+                .entry-company {
+                    font-size: 0.875rem;
+                    color: ${accentColor};
+                    margin-bottom: 0.5rem;
+                }
+                ul.bullets {
+                    margin: 0.5rem 0;
+                    padding-left: 1.25rem;
+                }
+                ul.bullets li {
+                    font-size: 0.875rem;
+                    color: #374151;
+                    margin-bottom: 0.25rem;
+                }
+                .references-grid {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 1.5rem;
+                    margin-top: 1rem;
+                    font-size: 0.875rem;
+                }
+                .ref-item {
+                    flex: 1 1 45%;
+                    min-width: 200px;
+                }
 
                 @media (min-width: 768px) {
-                    .grid { grid-template-columns: 1fr 2fr; }
-                    .header { padding: 3rem; }
-                    .sidebar { padding: 3rem; border-right: 1px solid #e4e4e7; }
-                    .main { padding: 3rem; }
+                    .grid { grid-template-columns: repeat(3, 1fr); }
+                    .header { padding: 3rem 4rem; }
+                    .header-content { flex-direction: row; align-items: center; }
+                    .name-title { text-align: left; }
+                    .sidebar { grid-column: 1; padding: 2.5rem 2rem; }
+                    .main-content { grid-column: 2 / 4; padding: 2.5rem 3rem; }
+                    .entry-header { flex-direction: row; justify-content: space-between; align-items: baseline; }
                 }
                 @media print {
-                    body { background: white; }
-                    .container { box-shadow: none; }
-                    .grid { grid-template-columns: repeat(3, auto) / 1fr 1fr 1fr; }
-                    .header { grid-column: 1 / 4; padding: 3rem; }
-                    .sidebar { grid-column: 1 / 2; padding: 3rem; border-right: 1px solid #e4e4e7; }
-                    .main { grid-column: 2 / 4; padding: 3rem; }
-                    /*.no-print-break { break-inside: avoid; }*/
-                    
+                    body { background: white; font-size: 10pt; }
+                    .container { box-shadow: none; margin: 0; max-width: none; }
+                    .grid { grid-template-columns: 1fr 2fr !important; }
+                    .header { grid-column: 1 / -1 !important; }
+                    .sidebar { grid-column: 1; border-right: 1px solid #ccc; }
+                    .main-content { grid-column: 2; }
+                    .profile-img { border: 4px solid ${accentColor}70 !important; -webkit-print-color-adjust: exact; }
                 }
             </style>
         </head>
@@ -1559,135 +1675,137 @@ function getMinimalImageTemplateHtml(data, accentColor) {
             <div class="container">
                 <div class="grid">
 
-                    <!-- HEADER WITH IMAGE -->
+                    <!-- HEADER -->
                     <div class="header">
-                        <div style="display: flex; flex-direction: row; align-items: center; gap: 1.5rem; text-align: center;">
-                            ${imgSrc ? `
-                                <img src="${imgSrc}" alt="Profile" style="width: 128px; height: 128px; object-fit: cover; border-radius: 50%; border: 4px solid ${accentColor}70;" />
-                            ` : ''}
-                            <div>
-                                <h1 style="font-size: 2.5rem; font-weight: 800; color: #27272a; margin: 0; letter-spacing: 0.05em;">
-                                    ${p.full_name || "Your Name"}
-                                </h1>
-                                <p style="text-transform: uppercase; color: #525252; font-weight: 500; letter-spacing: 0.2em; margin-top: 0.5rem;">
-                                    ${p.profession || ""}
-                                </p>
+                        <div class="header-content">
+                            ${imageUrl ? `<img src="${imageUrl}" alt="Profile" class="profile-img">` : ''}
+                            <div class="name-title">
+                                <h1 class="name">${p.full_name || "Your Name"}</h1>
+                                <p class="profession">${p.profession || ""}</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- SIDEBAR -->
                     <aside class="sidebar">
-                        <div style="max-width: 360px; margin: 0 auto;">
+                        <div style="display:flex;flex-direction:column;gap:2rem;">
 
-                            <!-- Contact -->
-                            <section class="no-print-break">
-                                <h2 class="section-title accent">CONTACT</h2>
-                                <div style="font-size: 0.875rem; line-height: 1.8;">
-                                    ${p.phone ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">${PhoneIcon}<span>${p.phone}</span></div>` : ''}
-                                    ${p.email ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">${MailIcon}<span>${p.email}</span></div>` : ''}
-                                    ${p.location ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">${MapPinIcon}<span>${p.location}</span></div>` : ''}
-                                    ${p.linkedin ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><a href="${p.linkedin}" target="_blank" style="color:inherit;">${LinkedinIcon}<span> Linkedin</span></a></div>` : ''}
-                                    ${p.website ? `<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><a href="${p.website}" target="_blank" style="color:inherit;">${GlobeIcon}<span> Protfolio</span></a></div>` : ''}
+                            <!-- CONTACT -->
+                            <section>
+                                <h2 class="section-title">CONTACT</h2>
+                                <div style="font-size:0.875rem;">
+                                    ${p.phone ? `<div class="contact-item"><span style="color:${accentColor};">Phone</span> ${p.phone}</div>` : ''}
+                                    ${p.email ? `<div class="contact-item"><span style="color:${accentColor};">Email</span> ${p.email}</div>` : ''}
+                                    ${p.location ? `<div class="contact-item"><span style="color:${accentColor};">Location</span> ${p.location}</div>` : ''}
+                                    ${p.linkedin ? `<div class="contact-item"><span style="color:${accentColor};">LinkedIn</span> <a href="${p.linkedin}" target="_blank">${p.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</a></div>` : ''}
+                                    ${p.website ? `<div class="contact-item"><span style="color:${accentColor};">Website</span> <a href="${p.website}" target="_blank">${p.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</a></div>` : ''}
                                 </div>
                             </section>
 
-                            <!-- Education -->
+                            <!-- EDUCATION -->
                             ${education.length > 0 ? `
-                                <section class="no-print-break" style="margin-top: 2rem;">
-                                    <h2 class="section-title accent">EDUCATION</h2>
+                            <section>
+                                <h2 class="section-title">EDUCATION</h2>
+                                <div style="font-size:0.875rem;">
                                     ${education.map(edu => `
-                                        <div style="margin-bottom: 1rem;">
-                                            <p style="font-weight: 600; text-transform: uppercase; margin:0;">${edu.degree}</p>
-                                            <p style="color:#525252; margin:0.25rem 0;">${edu.institution}</p>
-                                            <p style="font-size:0.75rem; color:#71717a;">${formatDate(edu.graduation_date)}</p>
+                                        <div style="margin-bottom:1rem;">
+                                            <div style="font-weight:600;text-transform:uppercase;">${edu.degree}</div>
+                                            <div style="color:#52525b;">${edu.institution}</div>
+                                            <div style="font-size:0.75rem;color:#71717a;">${formatDate(edu.graduation_date)}</div>
                                         </div>
                                     `).join('')}
-                                </section>
+                                </div>
+                            </section>
                             ` : ''}
 
-                            <!-- Skills -->
+                            <!-- SKILLS -->
                             ${skills.length > 0 ? `
-                                <section class="no-print-break" style="margin-top: 2rem;">
-                                    <h2 class="section-title accent">SKILLS</h2>
-                                    <div>
-                                        ${skills.map(s => `<span class="tag">${s}</span>`).join('')}
-                                    </div>
-                                </section>
+                            <section>
+                                <h2 class="section-title">SKILLS</h2>
+                                <div style="margin-top:0.5rem;">
+                                    ${skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+                                </div>
+                            </section>
                             ` : ''}
 
-                            <!-- Languages -->
+                            <!-- LANGUAGES -->
                             ${languages.length > 0 ? `
-                                <section class="no-print-break" style="margin-top: 2rem;">
-                                    <h2 class="section-title accent">LANGUAGES</h2>
-                                    ${languages.map(l => `
-                                        <p style="margin:0.35rem 0; font-size:0.875rem;">• <strong>${l.language}</strong> - ${l.level}</p>
-                                    `).join('')}
-                                </section>
+                            <section>
+                                <h2 class="section-title">LANGUAGES</h2>
+                                <div style="margin-top:0.5rem;font-size:0.875rem;">
+                                    ${languages.map(l => `<div style="margin-bottom:0.25rem;">• <strong>${l.language}</strong> - ${l.level}</div>`).join('')}
+                                </div>
+                            </section>
                             ` : ''}
-
                         </div>
                     </aside>
 
                     <!-- MAIN CONTENT -->
-                    <main class="main">
+                    <main class="main-content">
 
-                        <!-- Summary -->
+                        <!-- SUMMARY -->
                         ${data.professional_summary ? `
-                            <section class="no-print-break" style="margin-bottom: 2rem;">
-                                <h2 class="section-title" style="color:${accentColor};">SUMMARY</h2>
-                                <p style="font-size:0.95rem; color:#374151;">${data.professional_summary.replace(/\n/g, '<br>')}</p>
-                            </section>
+                        <section style="margin-bottom:2rem;">
+                            <h2 class="section-title" style="color:${accentColor};border-color:${accentColor};">SUMMARY</h2>
+                            <p style="font-size:0.875rem;color:#374151;line-height:1.6;">${data.professional_summary.replace(/\n/g, '<br>')}</p>
+                        </section>
                         ` : ''}
 
-                        <!-- Experience -->
+                        <!-- EXPERIENCE -->
                         ${experience.length > 0 ? `
-                            <section class="no-print-break" style="margin-bottom: 2rem;">
-                                <h2 class="section-title" style="color:${accentColor};">EXPERIENCE</h2>
-                                ${experience.map(exp => `
-                                    <div style="margin-bottom: 1.5rem;">
-                                        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap;">
-                                            <h3 style="font-size:1.1rem; font-weight:600; margin:0;">${exp.position}</h3>
-                                            <span style="font-size:0.8rem; color:#71717a;">${formatDate(exp.start_date)} – ${exp.is_current ? 'Present' : formatDate(exp.end_date)}</span>
-                                        </div>
-                                        <p style="margin:0.35rem 0; color:${accentColor}; font-weight:500;">${exp.company}</p>
-                                        ${exp.description ? `<ul>${exp.description.split('\n').map(line => `<li>${line || '&nbsp;'}</li>`).join('')}</ul>` : ''}
+                        <section style="margin-bottom:2rem;">
+                            <h2 class="section-title" style="color:${accentColor};border-color:${accentColor};">EXPERIENCE</h2>
+                            ${experience.map(exp => `
+                                <div class="entry">
+                                    <div class="entry-header">
+                                        <div class="entry-title">${exp.position}</div>
+                                        <div class="entry-meta">${formatDate(exp.start_date)} – ${exp.is_current ? 'Present' : formatDate(exp.end_date)}</div>
                                     </div>
-                                `).join('')}
-                            </section>
-                        ` : ''}
-
-                        <!-- Projects -->
-                        ${project.length > 0 ? `
-                            <section class="no-print-break" style="margin-bottom: 2rem;">
-                                <h2 class="section-title" style="color:${accentColor};">PROJECTS</h2>
-                                ${project.map(proj => `
-                                    <div style="margin-bottom: 1.5rem;">
-                                        <h3 style="font-size:1.1rem; font-weight:600; margin:0;">${proj.name}</h3>
-                                        <p style="margin:0.35rem 0; color:${accentColor};">${proj.type}</p>
-                                        ${proj.description ? `<ul>${proj.description.split('\n').map(line => `<li>${line || '&nbsp;'}</li>`).join('')}</ul>` : ''}
-                                    </div>
-                                `).join('')}
-                            </section>
-                        ` : ''}
-
-                        <!-- References -->
-                        ${references.length > 0 ? `
-                            <section class="no-print-break">
-                                <h2 class="section-title" style="color:${accentColor};">REFERENCES</h2>
-                                <div style="display:flex; flex-wrap:wrap; gap:2rem;">
-                                    ${references.map(ref => `
-                                        <div style="flex: 1 1 200px;">
-                                            <p style="font-weight:700; margin:0;">${ref.name}</p>
-                                            <p style="margin:0.25rem 0;">${ref.title}</p>
-                                            <p style="margin:0;">${ref.company}</p>
-                                            <p style="margin:0;">${ref.contact}</p>
-                                        </div>
-                                    `).join('')}
+                                    <div class="entry-company">${exp.company}</div>
+                                    ${exp.description ? `
+                                        <ul class="bullets">
+                                            ${exp.description.split('\n').filter(l => l.trim()).map(l => `<li>${l.trim()}</li>`).join('')}
+                                        </ul>
+                                    ` : ''}
                                 </div>
-                            </section>
+                            `).join('')}
+                        </section>
                         ` : ''}
 
+                        <!-- PROJECTS -->
+                        ${projects.length > 0 ? `
+                        <section style="margin-bottom:2rem;">
+                            <h2 class="section-title" style="color:${accentColor};border-color:${accentColor};">PROJECTS</h2>
+                            ${projects.map(p => `
+                                <div class="entry" style="margin-bottom:1.5rem;">
+                                    <h3 style="font-size:1.125rem;font-weight:600;color:#111;margin:0 0 0.25rem;">${p.name}</h3>
+                                    <div class="entry-company">${p.type}</div>
+                                    ${p.description ? `
+                                        <ul class="bullets">
+                                            ${p.description.split('\n').filter(l => l.trim()).map(l => `<li>${l.trim()}</li>`).join('')}
+                                        </ul>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </section>
+                        ` : ''}
+
+                        <!-- REFERENCES -->
+                        ${references.length > 0 ? `
+                        <section>
+                            <h2 class="section-title" style="color:${accentColor};border-color:${accentColor};">REFERENCES</h2>
+                            <div class="references-grid">
+                                ${references.map(r => `
+                                    <div class="ref-item">
+                                        <div style="font-weight:700;">${r.name}</div>
+                                        <div style="font-size:0.875rem;">${r.title}</div>
+                                        <div style="font-size:0.875rem;">${r.company}</div>
+                                        <div style="font-size:0.875rem;">${r.contact}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+                        ` : ''}
                     </main>
                 </div>
             </div>
@@ -3170,17 +3288,17 @@ function getOfficialTemplateHtml(data, accentColor) {
     };
 
     // === ICON SVGs (colored with accentColor) ===
-    const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f9f9f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>`;
+    const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>`;
 
     const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
     //const PhoneIcon = `<img width="16" height="16" src="https://img.icons8.com/ios/50/phone--v1.png" alt="phone--v1"/>`;
 
-    const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f9f9f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+    const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
 
     const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="${accentColor}" stroke="white" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
     //const LinkedinIcon = `<img width="16" height="16" src="https://img.icons8.com/ios/50/linkedin.png" alt="linkedin"/>`;
 
-    const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f9f9f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
+    const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
 
     const p = data.personal_info || {};
     const experience = data.experience || [];
