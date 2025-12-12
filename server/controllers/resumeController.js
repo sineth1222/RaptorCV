@@ -1488,6 +1488,19 @@ function getMinimalImageTemplateHtml(data, accentColor) {
         });
     };
 
+    // === ICON SVGs (colored with accentColor) ===
+    const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>`;
+
+    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
+    //const PhoneIcon = `<img width="16" height="16" src="https://img.icons8.com/ios/50/phone--v1.png" alt="phone--v1" fill="none" stroke="${accentColor}"/>`;
+
+    const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+
+    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="${accentColor}" stroke="white" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
+    //const LinkedinIcon = `<img width="16" height="16" src="https://img.icons8.com/ios/50/linkedin.png" alt="linkedin" fill="${accentColor}" stroke="white"/>`;
+
+    const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
+
     const p = data.personal_info || {};
     const experience = data.experience || [];
     const education = data.education || [];
@@ -1574,7 +1587,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                     padding: 2rem 2rem;
                 }
                 .section-title {
-                    font-size: 0.75rem; /* text-xs */
+                    font-size: 0.875rem; /* text-xs */
                     font-weight: 600;
                     text-transform: uppercase;
                     letter-spacing: 0.15em;
@@ -1618,7 +1631,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                 }
                 .entry-title {
                     font-weight: 600;
-                    font-size: 1rem;
+                    font-size: 0.875rem;
                     color: #111;
                 }
                 .entry-meta {
@@ -1694,11 +1707,11 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                             <section>
                                 <h2 class="section-title">CONTACT</h2>
                                 <div style="font-size:0.875rem;">
-                                    ${p.phone ? `<div class="contact-item"><span style="color:${accentColor};">Phone</span> ${p.phone}</div>` : ''}
-                                    ${p.email ? `<div class="contact-item"><span style="color:${accentColor};">Email</span> ${p.email}</div>` : ''}
-                                    ${p.location ? `<div class="contact-item"><span style="color:${accentColor};">Location</span> ${p.location}</div>` : ''}
-                                    ${p.linkedin ? `<div class="contact-item"><span style="color:${accentColor};">LinkedIn</span> <a href="${p.linkedin}" target="_blank">${p.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</a></div>` : ''}
-                                    ${p.website ? `<div class="contact-item"><span style="color:${accentColor};">Website</span> <a href="${p.website}" target="_blank">${p.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</a></div>` : ''}
+                                    ${p.email ? `<div class="contact-item">${MailIcon} ${p.email}</div>` : ''}
+                                    ${p.phone ? `<div class="contact-item">${PhoneIcon} ${p.phone}</div>` : ''}
+                                    ${p.location ? `<div class="contact-item">${MapPinIcon} ${p.location}</div>` : ''}
+                                    ${p.linkedin ? `<div class="contact-item">${LinkedinIcon} <a href="${p.linkedin}" target="_blank">LinkedIn</a></div>` : ''}
+                                    ${p.website ? `<div class="contact-item">${GlobeIcon} <a href="${p.website}" target="_blank">Portfolio</a></div>` : ''}
                                 </div>
                             </section>
 
@@ -1709,7 +1722,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                                 <div style="font-size:0.875rem;">
                                     ${education.map(edu => `
                                         <div style="margin-bottom:1rem;">
-                                            <div style="font-weight:600;text-transform:uppercase;">${edu.degree}</div>
+                                            <div style="font-weight:600;text-transform:uppercase;">${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</div>
                                             <div style="color:#52525b;">${edu.institution}</div>
                                             <div style="font-size:0.75rem;color:#71717a;">${formatDate(edu.graduation_date)}</div>
                                         </div>
@@ -1778,7 +1791,7 @@ function getMinimalImageTemplateHtml(data, accentColor) {
                             <h2 class="section-title" style="color:${accentColor};border-color:${accentColor};">PROJECTS</h2>
                             ${projects.map(p => `
                                 <div class="entry" style="margin-bottom:1.5rem;">
-                                    <h3 style="font-size:1.125rem;font-weight:600;color:#111;margin:0 0 0.25rem;">${p.name}</h3>
+                                    <h3 style="font-size:0.875rem;font-weight:600;color:#111;margin:0 0 0.25rem;">${p.name}</h3>
                                     <div class="entry-company">${p.type}</div>
                                     ${p.description ? `
                                         <ul class="bullets">
