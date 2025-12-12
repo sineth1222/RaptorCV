@@ -1284,10 +1284,10 @@ function getMinimalTemplateHtml(data, accentColor) {
                     color: ${accentColor};
                     padding-bottom: 0.25rem;
                     border-bottom: 1px solid ${accentColor};
-                    margin: 2.5rem 0 1rem;
+                    margin: 1.5rem 0 1rem;
                 }
                 .entry {
-                    margin-bottom: 1.5rem;
+                    margin-bottom: 1rem;
                 }
                 .entry-header {
                     display: flex;
@@ -1297,7 +1297,7 @@ function getMinimalTemplateHtml(data, accentColor) {
                 }
                 .entry-title {
                     font-weight: 500;
-                    font-size: 1rem;
+                    font-size: 0.875rem;
                 }
                 .entry-meta {
                     font-size: 0.75rem;
@@ -1306,7 +1306,7 @@ function getMinimalTemplateHtml(data, accentColor) {
                 .entry-company {
                     font-size: 0.875rem;
                     color: #4b5563;
-                    margin-bottom: 0.5rem;
+                    margin-bottom: 0.25rem;
                 }
                 .description {
                     font-size: 0.875rem;
