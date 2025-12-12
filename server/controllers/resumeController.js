@@ -3172,11 +3172,13 @@ function getOfficialTemplateHtml(data, accentColor) {
     // === ICON SVGs (colored with accentColor) ===
     const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>`;
 
-    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
+    //const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
+    const PhoneIcon = `<img width="16" height="16" src="https://img.icons8.com/ios/50/phone--v1.png" alt="phone--v1"/>`;
 
     const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
 
-    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="${accentColor}" stroke="white" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
+    //const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="${accentColor}" stroke="white" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
+    const LinkedinIcon = `<img width="16" height="16" src="https://img.icons8.com/ios/50/linkedin.png" alt="linkedin"/>`;
 
     const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
 
@@ -3227,23 +3229,23 @@ function getOfficialTemplateHtml(data, accentColor) {
                 header {
                     background: ${accentColor};
                     color: white;
-                    padding: 2.5rem 2rem;
+                    padding: 1.5rem 1rem;
                     text-align: left;
                 }
                 header h1 {
-                    font-size: 2.4rem;
+                    font-size: 2.25rem;
                     font-weight: 900;
                     margin: 0 0 0.4rem;
                     text-transform: uppercase;
                     letter-spacing: 0.08em;
                 }
                 header h2 {
-                    font-size: 1.35rem;
+                    font-size: 1.25rem;
                     font-weight: 600;
                     margin: 0 0 1rem;
                 }
                 header p {
-                    font-size: 0.95rem;
+                    font-size: 0.875rem;
                     opacity: 0.95;
                     max-width: 700px;
                 }
@@ -3257,20 +3259,20 @@ function getOfficialTemplateHtml(data, accentColor) {
                     margin-bottom: 1.5rem;
                 }
                 .section-title-sidebar {
-                    font-size: 0.8rem;
+                    font-size: 0.875rem;
                     font-weight: 800;
                     text-transform: uppercase;
-                    letter-spacing: 0.12em;
+                    letter-spacing: 0.05em;
                     color: #333;
                     padding: 1rem 0 0.5rem;
                     border-bottom: 2px solid #ccc;
                     margin-bottom: 0.8rem;
                 }
                 .section-title-main {
-                    font-size: 1.2rem;
+                    font-size: 1.125rem;
                     font-weight: 800;
                     text-transform: uppercase;
-                    letter-spacing: 0.15em;
+                    letter-spacing: 0.1em;
                     color: ${accentColor};
                     padding: 1.2rem 0 0.5rem;
                     border-bottom: 2px solid #ddd;
@@ -3281,7 +3283,7 @@ function getOfficialTemplateHtml(data, accentColor) {
                     align-items: center;
                     gap: 0.6rem;
                     margin-bottom: 0.7rem;
-                    font-size: 0.9rem;
+                    font-size: 0.875rem;
                 }
                 .contact-item a {
                     color: #333;
@@ -3323,17 +3325,17 @@ function getOfficialTemplateHtml(data, accentColor) {
                 }
                 .entry-title {
                     font-weight: 700;
-                    font-size: 1rem;
+                    font-size: 0.875rem;
                     color: #222;
                 }
                 .entry-meta {
-                    font-size: 0.88rem;
+                    font-size: 0.8rem;
                     color: #666;
                 }
                 .entry-subtitle {
                     font-style: italic;
                     color: #555;
-                    font-size: 0.95rem;
+                    font-size: 0.875rem;
                     margin-bottom: 0.4rem;
                 }
                 ul.bullets {
@@ -3342,7 +3344,7 @@ function getOfficialTemplateHtml(data, accentColor) {
                 }
                 ul.bullets li {
                     margin-bottom: 0.3rem;
-                    font-size: 0.92rem;
+                    font-size: 0.875rem;
                     color: #444;
                 }
 
@@ -3389,7 +3391,7 @@ function getOfficialTemplateHtml(data, accentColor) {
                     <!-- Contact -->
                     ${p.email || p.phone || p.location || p.linkedin || p.website ? `
                     <div class="section-title-sidebar">Contact</div>
-                    <div style="font-size:0.92rem;">
+                    <div style="font-size:0.875rem;">
                         ${p.email ? `<div class="contact-item">${MailIcon} ${p.email}</div>` : ''}
                         ${p.phone ? `<div class="contact-item">${PhoneIcon} ${p.phone}</div>` : ''}
                         ${p.location ? `<div class="contact-item">${MapPinIcon} ${p.location}</div>` : ''}
@@ -3409,7 +3411,7 @@ function getOfficialTemplateHtml(data, accentColor) {
                     <!-- Certificates -->
                     ${certificates.length > 0 ? `
                     <div class="section-title-sidebar">Certificates</div>
-                    <div style="font-size:0.9rem;">
+                    <div style="font-size:0.875rem;">
                         ${certificates.map(c => `
                             <div style="margin-bottom:0.8rem;">
                                 <div style="font-weight:600;">${c.name}</div>
@@ -3422,7 +3424,7 @@ function getOfficialTemplateHtml(data, accentColor) {
                     <!-- Languages -->
                     ${languages.length > 0 ? `
                     <div class="section-title-sidebar">Languages</div>
-                    <div style="font-size:0.9rem;">
+                    <div style="font-size:0.875rem;">
                         ${languages.map(l => {
                             const levelNum = parseInt(l.level);
                             const width = isNaN(levelNum) ? 0 : (levelNum / 5) * 100;
@@ -3439,7 +3441,7 @@ function getOfficialTemplateHtml(data, accentColor) {
                     <!-- References -->
                     ${references.length > 0 ? `
                     <div class="section-title-sidebar">References</div>
-                    <div style="font-size:0.88rem;">
+                    <div style="font-size:0.875rem;">
                         ${references.map(r => `
                             <div style="margin-bottom:0.9rem;">
                                 <div style="font-weight:700;">${r.name} (${r.title})</div>
@@ -3506,7 +3508,7 @@ function getOfficialTemplateHtml(data, accentColor) {
                                         <div class="entry-meta">${formatDate(edu.graduation_date)}</div>
                                     </div>
                                     <div class="entry-subtitle">${edu.institution}</div>
-                                    ${edu.gpa ? `<div style="color:#666; font-size:0.9rem;">GPA: ${edu.gpa}</div>` : ''}
+                                    ${edu.gpa ? `<div style="color:#666; font-size:0.875rem;">GPA: ${edu.gpa}</div>` : ''}
                                 </div>
                             `).join('')}
                         </div>

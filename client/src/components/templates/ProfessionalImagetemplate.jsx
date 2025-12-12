@@ -111,45 +111,45 @@ const ModernSidebarTemplate = ({ data, accentColor }) => {
                     <div className="space-y-3 text-sm font-medium">
                         {data.personal_info?.email && (
                             <div className="flex items-center gap-2">
-                                <Mail size={16} style={{ color: accentColor }} />
+                                <Mail size={16}  />
                                 <span className="break-all">{data.personal_info.email}</span>
                             </div>
                         )}
                         {data.personal_info?.phone && (
                             <div className="flex items-center gap-2">
-                                <Phone size={16} style={{ color: accentColor }} />
+                                <Phone size={16}  />
                                 <span>{data.personal_info.phone}</span>
                             </div>
                         )}
                         {data.personal_info?.location && (
                             <div className="flex items-start gap-2">
-                                <MapPin size={16} style={{ color: accentColor, marginTop: '2px' }} />
+                                <MapPin size={16}  />
                                 <span>{data.personal_info.location}</span>
                             </div>
                         )}
                         {data.personal_info?.linkedin && (
                             <div className="flex items-center gap-2">
-                                <Linkedin size={16} style={{ color: accentColor }} />
+                                <Linkedin size={16} />
                                 <a 
                                     href={data.personal_info.linkedin} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     className="hover:underline text-gray-700 break-all"
                                 >
-                                    {data.personal_info.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}
+                                   LinkedIn
                                 </a>
                             </div>
                         )}
                         {data.personal_info?.website && (
                             <div className="flex items-center gap-2">
-                                <Globe size={16} style={{ color: accentColor }} />
+                                <Globe size={16} />
                                 <a 
                                     href={data.personal_info.website} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     className="hover:underline text-gray-700 break-all"
                                 >
-                                    {data.personal_info.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Website'}
+                                    Portfolio
                                 </a>
                             </div>
                         )}
