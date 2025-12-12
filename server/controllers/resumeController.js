@@ -2437,10 +2437,10 @@ function getNaturalTemplateHtml(data, accentColor) {
                 .lang-item { font-size: 0.875rem; min-width: 45%; }
 
                 @media (min-width: 768px) {
-                    header { flex-direction: row; text-align: left; padding: 3rem; gap: 2rem; }
+                    header { flex-direction: row; text-align: left; padding: 1rem; gap: 1rem; }
                     .grid { grid-template-columns: 1fr 2fr; }
-                    aside { padding: 3rem; }
-                    main { padding: 2rem 3rem 3rem; }
+                    aside { padding: 1rem; }
+                    main { padding: 0.75rem 1rem 1rem; }
                 }
                 @media print {
                     body { background: white; }
