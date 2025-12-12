@@ -2100,7 +2100,7 @@ function getTraditionalTemplateHtml(data, accentColor) {
                 font-weight: 600;
                 text-transform: uppercase;
                 text-align: center;
-                margin: 0.75rem 0 0;
+                margin: 0.75rem 0 0.5rem;
                 color: ${accentColor};
             }
             .section-title {
@@ -2386,11 +2386,13 @@ function getNaturalTemplateHtml(data, accentColor) {
     // === ICON SVGs (colored with accentColor) ===
     const MailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>`;
 
-    const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
+    //const PhoneIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2h-3.92a2 2 0 0 1-2-2.16 2 2 0 0 0-2.3-2.3c-2.4 0-4.8-.48-7.2-1.44a15.8 15.8 0 0 1-3.48-1.78l-.34-.17a1 1 0 0 1 0-1.78l.34-.17A15.8 15.8 0 0 1 7.2 4.48a2 2 0 0 0 2.3-2.3 2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg>`;
+    const PhoneIcon = `<img width="16" height="16" src="https://img.icons8.com/ios/50/phone--v1.png" alt="phone--v1" fill="none" stroke="${accentColor}"/>`;
 
     const MapPinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
 
-    const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="${accentColor}" stroke="white" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
+    //const LinkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="${accentColor}" stroke="white" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="8" cy="8" r="2"/><path d="M8 11v7M8 11V11"/><path d="M16 11v7M12 15v2"/></svg>`;
+    const LinkedinIcon = `<img width="16" height="16" src="https://img.icons8.com/ios/50/linkedin.png" alt="linkedin" fill="${accentColor}" stroke="white"/>`;
 
     const GlobeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
 
@@ -2414,18 +2416,18 @@ function getNaturalTemplateHtml(data, accentColor) {
                 body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: #f3f4f6; color: #1f2937; line-height: 1.6; }
                 .container { max-width: 900px; margin: 2rem auto; background: white; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; }
                 header { padding: 2rem 2rem 1rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; background-color: ${headerBg}; -webkit-print-color-adjust: exact; color-adjust: exact; }
-                h1 { font-size: 2.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin: 0; color: #111827; }
-                .profession { font-size: 1.25rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: ${accentColor}; margin: 0.5rem 0; }
-                .summary { font-size: 0.9375rem; color: #4b5563; max-width: 800px; }
+                h1 { font-size: 2.25rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin: 0; color: #111827; }
+                .profession { font-size: 1.125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: ${accentColor}; margin: 0.5rem 0; }
+                .summary { font-size: 0.875rem; color: #4b5563; max-width: 800px; }
                 .grid { display: grid; grid-template-columns: 1fr; }
                 aside { padding: 2rem; background: #f8f8f8; -webkit-print-color-adjust: exact; color-adjust: exact; }
                 main { padding: 1rem 2rem 2rem; }
-                .section-title-main { font-size: 1.25rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; padding: 1rem 0 0.5rem; margin: 1.5rem 0 1rem; border-bottom: 1px solid #d1d5db; color: #111827; }
-                .section-title-side { font-size: 1.125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 1.5rem 0 1rem; color: #1f2937; }
-                .tag { display: inline-block; padding: 0.375rem 0.75rem; font-size: 0.75rem; font-weight: 600; border: 1px solid ${accentColor}; color: ${accentColor}; background: white; border-radius: 9999px; margin-right: 0.5rem; margin-bottom: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+                .section-title-main { font-size: 1.125rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 1rem 0 0.5rem; margin: 1.5rem 0 1rem; border-bottom: 1px solid #d1d5db; color: #111827; }
+                .section-title-side { font-size: 1.125rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin: 1.5rem 0 1rem; color: #1f2937; }
+                .tag { display: inline-block; padding: 0.375rem 0.75rem; font-size: 0.875rem; font-weight: 600; border: 1px solid ${accentColor}; color: ${accentColor}; background: white; border-radius: 9999px; margin-right: 0.5rem; margin-bottom: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
                 .entry { margin-bottom: 1.5rem; }
                 .entry-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.25rem; }
-                .entry-title { font-weight: 700; font-size: 1.1rem; color: #111827; }
+                .entry-title { font-weight: 700; font-size: 0.875rem; color: #111827; }
                 .entry-date { font-size: 0.875rem; color: #6b7280; font-weight: 500; }
                 .entry-subtitle { font-style: italic; color: #525252; margin-bottom: 0.5rem; }
                 ul { margin: 0.5rem 0; padding-left: 1.5rem; }
