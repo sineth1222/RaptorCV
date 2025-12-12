@@ -118,7 +118,7 @@ const CalmSidebarTemplate = ({ data, accentColor }) => {
                                     rel="noopener noreferrer"
                                     className="hover:underline text-gray-700 wrap-break-word"
                                 >
-                                    {data.personal_info.linkedin || 'LinkedIn'}
+                                    LinkedIn
                                 </a>
                             </div>
                         )}
@@ -132,7 +132,7 @@ const CalmSidebarTemplate = ({ data, accentColor }) => {
                                     rel="noopener noreferrer"
                                     className="hover:underline text-gray-700 wrap-break-word"
                                 >
-                                    {data.personal_info.website || 'Protfolio'}
+                                    Protfolio
                                 </a>
                             </div>
                         )}

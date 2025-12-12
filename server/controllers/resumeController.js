@@ -625,7 +625,7 @@ const getClassicTemplateHtml = (data, accentColor) => {
 
 
 /**
- * Calm Sidebar Template සඳහා HTML අන්තර්ගතය ජනනය කරයි.
+ * Calm Sidebar Template සඳහා HTML අන්තර්තය ජනනය කරයි.
  * @param {object} data - සම්පූර්ණ Resume දත්ත වස්තුව
  * @param {string} accentColor - තෝරාගත් වර්ණය (e.g., '#3b82f6')
  * @returns {string} - Styled HTML string
