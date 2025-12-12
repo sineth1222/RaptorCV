@@ -2414,7 +2414,7 @@ function getNaturalTemplateHtml(data, accentColor) {
             <title>${p.full_name || "Resume"} - Resume</title>
             <style>
                 body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: #f3f4f6; color: #1f2937; line-height: 1.6; }
-                .container { max-width: 900px; margin: 2rem auto; background: white; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; }
+                .container { max-width: 900px; margin: 1rem auto; background: white; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; }
                 header { padding: 1rem 1rem 1rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; background-color: ${headerBg}; -webkit-print-color-adjust: exact; color-adjust: exact; }
                 h1 { font-size: 2.25rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin: 0; color: #111827; }
                 .profession { font-size: 1.125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: ${accentColor}; margin: 0.5rem 0; }
@@ -2437,10 +2437,10 @@ function getNaturalTemplateHtml(data, accentColor) {
                 .lang-item { font-size: 0.875rem; min-width: 45%; }
 
                 @media (min-width: 768px) {
-                    header { flex-direction: row; text-align: left; padding: 1rem; gap: 1rem; }
+                    header { flex-direction: row; text-align: left; padding: 2rem; gap: 2rem; }
                     .grid { grid-template-columns: 1fr 2fr; }
-                    aside { padding: 1rem; }
-                    main { padding: 0.75rem 1rem 1rem; }
+                    aside { padding: 3rem; }
+                    main { padding: 2rem 3rem 3rem; }
                 }
                 @media print {
                     body { background: white; }
