@@ -1187,7 +1187,7 @@ function getModernTemplateHtml(data, accentColor) {
  * @param {string} accentColor - Resume එකේ ප්‍රධාන වර්ණය (e.g., '#0077b5').
  * @returns {string} - සම්පූර්ණ HTML String එක.
  */
-function getMinimalTemplateHtml(data, accentColor) {
+function getMinimalTemplateHtmlh(data, accentColor) {
 
     // Helper function to format date (copied from JSX)
     const formatDate = (dateStr) => {
