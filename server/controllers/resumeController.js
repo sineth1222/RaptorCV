@@ -1293,7 +1293,7 @@ function getMinimalTemplateHtml(data, accentColor) {
                     display: flex;
                     flex-direction: column;
                     gap: 0.25rem;
-                    margin-bottom: 0.25rem;
+                    margin-bottom: 0.125rem;
                 }
                 .entry-title {
                     font-weight: 500;
