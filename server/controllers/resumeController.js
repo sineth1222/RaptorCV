@@ -1387,7 +1387,7 @@ function getMinimalTemplateHtml(data, accentColor) {
                 ${experience.length > 0 ? `
                     <section>
                         <h2 class="section-title">Experience</h2>
-                        <div style="margin-top:1rem;">
+                        <div style="margin-top:0.5rem;">
                             ${experience.map(exp => `
                                 <div class="entry">
                                     <div class="entry-header">
@@ -1406,7 +1406,7 @@ function getMinimalTemplateHtml(data, accentColor) {
                 ${projects.length > 0 ? `
                     <section>
                         <h2 class="section-title">Projects</h2>
-                        <div style="margin-top:1rem;">
+                        <div style="margin-top:0.5rem;">
                             ${projects.map(p => `
                                 <div class="entry">
                                     <div class="entry-header project-header" style="gap:0.5rem;align-items:start;">
@@ -1424,7 +1424,7 @@ function getMinimalTemplateHtml(data, accentColor) {
                 ${education.length > 0 ? `
                     <section>
                         <h2 class="section-title">Education</h2>
-                        <div style="margin-top:1rem;">
+                        <div style="margin-top:0.5rem;">
                             ${education.map(edu => `
                                 <div class="entry">
                                     <div class="entry-header">
