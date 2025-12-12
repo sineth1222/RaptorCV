@@ -1287,7 +1287,7 @@ function getMinimalTemplateHtml(data, accentColor) {
                     margin: 1.5rem 0 1rem;
                 }
                 .entry {
-                    margin-bottom: 1rem;
+                    margin-bottom: 0.25rem;
                 }
                 .entry-header {
                     display: flex;
