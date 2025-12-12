@@ -2050,9 +2050,9 @@ function getTraditionalTemplateHtml(data, accentColor) {
     }
 
     const contactHtml = contactItems.length > 0
-        ? `<div style="font-size:0.875rem; color:#525252; display:flex; flex-wrap:wrap; justify-content:center; gap:0.75rem;">
+        ? `<div style="font-size:0.875rem; color:#525252; display:flex; flex-wrap:wrap; justify-content:center; column-gap:0.75rem; row-gap:0.25rem;">
              ${contactItems.map((item, i) => 
-                 `<span>${item}${i < contactItems.length - 1 ? '<span style="margin:0 0.5rem; color:#9ca3af;">|</span>' : ''}</span>`
+                 `<span>${item}${i < contactItems.length - 1 ? '<span style="margin:0 0.25rem; color:#9ca3af;">|</span>' : ''}</span>`
              ).join('')}
            </div>`
         : '';
@@ -2083,31 +2083,31 @@ function getTraditionalTemplateHtml(data, accentColor) {
             .header-border {
                 border-top: 2px solid ${accentColor};
                 border-bottom: 2px solid ${accentColor};
-                padding: 1.5rem 0;
-                margin: 0 2rem 2rem;
+                padding: 1rem 0;
+                margin: 0 1rem 1rem;
             }
             h1 {
-                font-size: 2.5rem;
+                font-size: 2.25rem;
                 font-weight: normal;
                 text-transform: uppercase;
-                letter-spacing: 0.15em;
+                letter-spacing: 0.05em;
                 text-align: center;
                 margin: 0 0 0.5rem;
                 color: #111827;
             }
             .profession {
-                font-size: 1.25rem;
+                font-size: 1rem;
                 font-weight: 600;
                 text-transform: uppercase;
                 text-align: center;
-                margin: 0.75rem 0 1rem;
+                margin: 0.75rem 0 0;
                 color: ${accentColor};
             }
             .section-title {
-                font-size: 1.35rem;
+                font-size: 1.25rem;
                 font-weight: bold;
                 text-transform: uppercase;
-                margin: 0 0 1rem;
+                margin: 0 0 0.75rem;
                 color: ${accentColor};
             }
             .left-col .section-title,
@@ -2126,19 +2126,19 @@ function getTraditionalTemplateHtml(data, accentColor) {
                 order: 1;
             }
             .entry {
-                margin-bottom: 1.5rem;
+                margin-bottom: 1rem;
             }
             .entry-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
                 flex-wrap: wrap;
-                gap: 0.5rem;
+                gap: 0.25rem;
                 margin-bottom: 0.25rem;
             }
             .entry-title {
                 font-weight: 600;
-                font-size: 1rem;
+                font-size: 0.875rem;
                 color: #111827;
             }
             .entry-date {
@@ -2203,10 +2203,10 @@ function getTraditionalTemplateHtml(data, accentColor) {
                 .container {
                     box-shadow: none;
                     margin: 0;
-                    padding: 2rem;
+                    padding: 1.5rem;
                     max-width: none;
                 }
-                .header-border { margin: 0 2rem 2rem; }
+                .header-border { margin: 0 1rem 1rem; }
                 .grid {
                     grid-template-columns: 4fr 8fr;
                 }
@@ -2217,7 +2217,7 @@ function getTraditionalTemplateHtml(data, accentColor) {
                 a { color: inherit; text-decoration: none; }
                 .contact-line span:not(:last-child):after {
                     content: " | ";
-                    margin: 0 0.5rem;
+                    margin: 0 0.125rem;
                     color: #9ca3af;
                 }
             }
@@ -2229,8 +2229,8 @@ function getTraditionalTemplateHtml(data, accentColor) {
             <!-- Header with bordered section -->
             <div class="header-border">
                 <header style="text-align:center;">
-                    <h1>${p.full_name || "SINETH MASHENKA"}</h1>
-                    <div class="profession">${p.profession || "UNDERGRADUATE"}</div>
+                    <h1>${p.full_name || ""}</h1>
+                    <div class="profession">${p.profession || ""}</div>
                     ${contactHtml}
                 </header>
             </div>
@@ -2245,7 +2245,7 @@ function getTraditionalTemplateHtml(data, accentColor) {
                     ${skills.length > 0 ? `
                         <section style="margin-bottom:2rem;">
                             <h2 class="section-title">Core Skills</h2>
-                            <ul class="skills-list" style="font-size:0.9375rem;">
+                            <ul class="skills-list" style="font-size:0.875rem;">
                                 ${skills.map(skill => `<li>${skill}</li>`).join('')}
                             </ul>
                         </section>
@@ -2255,9 +2255,9 @@ function getTraditionalTemplateHtml(data, accentColor) {
                     ${languages.length > 0 ? `
                         <section style="margin-bottom:2rem;">
                             <h2 class="section-title">Languages</h2>
-                            <div style="font-size:0.9375rem;">
+                            <div style="font-size:0.875rem;">
                                 ${languages.map(lang => `
-                                    <p style="margin:0.35rem 0;"><strong>${lang.language}</strong> - ${lang.level}</p>
+                                    <p style="margin:0.25rem 0;"><strong>${lang.language}</strong> - ${lang.level}</p>
                                 `).join('')}
                             </div>
                         </section>
@@ -2267,7 +2267,7 @@ function getTraditionalTemplateHtml(data, accentColor) {
                     ${references.length > 0 ? `
                         <section style="margin-bottom:2rem;">
                             <h2 class="section-title">References</h2>
-                            <div class="references" style="font-size:0.9375rem;">
+                            <div class="references" style="font-size:0.875rem;">
                                 ${references.map(ref => `
                                     <div>
                                         <div style="font-weight:bold;">${ref.name}</div>
@@ -2287,15 +2287,15 @@ function getTraditionalTemplateHtml(data, accentColor) {
 
                     <!-- Professional Summary -->
                     ${data.professional_summary ? `
-                        <section style="margin-bottom:2rem;">
+                        <section style="margin-bottom:1rem;">
                             <h2 class="section-title">Professional Summary</h2>
-                            <p style="font-size:0.9375rem; color:#374151;">${data.professional_summary.replace(/\n/g, '<br>')}</p>
+                            <p style="font-size:0.875rem; color:#374151;">${data.professional_summary.replace(/\n/g, '<br>')}</p>
                         </section>
                     ` : ''}
 
                     <!-- Experience -->
                     ${experience.length > 0 ? `
-                        <section style="margin-bottom:2rem;">
+                        <section style="margin-bottom:1rem;">
                             <h2 class="section-title">Experience</h2>
                             ${experience.map(exp => `
                                 <div class="entry">
@@ -2316,7 +2316,7 @@ function getTraditionalTemplateHtml(data, accentColor) {
 
                     <!-- Education -->
                     ${education.length > 0 ? `
-                        <section style="margin-bottom:2rem;">
+                        <section style="margin-bottom:1rem;">
                             <h2 class="section-title">Education</h2>
                             ${education.map(edu => `
                                 <div class="entry">
@@ -2332,7 +2332,7 @@ function getTraditionalTemplateHtml(data, accentColor) {
 
                     <!-- Projects -->
                     ${project.length > 0 ? `
-                        <section style="margin-bottom:2rem;">
+                        <section style="margin-bottom:1rem;">
                             <h2 class="section-title">Projects Experience</h2>
                             ${project.map(p => `
                                 <div class="entry">
