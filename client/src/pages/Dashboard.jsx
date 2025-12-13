@@ -1,6 +1,7 @@
-import { FilePenLineIcon, LoaderCircleIcon, PencilIcon, PlusIcon, TrashIcon, UploadCloudIcon, XIcon } from 'lucide-react'
+/* eslint-disable no-irregular-whitespace */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { FilePenLineIcon, FileTextIcon, LoaderCircleIcon, PencilIcon, PlusIcon, TrashIcon, UploadCloudIcon, XIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { dummyResumeData } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import api from '../configs/api'
@@ -166,7 +167,10 @@ const Dashboard = () => {
                   Select resume file
                   <div className='flex flex-col items-center justify-center gap-2 border group text-slate-400 border-slate-400 border-dashed rounded-md p-4 py-10 my-4 hover:border-emerald-500 hover:text-emerald-700 cursor-pointer transition-colors'>
                     {resume ? (
-                      <p className='text-sm text-emerald-700'>{resume.name}</p>
+                      <div className='flex items-center gap-2 text-emerald-700'>
+                        <FileTextIcon className='size-5'/>
+                        <p className='text-sm'>{resume.name}</p>
+                      </div>
                     ) : (
                       <>
                         <UploadCloudIcon className='size-14 stroke-1'/>

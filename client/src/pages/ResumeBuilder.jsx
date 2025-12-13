@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
-import { useParams, Link, data, useLocation, useNavigate } from 'react-router-dom'
-import { dummyResumeData } from '../assets/assets'
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, DownloadIcon, EyeIcon, EyeOffIcon, FileText, FolderIcon, GraduationCap, Share2Icon, Sparkles, User } from 'lucide-react'
 import PersonalInfoForm from '../components/PersonalInfoForm'
 import ResumePreview from '../components/ResumePreview'
@@ -82,17 +82,19 @@ const ResumeBuilder = () => {
         }
     }, [resumeId])
 
-  const loadExistingResume = async () => {
+
+    const loadExistingResume = async () => {
     try {
-      const {data} = await api.get('/api/resumes/get/' + resumeId, {headers: {Authorization: token}})
-      if(data.resume){
-        setResumeData(data.resume)
-        document.title = data.resume.title;
+        const {data} = await api.get('/api/resumes/get/' + resumeId, {headers: {Authorization: token}})
+        if(data.resume){
+          setResumeData(data.resume)
+          document.title = data.resume.title;
+        }
+      } catch (error) {
+        console.log(error.message)
       }
-    } catch (error) {
-      console.log(error.message)
     }
-  }
+ 
 
   const [activeSectionIndex, setActiveSectionIndex] = useState(0)
   const [removeBackground, setRemoveBackground] = useState(false);
@@ -145,9 +147,9 @@ const ResumeBuilder = () => {
   /*const downloadResume = () => {
     window.print();
   }*/
-  
-  // ✅ නව downloadResume ශ්‍රිතය - Back-End API එකට call කිරීමට
-  async function downloadResume() {
+ 
+  // ✅ නව downloadResume ශ්‍රිතය - Back-End API එකට call කිරීමට
+  async function downloadResume() {
     // resumeId එක 'new' නම් හෝ නොතිබුණහොත්, බාගත කිරීමට උත්සාහ නොකරන්න
     if (!resumeId || resumeId === 'new') {
       toast.error("Please save the resume before attempting to download.")
