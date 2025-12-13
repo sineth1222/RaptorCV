@@ -1647,7 +1647,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                 .references {
                     display: flex;
                     flex-wrap: wrap;
-                    gap: 2rem;
+                    gap: 1.5rem;
                     margin-top: 0.5rem;
                 }
                 .ref-item {
