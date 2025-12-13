@@ -1652,7 +1652,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                 }
                 .ref-item {
                     flex: 1;
-                    min-width: 280px;
+                    min-width: 180px;
                 }
 
                 @media (max-width: 640px) {
