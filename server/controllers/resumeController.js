@@ -1551,7 +1551,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                 }
                 .container {
                     max-width: 1000px;
-                    margin: 1rem auto;
+                    margin: 1rem 2rem;
                     background: white;
                     padding: 1rem;
                     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
@@ -1648,7 +1648,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                     display: flex;
                     flex-wrap: wrap;
                     gap: 2rem;
-                    margin-top: 1rem;
+                    margin-top: 0.5rem;
                 }
                 .ref-item {
                     flex: 1;
@@ -1656,7 +1656,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                 }
 
                 @media (max-width: 640px) {
-                    .container { padding: 1rem 1rem; margin: 1rem 2rem; border-radius: 0; box-shadow: none; }
+                    .container { padding: 1rem 1rem; margin: 1rem ; border-radius: 0; box-shadow: none; }
                     .skills-grid { grid-template-columns: 1fr 1fr; }
                     .languages { flex-direction: column; gap: 0.75rem; }
                     .references { flex-direction: column; gap: 1.5rem; }
