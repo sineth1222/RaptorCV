@@ -48,13 +48,13 @@ const MinimalTemplate = ({ data, accentColor }) => {
                     {data.personal_info?.linkedin && (
                         <a target="_blank" href={data.personal_info?.linkedin} className="flex items-center gap-1">
                             <Linkedin className="size-3 sm:size-4" />
-                            {data.personal_info.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}
+                            LinkedIn
                         </a>
                     )}
                     {data.personal_info?.website && (
                         <a target="_blank" href={data.personal_info?.website} className="flex items-center gap-1">
                             <Globe className="size-3 sm:size-4" />
-                            {data.personal_info.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}
+                            Portfolio
                         </a>
                     )}
                 </div>

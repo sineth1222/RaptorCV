@@ -135,7 +135,7 @@ const MordernImageTemplate = ({ data, accentColor }) => {
                                         rel="noopener noreferrer"
                                         className="hover:underline text-gray-700 break-words font-semibold"
                                     >
-                                        {data.personal_info.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}
+                                        LinkedIn
                                     </a>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@ const MordernImageTemplate = ({ data, accentColor }) => {
                                         // Changed break-all to break-words and added font-semibold
                                         className="hover:underline text-gray-700 break-words font-semibold"
                                     >
-                                        {data.personal_info.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}
+                                        Portfolio
                                     </a>
                                     
                                 </div>

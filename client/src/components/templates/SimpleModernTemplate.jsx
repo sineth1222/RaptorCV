@@ -1,8 +1,7 @@
 import { Mail, Phone, MapPin } from "lucide-react";
 
-const SimpleModernTemplate = ({ data, accentColor }) => {
-    
-    // Helper function to format dates as "Month Year" (e.g., "May 2017" or "May 2019 - Current")
+
+// Helper function to format dates as "Month Year" (e.g., "May 2017" or "May 2019 - Current")
     const formatDate = (dateStr) => {
         if (!dateStr || dateStr.toLowerCase() === 'current') return 'Current';
         
@@ -27,7 +26,7 @@ const SimpleModernTemplate = ({ data, accentColor }) => {
     };
 
     // This section header closely mimics the font-weight, size, and underline style of the image.
-    const SectionHeader = ({ title }) => (
+    const SectionHeader = ({ title, accentColor }) => (
         <h2 
             className="uppercase text-lg font-bold pt-6 pb-1 mb-2 border-b-2 tracking-wide" 
             style={{ borderColor: accentColor }}
@@ -37,7 +36,7 @@ const SimpleModernTemplate = ({ data, accentColor }) => {
     );
 
     // This renders the main contact line below the name, separated by pipes |
-    const renderHeaderContact = () => {
+    const renderHeaderContact = (data) => {
     const contactItems = [];
 
     // 1. Add Location
@@ -65,7 +64,7 @@ const SimpleModernTemplate = ({ data, accentColor }) => {
                 className="text-gray-700 hover:text-blue-600 hover:underline font-medium" 
                 rel="noopener noreferrer" 
             >
-                {data.personal_info.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}
+                LinkedIn
             </a>
         );
     }
@@ -80,7 +79,7 @@ const SimpleModernTemplate = ({ data, accentColor }) => {
                 className="text-gray-700 hover:text-blue-600 hover:underline font-medium" 
                 rel="noopener noreferrer"
             >
-                {data.personal_info.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'protfolio'}
+                Portfolio
             </a>
         );
     }
@@ -104,6 +103,9 @@ const SimpleModernTemplate = ({ data, accentColor }) => {
     );
 };
 
+
+const SimpleModernTemplate = ({ data, accentColor }) => {   
+    
     return (
         <div className="max-w-4xl mx-auto p-8 bg-white text-gray-800 font-sans shadow-lg">
             

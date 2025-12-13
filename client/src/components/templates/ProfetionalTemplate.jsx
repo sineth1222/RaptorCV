@@ -1,9 +1,8 @@
 import React from 'react';
 import { Mail, Phone, MapPin } from "lucide-react";
 
-const ClassicTwoColumnTemplate = ({ data, accentColor }) => {
-    
-    // Helper function to format dates
+
+// Helper function to format dates
     const formatDate = (dateStr) => {
         if (!dateStr || dateStr.toLowerCase() === 'current') return 'Present';
         
@@ -27,7 +26,7 @@ const ClassicTwoColumnTemplate = ({ data, accentColor }) => {
 
 
     // 1. Full-Width Dark Header Bar and Centered Info
-    const renderHeader = () => (
+    const renderHeader = ({data, accentColor}) => (
         <header 
             className="text-center p-6 text-white" 
             // Inline style for background color to maximize print visibility
@@ -54,7 +53,7 @@ const ClassicTwoColumnTemplate = ({ data, accentColor }) => {
                         href={data.personal_info.linkedin} 
                         className="hover:underline whitespace-nowrap"
                     >
-                        <span>{data.personal_info.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'} <span className="text-white"> | </span></span>
+                        <span>LinkedIn <span className="text-white"> | </span></span>
                     </a>
                 )}
                 {data.personal_info?.website && (
@@ -63,7 +62,7 @@ const ClassicTwoColumnTemplate = ({ data, accentColor }) => {
                         href={data.personal_info.website} 
                         className="hover:underline whitespace-nowrap"
                     >
-                        <span>{data.personal_info.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Protfolio'}</span> 
+                        <span>Portfolio</span> 
                     </a>
                 )}
             </div>
@@ -97,6 +96,9 @@ const ClassicTwoColumnTemplate = ({ data, accentColor }) => {
         </div>
     );
 
+
+
+const ClassicTwoColumnTemplate = ({ data, accentColor }) => {
 
     return (
         // Added max-w-full on print for better full-page print

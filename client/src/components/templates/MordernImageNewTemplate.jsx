@@ -92,7 +92,7 @@ const ImageAccurateTemplate = ({ data, accentColor }) => {
                             className="flex items-center gap-1 hover:underline text-gray-600"
                         >
                             <Linkedin size={14} className="text-gray-500 hidden sm:inline" />
-                            {data.personal_info.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}
+                            LinkedIn
                             <span className="mx-1 font-bold text-gray-400">|</span>
                         </a>
                     )}
@@ -104,7 +104,7 @@ const ImageAccurateTemplate = ({ data, accentColor }) => {
                             className="flex items-center gap-1 hover:underline text-gray-600"
                         >
                             <Globe size={14} className="text-gray-500 hidden sm:inline" />
-                            {data.personal_info.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Protfolio'}
+                            Protfolio
                         </a>
                     )}
                 </div>

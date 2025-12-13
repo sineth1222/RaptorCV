@@ -1,8 +1,7 @@
 import { Mail, Phone, MapPin } from "lucide-react";
 
-const StrongTemplate = ({ data, accentColor }) => {
-    
-    // Helper function to format dates
+
+// Helper function to format dates
     const formatDate = (dateStr) => {
         if (!dateStr || dateStr.toLowerCase() === 'current') return 'Present';
         
@@ -25,7 +24,7 @@ const StrongTemplate = ({ data, accentColor }) => {
     };
 
     // Main Header - Name, Profession, and Contact Info
-    const renderHeader = () => (
+    const renderHeader = ({data, accentColor}) => (
         <header className="mb-4 text-center">
             <h1 className="text-3xl font-extrabold uppercase tracking-wide mb-1 text-gray-900">
                 {data.personal_info?.full_name || ""}
@@ -45,7 +44,7 @@ const StrongTemplate = ({ data, accentColor }) => {
                         href={data.personal_info.linkedin} 
                         className="hover:text-blue-600 hover:underline whitespace-nowrap"
                     >
-                        <span>{data.personal_info.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'} <span className="text-gray-400"> | </span></span>
+                        <span>LinkedIn <span className="text-gray-400"> | </span></span>
                     </a>
                 )}
                 {data.personal_info?.website && (
@@ -54,7 +53,7 @@ const StrongTemplate = ({ data, accentColor }) => {
                         href={data.personal_info.website} 
                         className="hover:text-blue-600 hover:underline whitespace-nowrap"
                     >
-                        <span>{data.personal_info.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Protfolio'}</span> 
+                        <span>Portfolio</span> 
                     </a>
                 )}
             </div>
@@ -62,7 +61,7 @@ const StrongTemplate = ({ data, accentColor }) => {
     );
 
     // Section Header
-    const SectionHeader = ({ title }) => (
+    const SectionHeader = ({ title, accentColor }) => (
         <h2 
             className="uppercase text-lg font-bold py-1 pl-4 tracking-wider border-l-4"
             style={{ color: accentColor, borderLeftColor: accentColor }}
@@ -72,7 +71,7 @@ const StrongTemplate = ({ data, accentColor }) => {
     );
 
     // Component to hold the header and its content
-    const WorkExperienceContent = () => (
+    const WorkExperienceContent = ({data}) => (
         <section id="work-experience-content" className="space-y-6">
             {data.experience.map((exp, index) => (
                 <div key={index} className="pb-1">
@@ -104,7 +103,7 @@ const StrongTemplate = ({ data, accentColor }) => {
         </section>
     );
 
-    const EducationContent = () => (
+    const EducationContent = ({data}) => (
         <section id="education-content" className="space-y-4">
             {data.education.map((edu, index) => (
                 <div key={index} className="pb-1">
@@ -129,7 +128,7 @@ const StrongTemplate = ({ data, accentColor }) => {
         </section>
     );
 
-    const ProjectExperienceContent = () => (
+    const ProjectExperienceContent = ({data}) => (
         <section id="project-experience-content" className="space-y-6">
             {data.project.map((p, index) => (
                 <div key={index} className="pb-1">
@@ -170,6 +169,8 @@ const StrongTemplate = ({ data, accentColor }) => {
             </div>
         </div>
     );
+
+const StrongTemplate = ({ data, accentColor }) => {
 
 
     return (

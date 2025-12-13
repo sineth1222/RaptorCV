@@ -94,7 +94,7 @@ const TraditionalResumeTempalte = ({ data, accentColor }) => {
                                 href={data.personal_info.linkedin} 
                                 className="hover:text-blue-600 hover:underline whitespace-nowrap"
                             >
-                                <span>{data.personal_info.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}</span>
+                                <span>LinkedIn</span>
                             </a>
                         )}
                         {data.personal_info?.website && (
@@ -103,7 +103,7 @@ const TraditionalResumeTempalte = ({ data, accentColor }) => {
                                 href={data.personal_info.website} 
                                 className="hover:text-blue-600 hover:underline whitespace-nowrap"
                             >
-                                <span>{data.personal_info.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Protfolio'}</span>
+                                <span>Portfolio</span>
                             </a>
                         )}
                     </div>

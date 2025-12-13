@@ -88,13 +88,13 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                         className="hover:text-blue-600 hover:underline flex items-center gap-2" 
                                     >
                                         <Linkedin size={14} style={{ color: accentColor }} />
-                                        {data.personal_info.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}
+                                        LinkedIn
                                     </a>
                                 )}
                                 {data.personal_info?.website && (
                                     <a target="_blank" href={data.personal_info?.website} className="flex items-center gap-2 hover:text-blue-600 hover:underline">
                                         <Globe size={14} style={{ color: accentColor }} />
-                                        {data.personal_info.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Portfolio'}
+                                        Portfolio
                                     </a>
                                 )}
                             </div>
@@ -140,7 +140,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         {data.languages && data.languages.length > 0 && (
                             <section>
                                 <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3 border-b-2" style={{ borderColor: accentColor }}>
-                                    LANGUAGES    
+                                    LANGUAGES 
                                 </h2>
                                 <div className="space-y-1 pt-2">
                                     {data.languages.map((lang, index) => (

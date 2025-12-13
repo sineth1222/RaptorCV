@@ -41,6 +41,8 @@ const formatDate = (dateStr) => {
         </h3>
     );
 
+
+
 const NaturalTemplate = ({ data, accentColor }) => {
 
     return (
@@ -132,13 +134,13 @@ const NaturalTemplate = ({ data, accentColor }) => {
                                 className="hover:text-blue-600 hover:underline flex items-center gap-2"
                                 >
                                     <Linkedin size={16} style={{ color: accentColor, marginTop: '2px' }} />
-                                    {data.personal_info.linkedin.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'LinkedIn'}
+                                    LinkedIn
                                 </a>
                             )}
                             {data.personal_info?.website && (
                                 <a target="_blank" href={data.personal_info?.website} className="flex items-center gap-2 hover:text-blue-600 hover:underline">
                                     <Globe size={16} style={{ color: accentColor, marginTop: '2px' }} />
-                                    {data.personal_info.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '') || 'Protfolio'}
+                                    Protfolio
                                 </a>
                             )}
                         </div>
