@@ -1662,7 +1662,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
 
                 @media print {
                     body { background: white; }
-                    .container { box-shadow: none; margin: 0; max-width: none; padding: 1rem; }
+                    .container { box-shadow: none; margin: 0; max-width: none; padding: 1.5rem; }
                     a { color: inherit !important; text-decoration: none !important; }
                 }
             </style>
