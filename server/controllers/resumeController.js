@@ -1553,7 +1553,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                     max-width: 1000px;
                     margin: 1rem auto;
                     background: white;
-                    padding: 2rem;
+                    padding: 1rem;
                     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
                     border-radius: 8px;
                 }
