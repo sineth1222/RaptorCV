@@ -1654,7 +1654,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                 }
 
                 @media (max-width: 640px) {
-                    .container { padding: 1rem 1.5rem; margin: 1rem; border-radius: 0; box-shadow: none; }
+                    .container { padding: 1rem 1rem; margin: 1rem; border-radius: 0; box-shadow: none; }
                     .skills-grid { grid-template-columns: 1fr 1fr; }
                     .languages { flex-direction: column; gap: 0.75rem; }
                     .references { flex-direction: column; gap: 1.5rem; }
@@ -1662,7 +1662,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
 
                 @media print {
                     body { background: white; }
-                    .container { box-shadow: none; margin: 0; max-width: none; padding: 1.5rem; }
+                    .container { box-shadow: none; margin: 0; max-width: none; padding: 1rem; }
                     a { color: inherit !important; text-decoration: none !important; }
                 }
             </style>
