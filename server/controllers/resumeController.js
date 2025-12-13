@@ -1584,7 +1584,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                     text-transform: uppercase;
                     letter-spacing: 0.15em;
                     padding: 1.5rem 0 0.35rem;
-                    margin: 1.5rem 0 1rem;
+                    margin: 1rem 0 1rem;
                     border-bottom: 3px solid ${accentColor};
                     color: #111827;
                 }
@@ -1654,7 +1654,7 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                 }
 
                 @media (max-width: 640px) {
-                    .container { padding: 2rem 1.5rem; margin: 1rem; border-radius: 0; box-shadow: none; }
+                    .container { padding: 1rem 1.5rem; margin: 1rem; border-radius: 0; box-shadow: none; }
                     .skills-grid { grid-template-columns: 1fr 1fr; }
                     .languages { flex-direction: column; gap: 0.75rem; }
                     .references { flex-direction: column; gap: 1.5rem; }
