@@ -1615,6 +1615,8 @@ function getSimpleModernTemplateHtml(data, accentColor) {
                     margin-bottom: 0.5rem;
                 }
                 ul {
+                    list-style-type: disc;
+                    list-style-position: inside;
                     margin: 0.5rem 0;
                     padding-left: 1.5px;
                 }
