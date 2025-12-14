@@ -2,7 +2,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 
 // Helper function to format dates as "Month Year" (e.g., "May 2017" or "May 2019 - Current")
-    const formatDate = (dateStr) => {
+    const formatDate = ({dateStr}) => {
         if (!dateStr || dateStr.toLowerCase() === 'current') return 'Current';
         
         // Assuming dateStr is in "YYYY-MM" format
@@ -36,7 +36,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
     );
 
     // This renders the main contact line below the name, separated by pipes |
-    const renderHeaderContact = (data) => {
+    const renderHeaderContact = ({data}) => {
     const contactItems = [];
 
     // 1. Add Location

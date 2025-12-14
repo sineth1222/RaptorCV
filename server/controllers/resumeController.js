@@ -3954,7 +3954,7 @@ function getImageAccurateTemplateHtml(data, accentColor) {
  * @param {string} accentColor - e.g. "#dc2626", "#1e40af"
  * @returns {string} Standalone HTML string
  */
-function getMinimalImageTemplateHtml(data, accentColor = "#dc2626") {
+function getMinimalImageTemplateHtml(data, accentColor) {
 
     const formatDate = (dateStr) => {
         if (!dateStr) return "";
@@ -4117,7 +4117,7 @@ function getMinimalImageTemplateHtml(data, accentColor = "#dc2626") {
                 }
                 .entry-title {
                     font-weight: 600;
-                    font-size: 1rem;
+                    font-size: 0.875rem;
                     color: #111;
                 }
                 .entry-meta {
@@ -4151,7 +4151,7 @@ function getMinimalImageTemplateHtml(data, accentColor = "#dc2626") {
                 }
 
                 @media (min-width: 640px) {
-                    .header { padding: 2.5rem; } /* sm:p-10 */
+                    .header { padding: 1.5rem; } /* sm:p-10 */
                     .profile-img { width: 8rem; height: 8rem; } /* sm:w-32 sm:h-32 */
                     .name { font-size: 2.25rem; } /* sm:text-4xl */
                     .profession { font-size: 1rem; } /* sm:text-base */
@@ -4215,7 +4215,7 @@ function getMinimalImageTemplateHtml(data, accentColor = "#dc2626") {
                                 <div style="font-size:0.875rem;">
                                     ${education.map(edu => `
                                         <div style="margin-bottom:1rem;">
-                                            <div style="font-weight:600;text-transform:uppercase;">${edu.degree}</div>
+                                            <div style="font-weight:600;text-transform:uppercase;">${edu.degree} ${edu.field && `in ${edu.field}`}</div>
                                             <div style="color:#52525b;">${edu.institution}</div>
                                             <div style="font-size:0.75rem;color:#71717a;">${formatDate(edu.graduation_date)}</div>
                                         </div>
