@@ -159,7 +159,7 @@ const ResumeBuilder = () => {
     try {
       await saveResume()
 
-      toast.loading('Generating copyable PDF...', { id: 'downloadToast' })
+      toast.loading('Generating PDF...', { id: 'downloadToast' })
 
       // 2. Back-End API call එක සිදු කරන්න.
       // responseType: 'blob' යනු binary file (PDF) එකක් අපේක්ෂා කරන බව Axios වෙත දැනුම් දීමයි.
