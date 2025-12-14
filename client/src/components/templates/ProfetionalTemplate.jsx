@@ -31,7 +31,7 @@ const ClassicTwoColumnTemplate = ({ data, accentColor }) => {
 
 
     // 1. Full-Width Dark Header Bar and Centered Info
-    const renderHeader = ({data}) => (
+    const renderHeader = () => (
         <header 
             className="text-center p-6 text-white" 
             // Inline style for background color to maximize print visibility

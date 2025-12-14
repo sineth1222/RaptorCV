@@ -28,7 +28,7 @@ const StrongTemplate = ({ data, accentColor }) => {
     };
 
     // Main Header - Name, Profession, and Contact Info
-    const renderHeader = ({data}) => (
+    const renderHeader = () => (
         <header className="mb-4 text-center">
             <h1 className="text-3xl font-extrabold uppercase tracking-wide mb-1 text-gray-900">
                 {data.personal_info?.full_name || ""}
@@ -75,7 +75,7 @@ const StrongTemplate = ({ data, accentColor }) => {
     );
 
     // Component to hold the header and its content
-    const WorkExperienceContent = ({data}) => (
+    const WorkExperienceContent = () => (
         <section id="work-experience-content" className="space-y-6">
             {data.experience.map((exp, index) => (
                 <div key={index} className="pb-1">
@@ -107,7 +107,7 @@ const StrongTemplate = ({ data, accentColor }) => {
         </section>
     );
 
-    const EducationContent = ({data}) => (
+    const EducationContent = () => (
         <section id="education-content" className="space-y-4">
             {data.education.map((edu, index) => (
                 <div key={index} className="pb-1">
@@ -132,7 +132,7 @@ const StrongTemplate = ({ data, accentColor }) => {
         </section>
     );
 
-    const ProjectExperienceContent = ({data}) => (
+    const ProjectExperienceContent = () => (
         <section id="project-experience-content" className="space-y-6">
             {data.project.map((p, index) => (
                 <div key={index} className="pb-1">
