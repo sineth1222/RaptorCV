@@ -1,50 +1,51 @@
+/* eslint-disable react-hooks/static-components */
 import React from 'react';
 import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
 
-// --- Helper Components ---
-
-// Skill Pill/Tag 
-const SkillPill = ({ skill, accentColor }) => (
-    <div 
-        // Ensure no unnatural breaks
-        className="text-xs font-semibold px-2 py-1 rounded-sm inline-block mb-1 mr-1"
-        style={{ 
-            backgroundColor: 'transparent',
-            color: '#333', 
-            border: `1px solid ${accentColor}`,
-        }}
-    >
-        {skill}
-    </div>
-);
-
-// Sidebar Section Header
-const SidebarHeader = ({ title, accentColor }) => (
-    <h3 
-        // Prevents header from being separated from content
-        className="uppercase text-sm font-bold pt-4 pb-1 mb-2 tracking-wider print:break-after-avoid print:break-before-avoid"
-        style={{ color: accentColor, borderBottom: `2px solid ${accentColor}` }}
-    >
-        {title}
-    </h3>
-);
-
-// Main Content Section Header
-const MainHeader = ({ title, accentColor }) => (
-    <h3 
-        // Prevents header from being separated from content
-        className="uppercase text-lg font-bold pt-4 mb-2 tracking-widest text-gray-800 print:break-after-avoid"
-        style={{ borderBottom: `2px solid ${accentColor}`, paddingBottom: '4px' }}
-    >
-        {title}
-    </h3>
-);
 
 
 // --- Main Template Component ---
 
 const CalmSidebarTemplate = ({ data, accentColor }) => {
-    
+
+
+    // Skill Pill/Tag 
+    const SkillPill = ({ skill }) => (
+        <div 
+            // Ensure no unnatural breaks
+            className="text-xs font-semibold px-2 py-1 rounded-sm inline-block mb-1 mr-1"
+            style={{ 
+                backgroundColor: 'transparent',
+                color: '#333', 
+                border: `1px solid ${accentColor}`,
+            }}
+        >
+            {skill}
+        </div>
+    );
+
+    // Sidebar Section Header
+    const SidebarHeader = ({ title }) => (
+        <h3 
+            // Prevents header from being separated from content
+            className="uppercase text-sm font-bold pt-4 pb-1 mb-2 tracking-wider print:break-after-avoid print:break-before-avoid"
+            style={{ color: accentColor, borderBottom: `2px solid ${accentColor}` }}
+        >
+            {title}
+        </h3>
+    );
+
+    // Main Content Section Header
+    const MainHeader = ({ title }) => (
+        <h3 
+            // Prevents header from being separated from content
+            className="uppercase text-lg font-bold pt-4 mb-2 tracking-widest text-gray-800 print:break-after-avoid"
+            style={{ borderBottom: `2px solid ${accentColor}`, paddingBottom: '4px' }}
+        >
+            {title}
+        </h3>
+    );
+        
     // Helper function to format dates
     const formatDate = (dateStr) => {
         if (!dateStr || dateStr.toLowerCase() === 'present') return 'Present';

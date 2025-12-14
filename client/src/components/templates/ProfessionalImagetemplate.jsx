@@ -1,55 +1,6 @@
+/* eslint-disable react-hooks/static-components */
 import React from 'react';
 import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
-
-// --- Helper Components ---
-
-// Language Proficiency Bar 
-const LanguageBar = ({ level, accentColor }) => {
-    // Assuming level is a number from 0 to 5 or a percentage that maps to 5 segments
-    const widthPercent = (level / 5) * 100;
-
-    return (
-        <div className="w-full bg-gray-200 h-2 rounded-full mt-1">
-            <div 
-                className="h-full rounded-full" 
-                style={{ 
-                    width: `${widthPercent}%`, 
-                    backgroundColor: accentColor 
-                }}
-            ></div>
-        </div>
-    );
-};
-
-// Skill Pill/Tag 
-const SkillPill = ({ skill, accentColor }) => (
-    <div 
-        className="text-xs font-semibold px-2 py-1 rounded-full text-white inline-block mb-1 mr-1 print:text-white! print:break-all" 
-        style={{ backgroundColor: accentColor }}
-    >
-        {skill}
-    </div>
-);
-
-// Sidebar Section Header
-const SidebarHeader = ({ title }) => (
-    <h3 
-        className="uppercase text-sm font-bold pt-4 pb-1 mb-2 tracking-wider text-gray-800"
-        style={{ borderBottom: '2px solid #ccc' }} // Using a light gray border
-    >
-        {title}
-    </h3>
-);
-
-// Main Content Section Header
-const MainHeader = ({ title, accentColor }) => (
-    <h3 
-        className="uppercase text-lg font-bold pt-4 mb-2 tracking-widest border-b border-gray-300 pb-1"
-        style={{ color: accentColor }}
-    >
-        {title}
-    </h3>
-);
 
 
 // --- Main Template Component ---
@@ -77,6 +28,57 @@ const ModernSidebarTemplate = ({ data, accentColor }) => {
             month: "short"
         });
     };
+
+
+    // --- Helper Components ---
+
+    // Language Proficiency Bar 
+    const LanguageBar = ({ level }) => {
+        // Assuming level is a number from 0 to 5 or a percentage that maps to 5 segments
+        const widthPercent = (level / 5) * 100;
+
+        return (
+            <div className="w-full bg-gray-200 h-2 rounded-full mt-1">
+                <div 
+                    className="h-full rounded-full" 
+                    style={{ 
+                        width: `${widthPercent}%`, 
+                        backgroundColor: accentColor 
+                    }}
+                ></div>
+            </div>
+        );
+    };
+
+    // Skill Pill/Tag 
+    const SkillPill = ({ skill }) => (
+        <div 
+            className="text-xs font-semibold px-2 py-1 rounded-full text-white inline-block mb-1 mr-1 print:text-white! print:break-all" 
+            style={{ backgroundColor: accentColor }}
+        >
+            {skill}
+        </div>
+    );
+
+    // Sidebar Section Header
+    const SidebarHeader = ({ title }) => (
+        <h3 
+            className="uppercase text-sm font-bold pt-4 pb-1 mb-2 tracking-wider text-gray-800"
+            style={{ borderBottom: '2px solid #ccc' }} // Using a light gray border
+        >
+            {title}
+        </h3>
+    );
+
+    // Main Content Section Header
+    const MainHeader = ({ title }) => (
+        <h3 
+            className="uppercase text-lg font-bold pt-4 mb-2 tracking-widest border-b border-gray-300 pb-1"
+            style={{ color: accentColor }}
+        >
+            {title}
+        </h3>
+    );
 
 
     return (

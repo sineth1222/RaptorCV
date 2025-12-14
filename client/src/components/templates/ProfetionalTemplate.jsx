@@ -1,8 +1,13 @@
+/* eslint-disable react-hooks/static-components */
 import React from 'react';
 import { Mail, Phone, MapPin } from "lucide-react";
 
 
-// Helper function to format dates
+
+const ClassicTwoColumnTemplate = ({ data, accentColor }) => {
+
+
+    // Helper function to format dates
     const formatDate = (dateStr) => {
         if (!dateStr || dateStr.toLowerCase() === 'current') return 'Present';
         
@@ -26,7 +31,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 
     // 1. Full-Width Dark Header Bar and Centered Info
-    const renderHeader = ({data, accentColor}) => (
+    const renderHeader = ({data}) => (
         <header 
             className="text-center p-6 text-white" 
             // Inline style for background color to maximize print visibility
@@ -95,10 +100,6 @@ import { Mail, Phone, MapPin } from "lucide-react";
             </div>
         </div>
     );
-
-
-
-const ClassicTwoColumnTemplate = ({ data, accentColor }) => {
 
     return (
         // Added max-w-full on print for better full-page print

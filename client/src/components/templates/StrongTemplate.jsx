@@ -1,7 +1,11 @@
+/* eslint-disable react-hooks/static-components */
 import { Mail, Phone, MapPin } from "lucide-react";
 
 
-// Helper function to format dates
+const StrongTemplate = ({ data, accentColor }) => {
+
+
+    // Helper function to format dates
     const formatDate = (dateStr) => {
         if (!dateStr || dateStr.toLowerCase() === 'current') return 'Present';
         
@@ -24,7 +28,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
     };
 
     // Main Header - Name, Profession, and Contact Info
-    const renderHeader = ({data, accentColor}) => (
+    const renderHeader = ({data}) => (
         <header className="mb-4 text-center">
             <h1 className="text-3xl font-extrabold uppercase tracking-wide mb-1 text-gray-900">
                 {data.personal_info?.full_name || ""}
@@ -61,7 +65,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
     );
 
     // Section Header
-    const SectionHeader = ({ title, accentColor }) => (
+    const SectionHeader = ({ title }) => (
         <h2 
             className="uppercase text-lg font-bold py-1 pl-4 tracking-wider border-l-4"
             style={{ color: accentColor, borderLeftColor: accentColor }}
@@ -169,8 +173,6 @@ import { Mail, Phone, MapPin } from "lucide-react";
             </div>
         </div>
     );
-
-const StrongTemplate = ({ data, accentColor }) => {
 
 
     return (

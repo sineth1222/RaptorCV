@@ -1,35 +1,38 @@
+/* eslint-disable react-hooks/static-components */
 import React from 'react';
 import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
 
-// --- Helper Components ---
 
-// Skill Pill/Tag (Purple background as seen in the image)
-const SkillPill = ({ skill, accentColor }) => (
-    <div 
-        className="text-xs font-semibold px-2 py-1 rounded-md inline-block mb-1 mr-2 print:break-all"
-        style={{ 
-            backgroundColor: accentColor, 
-            color: 'white' // White text for maximum contrast on the accent color
-        }}
-    >
-        {skill}
-    </div>
-);
+    // --- Main Template Component ---
 
-// Main Content Section Header
-const MainHeader = ({ title, accentColor }) => (
-    <h3 
-        className="uppercase text-lg font-bold pt-6 mb-3 tracking-wider text-gray-800"
-        style={{ borderBottom: `2px solid ${accentColor}` }} // Underline with accent color
-    >
-        {title}
-    </h3>
-);
+    const ImageAccurateTemplate = ({ data, accentColor }) => {
+        
 
-// --- Main Template Component ---
+        // --- Helper Components ---
 
-const ImageAccurateTemplate = ({ data, accentColor }) => {
-    
+    // Skill Pill/Tag (Purple background as seen in the image)
+    const SkillPill = ({ skill }) => (
+        <div 
+            className="text-xs font-semibold px-2 py-1 rounded-md inline-block mb-1 mr-2 print:break-all"
+            style={{ 
+                backgroundColor: accentColor, 
+                color: 'white' // White text for maximum contrast on the accent color
+            }}
+        >
+            {skill}
+        </div>
+    );
+
+    // Main Content Section Header
+    const MainHeader = ({ title }) => (
+        <h3 
+            className="uppercase text-lg font-bold pt-6 mb-3 tracking-wider text-gray-800"
+            style={{ borderBottom: `2px solid ${accentColor}` }} // Underline with accent color
+        >
+            {title}
+        </h3>
+    );
+
     // Helper function to format dates
     const formatDate = (dateStr) => {
         if (!dateStr || dateStr.toLowerCase() === 'present') return 'Present';

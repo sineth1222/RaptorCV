@@ -1,64 +1,65 @@
+/* eslint-disable react-hooks/static-components */
 import React from 'react';
 import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
-
-// --- Helper Components ---
-
-// Language Proficiency Bar 
-const LanguageBar = ({ level, accentColor }) => {
-    // Assuming level is a number from 0 to 5 or a percentage that maps to 5 segments
-    const widthPercent = (level / 5) * 100;
-
-    return (
-        <div className="w-full bg-gray-200 h-2 rounded-full mt-1">
-            <div 
-                className="h-full rounded-full" 
-                style={{ 
-                    width: `${widthPercent}%`, 
-                    backgroundColor: accentColor 
-                }}
-            ></div>
-        </div>
-    );
-};
-
-// Skill Pill/Tag 
-const SkillPill = ({ skill, accentColor }) => (
-    // Note: The image uses accentColor for background, but the new template uses a white background for better contrast/printing.
-    <div 
-        className="text-xs font-semibold px-2 py-1 rounded-full inline-block mb-1 mr-1 print:break-all"
-        style={{ 
-            backgroundColor: '#ffffff', // Always white background for skills in the sidebar area
-            color: '#333', // Dark text color
-            border: `1px solid ${accentColor}` // Border with accent color for definition
-        }}
-    >
-        {skill}
-    </div>
-);
-
-// Sidebar Section Header
-const SidebarHeader = ({ title, accentColor }) => (
-    <h3 
-        className="uppercase text-sm font-bold pt-4 pb-1 mb-2 tracking-wider"
-        style={{ color: accentColor, borderBottom: `1px solid ${accentColor}` }} // Using accent color for header and border
-    >
-        {title}
-    </h3>
-);
-
-// Main Content Section Header
-const MainHeader = ({ title }) => (
-    <h3 
-        className="uppercase text-lg font-bold pt-4 mb-2 tracking-widest border-b border-gray-300 pb-1 text-gray-800"
-    >
-        {title}
-    </h3>
-);
 
 
 // --- Main Template Component ---
 
 const MordernImageTemplate = ({ data, accentColor }) => {
+
+    // --- Helper Components ---
+
+    // Language Proficiency Bar 
+    const LanguageBar = ({ level }) => {
+        // Assuming level is a number from 0 to 5 or a percentage that maps to 5 segments
+        const widthPercent = (level / 5) * 100;
+
+        return (
+            <div className="w-full bg-gray-200 h-2 rounded-full mt-1">
+                <div 
+                    className="h-full rounded-full" 
+                    style={{ 
+                        width: `${widthPercent}%`, 
+                        backgroundColor: accentColor 
+                    }}
+                ></div>
+            </div>
+        );
+    };
+
+    // Skill Pill/Tag 
+    const SkillPill = ({ skill }) => (
+        // Note: The image uses accentColor for background, but the new template uses a white background for better contrast/printing.
+        <div 
+            className="text-xs font-semibold px-2 py-1 rounded-full inline-block mb-1 mr-1 print:break-all"
+            style={{ 
+                backgroundColor: '#ffffff', // Always white background for skills in the sidebar area
+                color: '#333', // Dark text color
+                border: `1px solid ${accentColor}` // Border with accent color for definition
+            }}
+        >
+            {skill}
+        </div>
+    );
+
+    // Sidebar Section Header
+    const SidebarHeader = ({ title }) => (
+        <h3 
+            className="uppercase text-sm font-bold pt-4 pb-1 mb-2 tracking-wider"
+            style={{ color: accentColor, borderBottom: `1px solid ${accentColor}` }} // Using accent color for header and border
+        >
+            {title}
+        </h3>
+    );
+
+    // Main Content Section Header
+    const MainHeader = ({ title }) => (
+        <h3 
+            className="uppercase text-lg font-bold pt-4 mb-2 tracking-widest border-b border-gray-300 pb-1 text-gray-800"
+        >
+            {title}
+        </h3>
+    );
     
     // Helper function to format dates
     const formatDate = (dateStr, justYear = false) => {

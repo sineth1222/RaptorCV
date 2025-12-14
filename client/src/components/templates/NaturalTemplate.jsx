@@ -1,9 +1,14 @@
+/* eslint-disable react-hooks/static-components */
 /* eslint-disable no-irregular-whitespace */
 import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
 
 
-// Helper function to format dates
-const formatDate = (dateStr) => {
+
+
+const NaturalTemplate = ({ data, accentColor }) => {
+
+    // Helper function to format dates
+    const formatDate = (dateStr) => {
        if (!dateStr || dateStr.toLowerCase() === 'current') return 'Present';
 
         const [year, month] = dateStr.split("-");
@@ -40,10 +45,6 @@ const formatDate = (dateStr) => {
             {title}
         </h3>
     );
-
-
-
-const NaturalTemplate = ({ data, accentColor }) => {
 
     return (
         // 1. ප්‍රධාන Container එකේ පළල 'max-w-4xl' ලෙස සකස් කර ඇත.

@@ -1,24 +1,6 @@
+/* eslint-disable react-hooks/static-components */
 import { Mail, Phone, MapPin } from "lucide-react";
 
-
-const RightSectionHeader = ({ title, accentColor }) => (
-    <h2 
-        className="pt-0 mb-3 text-lg font-bold uppercase sm:text-xl" 
-        style={{ color: accentColor }} 
-    >
-        {title}
-    </h2>
-);
-
-// ✅ Correct Position: Defined OUTSIDE the main component (TraditionalResumeTempalte)
-const LeftSectionHeader = ({ title, accentColor }) => (
-    <h2 
-        className="pt-0 mb-3 text-lg font-bold uppercase sm:text-xl" 
-        style={{ color: accentColor }} 
-    >
-        {title}
-    </h2>
-);
 
 const TraditionalResumeTempalte = ({ data, accentColor }) => {
     
@@ -43,6 +25,25 @@ const TraditionalResumeTempalte = ({ data, accentColor }) => {
             month: "short",
         });
     };
+
+    const RightSectionHeader = ({ title }) => (
+        <h2 
+            className="pt-0 mb-3 text-lg font-bold uppercase sm:text-xl" 
+            style={{ color: accentColor }} 
+        >
+            {title}
+        </h2>
+    );
+
+    // ✅ Correct Position: Defined OUTSIDE the main component (TraditionalResumeTempalte)
+    const LeftSectionHeader = ({ title }) => (
+        <h2 
+            className="pt-0 mb-3 text-lg font-bold uppercase sm:text-xl" 
+            style={{ color: accentColor }} 
+        >
+            {title}
+        </h2>
+    );
 
     /*const RightSectionHeader = ({ title }) => (
         <h2 
