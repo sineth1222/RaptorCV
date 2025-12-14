@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 import { Mail, Phone, MapPin } from "lucide-react";
 
 
