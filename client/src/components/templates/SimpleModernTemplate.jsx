@@ -30,7 +30,7 @@ const SimpleModernTemplate = ({ data, accentColor }) => {
     };
 
     // This section header closely mimics the font-weight, size, and underline style of the image.
-    const SectionHeader = ({ title, accentColor }) => (
+    const SectionHeader = ({ title }) => (
         <h2 
             className="uppercase text-lg font-bold pt-6 pb-1 mb-2 border-b-2 tracking-wide" 
             style={{ borderColor: accentColor }}
@@ -40,7 +40,7 @@ const SimpleModernTemplate = ({ data, accentColor }) => {
     );
 
     // This renders the main contact line below the name, separated by pipes |
-    const renderHeaderContact = (data) => {
+    const renderHeaderContact = () => {
     const contactItems = [];
 
     // 1. Add Location
