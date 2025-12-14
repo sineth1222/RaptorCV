@@ -1,11 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { assets } from '../../assets/assets';
 
 const Hero = () => {
-    const { user } = useSelector(state => state.auth);
-    const [menuOpen, setMenuOpen] = React.useState(false);
+    //const { user } = useSelector(state => state.auth);
+    //const [menuOpen, setMenuOpen] = React.useState(false);
     
     // 🆕 State: වත්මන් active image එක පාලනය කිරීමට.
     const [isFlipped, setIsFlipped] = React.useState(false);
@@ -31,7 +31,7 @@ const Hero = () => {
 
 
     return (
-        <div className="min-h-screen bg-white text-slate-900 font-inter">
+        <div className="min-h-screen mt-20 bg-white text-slate-900 font-inter">
             
             {/* Main Hero Content - Responsive Two-Column Layout */}
             {/* py-16 mobile padding එකට ඉඩ දෙන්න */}

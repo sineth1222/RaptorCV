@@ -7,9 +7,12 @@ import { Provider } from 'react-redux'
 import { store } from './app/store.js'
 
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>  
-  </BrowserRouter>,
+  <div className="overflow-x-hidden">
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>  
+    </BrowserRouter>
+  </div>
+
 )
